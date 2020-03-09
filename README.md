@@ -1,7 +1,7 @@
 # Eagre/Aegir European Industry Doctorates GitHub pages
 
 ## Introduction
-See Eagre website at: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html (not yet working but try; hae asked IT)
+See Eagre website at: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html (not yet working but try; have asked IT)
 
 ## Data Management plan
 
