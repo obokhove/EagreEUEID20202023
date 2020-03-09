@@ -19,5 +19,5 @@ to do by ESRs once they have arrived.
 
 Per 09-03-2020:
 - This GitHub site established: https://github.com/obokhove/EagreEUEID20202023/
-- Website Eagre made (shadow one for now):  http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
+- Website Eagre made:  http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
 
