@@ -1,7 +1,7 @@
 # Eagre/Aegir European Industry Doctorates GitHub pages
 
 ## Introduction
-See Eagre website at: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html (not yet working but try; have asked IT)
+See Eagre website at: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
 
 ## Data Management plan
 
@@ -19,5 +19,5 @@ to do by ESRs once they have arrived.
 
 Per 09-03-2020:
 - This GitHub site established: https://github.com/obokhove/EagreEUEID20202023/
-- Website Eagre made (shadow one for now):  http://www1.maths.leeds.ac.uk/eagreEUEID/index.html (faulty but try; TBC) 
+- Website Eagre made (shadow one for now):  http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
 
