@@ -21,3 +21,5 @@ Per 09-03-2020:
 - This GitHub site established: https://github.com/obokhove/EagreEUEID20202023/
 - Website Eagre made:  http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
 
+Per 01-04-2020: Budget for courses added; minutes actions kick-off updated as well. See minutes with that date.
+
