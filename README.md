@@ -23,4 +23,4 @@ Per 09-03-2020:
 
 Per 01-04-2020: Budget for courses at MARIN for ESRs added; minutes actions kick-off updated as well. See minutes with that date.
 
-18-01-2021: Kick-off meeting coompleted; see agenda (Kickoffmeetagenda18012021.pdf), presentations (Wajiha, George, Onno) and minutes (latter pending).
+18-01-2021: Kick-off meeting coompleted; see agenda (Kickoffmeetagenda18012021.pdf), presentations (Wajiha, George, Onno --Eagre20201801.pdf) and minutes (latter pending).
