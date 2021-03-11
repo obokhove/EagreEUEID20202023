@@ -26,3 +26,5 @@ Per 01-04-2020: Budget for courses at MARIN for ESRs added; minutes actions kick
 18-01-2021 to 20-01-2021: Kick-off meeting completed; see agenda (Kickoffmeetagenda18012021.pdf), presentations (Wajiha, George, Onno --Eagre20201801.pdf -2020 should be 2021) and minutes (added 20-01-2021).
 
 20-01-2021 to 18-02-2021: Action points AP1, AP2 and AP3 in minutes of 18-01-2021 kick-off meeting completed. Numerical exercises NP1 and NP2 completed of Fluid Dynamics course; last numerical exercise NP3 of Fluid Dynamics course in progress; FSI course has started/half way. Other action points pending as of 18-02-2021.
+
+26-03-2021 Mid-term meeting
