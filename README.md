@@ -21,6 +21,8 @@ Per 09-03-2020:
 - This GitHub site established: https://github.com/obokhove/EagreEUEID20202023/
 - Website Eagre made:  http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
 
+## News items
+
 Per 01-04-2020: Budget for courses at MARIN for ESRs added; minutes actions kick-off updated as well. See minutes with that date.
 
 18-01-2021 to 20-01-2021: Kick-off meeting completed; see agenda (Kickoffmeetagenda18012021.pdf), presentations (Wajiha, George, Onno --Eagre20201801.pdf -2020 should be 2021) and minutes (added 20-01-2021).
