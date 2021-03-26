@@ -35,5 +35,6 @@ Per 01-04-2020: Budget for courses at MARIN for ESRs added; minutes actions kick
 - presentation Wajiha: EU_Midterm_Meeting_Wajiha_Rehman.pptx
 - presentation George: pending
 - minutes: pending
-- midterm report: pending
+- midterm report: EUmidtermreport24032021.pdf
+
 
