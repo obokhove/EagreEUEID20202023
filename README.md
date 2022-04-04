@@ -2,6 +2,9 @@
 
 ## Introduction
 See Eagre website at: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
+Webpage Yang Lu: https://www1.maths.leeds.ac.uk/~mmyl/index.html
+Webpage Wajiha Rehman: https://www1.maths.leeds.ac.uk/~mmwr/
+Outreach: 
 
 ## Data Management plan
 
