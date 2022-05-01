@@ -42,7 +42,7 @@ Per 01-04-2020: Budget for courses at MARIN for ESRs added; minutes actions kick
 - minutes: pending
 - midterm report: EUmidtermreport24032021.pdf
 
-01-05-2022: Draft minutes workshop 26-=04-2022 online and in person meeting at MARIN 
+01-05-2022: Draft minutes workshop 26-04-2022 online and in person meeting at MARIN 
 AgendaEAGRE26042022copymin.pdf
 
 
