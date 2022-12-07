@@ -18,6 +18,8 @@ $\partial_t\phi+g \eta = 0$ on $x\in[0,L_x]$ and $z=H_0$ for $\phi(x,z=H_0,t),\e
 
 $\partial_t \eta = \partial_z\phi$ on $x\in[0,L_x]$ and $z=H_0$ for $\phi(x,z=H_0,t)$.
 
+Neumann conditions at $z=0,x=0,L_x$.
+
 Solutions:
 
 $\phi(x,z,t) = D \cos(k x)\cosh(k z)\cos(\omega t)$ or $\phi(x,z,t) = D \cos(k x)\cosh(k z)\sin(\omega t)$ 
