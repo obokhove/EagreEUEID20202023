@@ -14,8 +14,11 @@ Energy needs to be checked, as monitor.
 ##Linear solution
 
 Solving linear potential flow:
-$\nabla^2 phi=0\quad[x,z]\in[0,L_x]\yimes[0,H_0]$ for $\phi(x,z,t)$.
+
+$\nabla^2 \phi=0\quad[x,z]\in[0,L_x]\times[0,H_0]$ for $\phi(x,z,t)$.
+
 $\partial_t\phi+g \eta = 0$ on $x\in[0,L_x]$ and $z=H_0$ for $\phi(x,z=H_0,t),\eta(x,t)$.
+
 $\partial_t \eta = \partial_z\phi$ on $x\in[0,L_x]$ and $z=H_0$ for $\phi(x,z=H_0,t)$.
 
 
