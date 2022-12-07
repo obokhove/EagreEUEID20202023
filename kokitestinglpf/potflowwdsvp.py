@@ -6,8 +6,8 @@ import os
 
 
 # parameters in SI units
-t_end = 0.0001*5.0  # time of simulation [s]
-dt = 0.005  # time step [s]
+# t_end = 5.0  # time of simulation [s]
+# dt = 0.005  # time step [s]
 g = 9.8  # gravitational acceleration [m/s^2]
 
 # water
@@ -47,14 +47,11 @@ zvals = np.linspace(0, Lz- 0.001  , nz)
 zslice = Lz
 xslice = Lx/2
 
-# The equations are in nondimensional units, hence we transform:
-
-L = Lz
-T = L / math.sqrt(g * L)
+# The equations are in nondimensional units, hence we 
 L = 1
 T = 1
-t_end /= T
-dt /= T
+# T t_end /= T
+# Tdt /= T
 Lx /= L
 Lz /= L
 gg = g
@@ -175,18 +172,20 @@ BC_phi_new = fd.DirichletBC(V_W, phi_new, top_id)
 # Working equations format:
 #
 if nvpcase == 0:
-    phif_expr =  (v_W * (phi - phi_f)/dt  + gg * v_W *  eta ) * fd.ds(top_id) # g ? derivative of VP wrt eta^n+1 to get the value of phi^n+1b at top surface
-    phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr, phi, bcs= BC_exclude_beyond_surface))
-
+    # Step-1: update phi at free surface using explicit forward Euler on eta but impliciy on phi (nonlinear case so not here) 
+    phif_expr =  v_W * ((phi - phi_f)/dt  + gg * eta ) * fd.ds(top_id) # g ? derivative of VP wrt eta^n+1 to get the value of phi^n+1b at top surface
+    phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr, phi, bcs = BC_exclude_beyond_surface))
     # ONNO 06-12 error phi_f is used at top not phif_new? BC_phi_f = fd.DirichletBC(V_W, phif_new, top_id)
-    
-    phi1_expr = fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
-    # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi1_expr, phi, bcs = BC_phi_f)) # ONNO 06-12
-    phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi1_expr, phi_new, bcs = BC_phi)) # ONNO 06-12 now new phi at top used ONNONEW:  time does not move something is off
 
-    # ONNO 06-12 Since phi is used at top in step 2, phi_new takes over that phi at the top in its solve, so it is phi_new everywhere
-    eta_expr1 = v_W *  (eta_new - eta)/dt * fd.ds(top_id) - fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
-    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr1, eta_new, bcs= BC_exclude_beyond_surface ))
+    # Step-2: Update phi_new in interior using the updated phi as bc. 
+    phi_expr = fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
+    phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr, phi_new, bcs = BC_phi))
+    # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi1_expr, phi, bcs = BC_phi_f)) # ONNO 06-12 old one Wajiha; how is this using the top updated phi?
+    # ONNO 07-12: How do I know wjether bcs = BC_phi uploads the new phi at the free surface solved in Step-1?
+    
+    # Step-3: update eta_new at free surface using all updated phi_new (which now includes updated phi at free surface from Step-1) backward Euler step
+    eta_expr = v_W *  (eta_new - eta)/dt * fd.ds(top_id) - fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr, eta_new, bcs = BC_exclude_beyond_surface ))
     #
 elif nvpcase==1:
     # KOKI 06-12
@@ -247,13 +246,6 @@ eta.assign(eta_exact, bc_top.node_set)
 phi.interpolate(phi_exact_expr)
 phi_f.assign(phi, bc_top.node_set)
 
- 
-# 
-# ONNO to do: new VP IC's: no need, the above should still work as IC for eta and phi in the VP
-#
-# if nvpcase == 1:
-#    noting = 0 # to do ONNO: no need, the above should still work as IC for eta and phi in the VP
-# end if
 
 ###### OUTPUT FILES ##########
 outfile_phi = fd.File("results/phi.pvd")
@@ -273,9 +265,17 @@ def output_data():
     
 output_data.counter = -1  # -1 to exclude counting print of initial state
 
-
 t = 0.0
 i = 0.0
+
+print('Plotting starts, initial data:')
+eta1vals = np.array([eta.at(x, zslice) for x in xvals])
+phi1vals = np.array([phi_f.at(x, zslice) for x in xvals])            
+
+ax1.plot(xvals, eta1vals, ':k', label = f' $\eta_n: t = {t:.3f}$',linewidth=2)
+ax2.plot(xvals, phi1vals, ':k', label = f' $\phi_n: t = {t:.3f}$', linewidth=2)
+# ONNO 07-12: something is off since t~0 inthe time loop is not close to the initial condition. phi-solve seems wrong; dotted black lines are IC.
+        
 
 
 output_data()
@@ -289,7 +289,7 @@ while t <= t_end + dt:
     if nvpcase == 0:
         # normal weak-form case
         phif_expr.solve() # solves phi^(n+1) at top free surface
-        # ONNO 06-12 not needed? phi_f.assign(phi)
+        # ONNO 07-12 not needed? phi_f.assign(phi)
         # ONNO 06-12 needed?        phi_f.assign(phif_new) now solved with new BSC case above
         phi_expr.solve() # solves phi^(n+1) in interior
         eta_expr.solve() # solves eta^(n+1) at top free surface
