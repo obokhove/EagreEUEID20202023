@@ -8,7 +8,7 @@ code: potflowwdsvp.py
 
 However, for nvpcase == 0 the plots should show a wave for eta in its 5 phases at $0, \pi/2, \pi, 3\pi/2 and 2\pi$, i.e. at $t=(0,1/4,1/2,3/4,1)*T_{period}$. So if $\eta$ is 0 bto start it should be zero at $(0,1/2,1)T_{period}$ and at the moment movement seems to be very small as if time is wrong. Energy needs to be checked, as monitoring.
 
-## Linear solution
+## Linear solution used in code
 
 Solving linear potential flow:
 
