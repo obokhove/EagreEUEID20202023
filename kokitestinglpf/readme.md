@@ -24,6 +24,6 @@ $\phi(x,z,t) = D \cos(k x)\cosh(k z)\cos(\omega t)$ or $\phi(x,z,t) = D \cos(k x
 
 $\eta(x,t) = A \cos(k x) \sin(\omega_t)$ or $\eta(x,t) = A \cos(k x) \cos(\omega_t)$
 
-with $D = g A/(\omega\cosh(k z))$ or $D = -g A/(\omega\cosh(k z))$.
+with $D = g A/(\omega\cosh(k H_0))$ or $D = -g A/(\omega\cosh(k H_0))$ and $\omega = \pm \sqrt{g k \tanh(k H_0)}$.
 
 
