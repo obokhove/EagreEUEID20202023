@@ -1,4 +1,4 @@
-# Testing ground for (linear) potential flow (from variatonal principle --VP)
+# Testing ground for (linear) potential flow (from variational principle -VP)
 
 ## Linear potential flow without VP
 
