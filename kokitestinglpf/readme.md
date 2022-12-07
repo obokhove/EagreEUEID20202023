@@ -5,6 +5,8 @@
 06-12-2022 Onno: Clean-up of code, made scaling simple and redid exact solution.
 
 code: potflowwdsvp.py
+See comments 07-12-2022
+Something is terribly wrong in the code; I have no contact/link with exact solution.
 
 However, for the runtime case nvpcase == 0 the plots should show a wave for $\eta$ in its four phases at $0, \pi/2, \pi, 3\pi/2 and 2\pi$, i.e. at $t=(0,1/4,1/2,3/4,1) T_{period}$. So if $\eta$ is 0 at the start it should be zero at $(0,1/2,1)T_{period}$ and at the moment movement seems to be very small as if time increments are wrong. Energy needs to be checked, as monitoring.
 
