@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+08-12: probably got it for nomrla part: had made silly mistake by assigning incorrectly before end of time loop so no update was made.
+
 06-12-2022 Onno: Clean-up of code, made scaling simple and redid exact solution.
 
 code: potflowwdsvp.py
