@@ -3,7 +3,8 @@
 ## Linear potential flow without VP
 
 15-12: energy plotted; seems to behave like SE oscillations halving with dt-> 0.5*dt; exact and numerical solutions plotted together; terribly slow? Why? To do: faster, check whether converges a bit.
-To do: VO version as discussed.
+To do: CG@ does not work; output function complains? Why?
+To do: VP version as discussed.
 
 09-12: performance still very poor relative to exact solution at nx=120 and nz=6 and 2000 time steps in one period?
 
