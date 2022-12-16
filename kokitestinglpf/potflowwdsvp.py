@@ -188,10 +188,10 @@ if nvpcase == 0:
     eta_expr1 = v_W *  (eta_new - eta)/dt * fd.ds(top_id) - fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr1, eta_new, bcs = BC_exclude_beyond_surface ))
     # Above works
-    a_eta_expr1 = v_W * eta_new * fd.ds(top_id)
+    a_eta_expr1 = v_W * trial_W * fd.ds(top_id)
     Lhat_eta_expr1 = v_W * eta * fd.ds(top_id) + dt*fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
     params = {'ksp_type': 'preonly', 'pc_type': 'none'} #  , 'sub_pc_type': 'ilu'}
-    prob3 = fd.LinearVariationalProblem(a_eta_expr1, Lhat_eta_expr1, eta_new)
+    prob3 = fd.LinearVariationalProblem(a_eta_expr1, Lhat_eta_expr1, eta_new, bcs=BC_exclude_beyond_surface)
     param_hat_psi = {'ksp_converged_reason':None}
     solv3 = fd.LinearVariationalSolver(prob3, solver_parameters=param_hat_psi)
     # solve(a_eta_expr1 == Lhat_eta_expr1, eta_new, solver_parameters={'ksp_type': 'cg', 'pc_type': 'none'})
