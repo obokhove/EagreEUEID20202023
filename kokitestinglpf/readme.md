@@ -3,7 +3,7 @@
 ## Linear potential flow without VP
 
 15-12: energy plotted; seems to behave like SE oscillations halving with dt-> 0.5*dt; exact and numerical solutions plotted together; terribly slow? Why?
-- To do: faster, check whether converges a bit; steps 2 and 3 are linear also for nonlinear model so linear fast solvesr possible.
+- To do: faster, check whether code can converges a bit better; steps 2 and 3 are linear also for nonlinear model so linear fast solvers are possible.
 Attempts do not work yet.
 - To do: CG2 does not work; output function complains? Why?
 - To do: VP version as discussed.
