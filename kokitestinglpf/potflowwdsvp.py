@@ -99,7 +99,7 @@ t_plot = np.array([ time[0], time[t2], time[-1] ])
 t_plot = time[0::nt]
 print('t_plot', t_plot,nt,nplot)
 print('gg:',gg)
-color = np.array(['g-', 'b--', 'r:'])
+color = np.array(['g-', 'b--', 'r:', 'm.'])
 colore = np.array(['k:', 'c--', 'm:'])
 
 
@@ -161,6 +161,7 @@ def surface_BC():
 
 
 BC_exclude_beyond_surface = surface_BC() # ONNO 08-12 do not understand what is inside: surface_BC() or MyBC()
+                                         # KOKI 16-12 I think the name is confusing; should be BC_exclude_below_surface?
 BC_phi_f = fd.DirichletBC(V_W, phi_f, top_id)
 BC_phif_new = fd.DirichletBC(V_W, phif_new, top_id)
 
@@ -183,7 +184,8 @@ if nvpcase == 0:
     
     # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi1_expr, phi, bcs = BC_phi_f)) # ONNO 06-12 old one Wajiha; how is this using the top updated phi?
     # ONNO 07-12: How do I know wjether bcs = BC_phi uploads the new phi at the free surface solved in Step-1?
-    
+    # KOKI 16-12: We defined BC_phi so that it uses phi on the top surface and phi has been successfully updated in Step-1.
+
     # Step-3: update eta_new at free surface using all updated phi_new (which now includes updated phi at free surface from Step-1) backward Euler step
     eta_expr1 = v_W *  (eta_new - eta)/dt * fd.ds(top_id) - fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr1, eta_new, bcs = BC_exclude_beyond_surface ))
@@ -301,8 +303,8 @@ phi1vals = np.array([phi.at(x, zslice) for x in xvals])
 ax1.plot(xvals, eta1vals, ':k', label = f' $\eta_n: t = {t:.3f}$',linewidth=2)
 ax2.plot(xvals, phi1vals, ':k', label = f' $\phi_n: t = {t:.3f}$', linewidth=2)
 
-# ONNO 07-12: something is off since t~0 inthe time loop is not close to the initial condition. phi-solve seems wrong; dotted black lines are IC.
-        
+# ONNO 07-12: something is off since t~0 in the time loop is not close to the initial condition. phi-solve seems wrong; dotted black lines are IC.
+# KOKI 16-12: t += dt happens before plotting, so solution at t = 0 is not plotted in the time loop. Is that why?
 
 
 output_data()
@@ -361,13 +363,14 @@ while t <= t_end + dt:
         eta1vals = np.array([eta.at(x, zslice) for x in xvals])
         phi1vals = np.array([phi.at(x, zslice) for x in xvals])            
         
-        ax1.plot(xvals, eta1vals, color[int(i-1) % 3], label = f' $\eta_n: t = {t:.3f}$')
-        ax2.plot(xvals, phi1vals, color[int(i-1) % 3], label = f' $\phi_n: t = {t:.3f}$')
+        ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
+        ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
 
         # Free-surface exact expressions
         phi_exact_exprv = D * np.cos(kx * xvals) * np.cosh(kx * H0) * np.sin(omega * t) #
         eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
 
+        # KOKI: maybe use different markers to distinguish solutions at different times?
         ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1)
         ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1)
         
