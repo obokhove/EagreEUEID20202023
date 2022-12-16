@@ -6,7 +6,7 @@
 - To do: faster, check whether code can converges a bit better; steps 2 and 3 are linear also for nonlinear model so linear fast solvers are possible.
 Attempts do not work yet.
 - To do: CG2 does not work; output function complains? Why?
-- To do: VP version as discussed.
+- To do: VP version as discussed; discussion with Koki found als in the code as comments.
 
 09-12: performance still very poor relative to exact solution at nx=120 and nz=6 and 2000 time steps in one period?
 
