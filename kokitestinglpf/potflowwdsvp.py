@@ -180,12 +180,21 @@ if nvpcase == 0:
     # Step-2: Update phi_new in interior using the updated phi as bc. 
     phi_expr1 = fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
     phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, phi_new, bcs = BC_phi))
+    
     # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi1_expr, phi, bcs = BC_phi_f)) # ONNO 06-12 old one Wajiha; how is this using the top updated phi?
     # ONNO 07-12: How do I know wjether bcs = BC_phi uploads the new phi at the free surface solved in Step-1?
     
     # Step-3: update eta_new at free surface using all updated phi_new (which now includes updated phi at free surface from Step-1) backward Euler step
     eta_expr1 = v_W *  (eta_new - eta)/dt * fd.ds(top_id) - fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr1, eta_new, bcs = BC_exclude_beyond_surface ))
+    # Above works
+    a_eta_expr1 = v_W * eta_new * fd.ds(top_id)
+    Lhat_eta_expr1 = v_W * eta * fd.ds(top_id) + dt*fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
+    params = {'ksp_type': 'preonly', 'pc_type': 'none'} #  , 'sub_pc_type': 'ilu'}
+    prob3 = fd.LinearVariationalProblem(a_eta_expr1, Lhat_eta_expr1, eta_new)
+    param_hat_psi = {'ksp_converged_reason':None}
+    solv3 = fd.LinearVariationalSolver(prob3, solver_parameters=param_hat_psi)
+    # solve(a_eta_expr1 == Lhat_eta_expr1, eta_new, solver_parameters={'ksp_type': 'cg', 'pc_type': 'none'})
     #
 elif nvpcase==1:
     # KOKI 06-12
@@ -308,7 +317,8 @@ while t <= t_end + dt:
         # normal weak-form case
         phif_expr.solve() # solves phi^(n+1) at top free surface
         phi_expr.solve() # solves phi^(n+1) in interior not needed: phi.assign(phi_new)
-        eta_expr.solve() # solves eta^(n+1) at top free surface
+        # eta_expr.solve() # solves eta^(n+1) at top free surface works
+        solv3.solve()
     elif nvpcase == 1:
         # ONNO: to do: VP solve
         phif_expr.solve() # solves phi^(n+1) at top free surface same as above
@@ -341,6 +351,7 @@ while t <= t_end + dt:
     plt.ylabel(f'$E(t)$')
     
     #
+    t+= dt
     if (t in t_plot):
         print('Plotting starts')
         plt.figure(1)
@@ -364,7 +375,6 @@ while t <= t_end + dt:
         ax2.legend(loc=4)
         output_data()
      
-    t+= dt
     # print('t=',t)
 
 
