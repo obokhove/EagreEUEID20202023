@@ -2,7 +2,7 @@
 
 ## Linear potential flow without VP
 
-18-12 Standard weak approach (nvpcase = 0) and VP approach (nvpcase = 1) seem to both work and give same result; please check; but comparision with exact solution seems off? Use: potflowwdsvpf.py
+18-12 Standard weak approach (nvpcase = 0) and VP approach (nvpcase = 1) seem to both work and give same result; please check; but comparison with exact solution seems off? Use: potflowwdsvpf.py
 Just copied file here; not sure yet how commit works. 
 - To do: CG2 does not work; output function complains? Why?
 - To do: check with exact solution --found below? Needs sorting as check!
