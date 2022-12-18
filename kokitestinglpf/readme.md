@@ -8,6 +8,9 @@ Just copied file here; not sure yet how commit works.
 - To do: check with exact solution --found below? Needs sorting as check!
 - To do: make faster.
 
+- To do: add wavemaker
+- To do: work out nonlinear case and implement.
+
 15-12: energy plotted; seems to behave like SE oscillations halving with dt-> 0.5*dt; exact and numerical solutions plotted together; terribly slow? Why?
 - To do: faster, check whether code can converges a bit better; steps 2 and 3 are linear also for nonlinear model so linear fast solvers are possible.
 Attempts do not work yet.
