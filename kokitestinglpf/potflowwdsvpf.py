@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 1 # ONNO 07-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps
+nvpcase = 1 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -108,8 +108,12 @@ print('Figure settings')
 
 fig, (ax1, ax2) = plt.subplots(2)
 
-ax2.set_title(r'$\phi$ value in $x$ direction',fontsize=tsize)
-ax1.set_title(r'$\eta$ value in $x$ direction',fontsize=tsize)
+# ONNO 18-12 removed: ax2.set_title(r'$\phi$ value in $x$ direction',fontsize=tsize)
+if nvpcase == 0:
+    ax1.set_title(r'Weak form used:',fontsize=tsize)
+elif nvpcase == 1:
+    ax1.set_title(r'Functional derivative VP used:',fontsize=tsize)
+# end if
 ax1.set_ylabel(r'$\eta (x,t) [m]$ ',fontsize=size)
 ax1.grid()
 ax2.set_xlabel(r'$x [m]$ ',fontsize=size)
@@ -132,7 +136,8 @@ eta = fd.Function(V_W, name="eta")
 eta_new = fd.Function(V_W, name="eta")
 
 trial_W = fd.TrialFunction(V_W)
-# trial_eta, trial_phi = fd.TrialFunction(V_W)
+trial_eta = fd.TrialFunction(V_W)
+trial_phi = fd.TrialFunction(V_W)
 v_W = fd.TestFunction(V_W)
 
 mixed_V = V_W * V_W
@@ -206,51 +211,34 @@ if nvpcase == 0:
     solv3 = fd.LinearVariationalSolver(prob3) #  , solver_parameters=param_hh) # default solver_parameter ONNO 17-12: Optimise?
 elif nvpcase==1:
     # KOKI 06-12
-    VP =  ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
+    VP = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
         - ( 1/2 * fd.inner(fd.grad(phi), fd.grad(phi))  ) * fd.dx
+    # Step-1: f-derivative VP wrt eta to find update of phi at free surface
     phif_expr1 = fd.derivative(VP, eta, du=v_W)  # du=v_W represents perturbation
     phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, phi, bcs=BC_exclude_beyond_surface))
-    # ONNO TRY OLD NORMAL stuff
-    #phi1_expr = fd.dot(fd.grad(phi), fd.grad(v_W)) * fd.dx
-    #phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi1_expr, phi, bcs = BC_phi))
-    # eta_expr1 = v_W *  (eta_new - eta)/dt * fd.ds(top_id) - fd.dot(fd.grad(phi_new), fd.grad(v_W)) * fd.dx
-    # eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr1, eta_new, bcs= BC_exclude_beyond_surface ))
-    phi_expr1 = fd.derivative(VP, phi, du=v_W) # IN HERE no BC has been applied yet
-    #  Issue is that bsc=BC_phi removes the free surface rows while they should be kept and put on RHS.
+    #
+    # Issue is that bsc=BC_phi removes the free surface rows while they should be kept and put on RHS.
+    # only solve for phi by imposing phi at free surface; ignore eta which at free surface anyway
+    # Step-2: f-derivative VP wrt phi to get interior phi given sruface update phi
+    phi_expr1 = fd.derivative(VP, phi, du=v_W)
     phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, phi, bcs = BC_phi)) 
-    # eta, phi = split(result_mixed)
-    # only solve for phi by imposing ohi at free surface; ignore eta which at free surface anyway
-
     # Third step here where we use again the variational derivative wrt phi but now solve for eta only whilst using tyhe new phin from the previous two steps
-    # Ensure that phi is the new phi from step 2
+    # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_bew
     eta_expr2 = fd.derivative(VP, phi, du=v_W)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
-    # only solve for eta by using excluse
+    # only solve for eta_new by using exclude
     #
 elif nvpcase==2:
     # 
-    # ONNO 01-12
     # Desired VP format of the above
     # 
     # VP formulation of above with phi^n+1=phi_f at free top surface the same but interior phi^(n+1) and surface eta^(n+1) in one go
     #
     VP =  ( fd.inner(trial_phi, (trial_eta - eta)/dt) + fd.inner(phi, eta/dt) - (1/2 * g * fd.inner(eta,eta)) )* fd.ds(top_id) \
         + ( - 1/2 * H0 * fd.inner(fd.grad(trial_phi), fd.grad(trial_phi))  ) * fd.dx
-
     # 
-    # derivative of VP wrt eta=eta^n to get the value of trial_phi=phi^n+1 at top surface only
-    phif_expr1 = fd.derivative(VP, eta, v_W)  # ONNO 01-12 don't understand why v_W and not V_W 
-    # phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, trial_phi, bcs= BC_exclude_beyond_surface)) # ONNO 02-12-2022: FAILS
-    phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, trial_phi, bcs= BC_exclude_beyond_surface)) # ONNO 02-12-2022: FAILS
-
-    # 
-    # derivative of VP wrt trial_phi=phi^n+1 to get the value of trial_phi=phi^n+1 in interior
-    #                                                        and trial_eta=eta^(n+1) at surface in one go using solved phi at top.
-    phi_expr1 = fd.derivative(VP, trial_phi, v_W)  
-    phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, result_mixed, bcs = BC_phi_f))
     #
 # end if
-
 #  
 # tmp_eta, tmp_phi = result_mixed.split()
 
@@ -296,6 +284,11 @@ plt.plot(t,EPot,'.b')
 plt.plot(t,EKin,'.r')
 plt.xlabel(f'$t$')
 plt.ylabel(f'$E(t)$')
+if nvpcase == 0:
+    plt.title(r'Weak form used:',fontsize=tsize)
+elif nvpcase == 1:
+    plt.title(r'Functional derivative VP used:',fontsize=tsize)
+# end if
 print('E0=',E,EKin,EPot)
 
 
