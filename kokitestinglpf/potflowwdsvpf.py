@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 1 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps
+nvpcase = 0 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -42,10 +42,10 @@ tt = format(t, '.3f')
 mesh = fd.RectangleMesh(nx, nz, Lx, Lz)
 x,z = fd.SpatialCoordinate(mesh)
 
-xvals = np.linspace(0, Lx-0.001 , nx)
-zvals = np.linspace(0, Lz-0.001 , nz) # ONNO 07-12 why -0.001 and not at top?
-zslice = Lz
-xslice = Lx/2
+xvals = np.linspace(0, Lx-10**(-10), nx)
+zvals = np.linspace(0, Lz-10**(-10), nz) # ONNO 07-12 why -0.001 and not at top?
+zslice = H0
+xslice = 0.5*Lx
 
 # The equations are in nondimensional units, hence we 
 L = 1
@@ -70,8 +70,8 @@ D = -gg*A/(omega*np.cosh(kx*H0))
 Tperiod = 2*np.pi/omega
 print('Period: ', Tperiod)
 x = mesh.coordinates
-##phi_exact_expr = a * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) # Huh?
-##eta_exact_expr = -omega * b * fd.cos(kx * x[0]) * fd.cosh(kx * Lz) # Huh?
+##phi_exact_expr = a * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) # ONNO: Huh?
+##eta_exact_expr = -omega * b * fd.cos(kx * x[0]) * fd.cosh(kx * Lz) # ONNO: Huh?
 
 t0 = 0.0
 phi_exact_expr = D * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
@@ -210,7 +210,6 @@ if nvpcase == 0:
     param_hh      = {'pc_type': 'fieldsplit','pc_fieldsplit_type': 'schur','pc_fieldsplit_schur_fact_type': 'upper'} 
     solv3 = fd.LinearVariationalSolver(prob3) #  , solver_parameters=param_hh) # default solver_parameter ONNO 17-12: Optimise?
 elif nvpcase==1:
-    # KOKI 06-12
     VP = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
         - ( 1/2 * fd.inner(fd.grad(phi), fd.grad(phi))  ) * fd.dx
     # Step-1: f-derivative VP wrt eta to find update of phi at free surface
@@ -223,11 +222,9 @@ elif nvpcase==1:
     phi_expr1 = fd.derivative(VP, phi, du=v_W)
     phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, phi, bcs = BC_phi)) 
     # Third step here where we use again the variational derivative wrt phi but now solve for eta only whilst using tyhe new phin from the previous two steps
-    # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_bew
+    # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP, phi, du=v_W)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
-    # only solve for eta_new by using exclude
-    #
 elif nvpcase==2:
     # 
     # Desired VP format of the above
@@ -237,7 +234,6 @@ elif nvpcase==2:
     VP =  ( fd.inner(trial_phi, (trial_eta - eta)/dt) + fd.inner(phi, eta/dt) - (1/2 * g * fd.inner(eta,eta)) )* fd.ds(top_id) \
         + ( - 1/2 * H0 * fd.inner(fd.grad(trial_phi), fd.grad(trial_phi))  ) * fd.dx
     # 
-    #
 # end if
 #  
 # tmp_eta, tmp_phi = result_mixed.split()
@@ -369,6 +365,8 @@ while t <= t_end + dt:
         ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
 
         # Free-surface exact expressions
+        # phi_exact_expr = D * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
+        # eta_exact_expr = A * fd.cos(kx * x[0]) * np.cos(omega * t0)
         phi_exact_exprv = D * np.cos(kx * xvals) * np.cosh(kx * H0) * np.sin(omega * t) #
         eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
 
