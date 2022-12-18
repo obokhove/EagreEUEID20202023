@@ -2,11 +2,17 @@
 
 ## Linear potential flow without VP
 
+18-12 Standard weak approach (nvpcase = 0) and VP approach (nvpcase = 1) seem to both work and give same result; please check; but comparision with exact solution seems off?
+Just copied file here; not sure yet how commit works. 
+- To do: CG2 does not work; output function complains? Why?
+- To do: check with exact solution --found below? Needs sorting as check!
+- To do: make faster.
+
 15-12: energy plotted; seems to behave like SE oscillations halving with dt-> 0.5*dt; exact and numerical solutions plotted together; terribly slow? Why?
 - To do: faster, check whether code can converges a bit better; steps 2 and 3 are linear also for nonlinear model so linear fast solvers are possible.
 Attempts do not work yet.
 - To do: CG2 does not work; output function complains? Why?
-- To do: VP version as discussed; discussion with Koki found als in the code as comments.
+- To do: VP version as discussed; discussion with Koki found als in the code as comments. Seem to work now see 18-12.
 
 09-12: performance still very poor relative to exact solution at nx=120 and nz=6 and 2000 time steps in one period?
 
