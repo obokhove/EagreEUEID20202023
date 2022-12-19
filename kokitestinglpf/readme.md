@@ -56,9 +56,10 @@ with $D = g A/(\omega\cosh(k H_0))$ or $D = -g A/(\omega\cosh(k H_0))$ and $\ome
 
 No wavemaker, topography $b=0, \partial_y =0$:
 
-\begin{align}
-    0 =& \delta \int_0^T \Bigl( \int_{\Omega_{x,y}} \Bigl[ \int_{0}^{H_{0}}\Bigl[\frac12 \frac{L_{w}^2}{W}h (\phi_{x} - \frac{1}{h} (H_{0}b_{x} + z h_{x})\phi_{z})^2  \nonumber\\
+$$
+    0 =& \delta \int_0^T \Bigl( \int_{0}^{L_x}
+    \Bigl[ \int_{0}^{H_{0}}\Bigl[\frac12 \frac{L_{w}^2}{W}h (\phi_{x} - \frac{1}{h} (H_{0}b_{x} + z h_{x})\phi_{z})^2  \nonumber\\
     & \quad + \frac12 Wh \Bigl( \frac{U}{W} \Bigl[ \phi_{x} - \frac{1}{h} (H_{0}b_{x} + z h_{x}) \phi_{z}\Bigr] + \phi_{y} - \frac{1}{h} (H_{0}b_{y} + zh_{y})\phi_{z}\Bigr)^2 + \frac12 W \frac{H_{0}^2}{h} (\phi_{z})^2 \Bigr] \d z \nonumber\\
-    & \qquad \qquad +H_{0} \Bigl(g W h (\frac12 h-H) - \phi(W h_{t} + X \tilde{R}_{t} h_{x})\Bigr)_{z=H_{0}} \Bigr]\d x \, \d y \nonumber\\
-    & \qquad \qquad +\int_{0}^{L_{y}} \int_{0}^{H_{0}} (L_{w} \tilde{R}_{t} \phi h)_{x=0} \d z \, \d y\Bigr),
-\end{align}
+    & \qquad \qquad +H_{0} \Bigl(g W h (\frac 12 h-H_0) - \phiW h_{t} \Bigr)_{z=H_{0}} \Bigr]\d x \,
+    \Bigr),
+$$
