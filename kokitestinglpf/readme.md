@@ -2,6 +2,9 @@
 
 ## Linear potential flow without VP
 
+19-12: Coded up VP nonlinear case (nvpcase = 2); can be run with fac=0 such that nonlinearity switched off; that works; poor or failed convergence for fac=1.0 (nonlinear case); not sure which solvers to use. Last two steps are linear: how can that be enforced? How does one choose the solvers?
+ 
+
 18-12 Standard weak approach (nvpcase = 0) and VP approach (nvpcase = 1) seem to both work and give same result; please check; but comparison with exact solution seems off? Use: potflowwdsvpf.py
 Just copied file here; not sure yet how commit works. 
 - To do: CG2 does not work; output function complains? Why?
