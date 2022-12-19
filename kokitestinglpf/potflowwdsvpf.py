@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 2 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps
+nvpcase = 2 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow.
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -81,7 +81,7 @@ t_end = Tperiod  # time of simulation [s]
 dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
 Nt = 100 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
 dt = Tperiod/Nt  # 0.005  # time step [s]
-dt = dtt
+dt = 0.1*dtt
 print('dtt=',dtt, t_end/dtt,dt,2/omega)
 
 
@@ -253,10 +253,11 @@ elif nvpcase==2: # ONNO 19-12
     param_hat_psi4 = {'ksp_converged_reason':None, 'snes_type': 'newtonls','ksp_type': 'richardson', 'pc_type': 'jacobi'} #   17 IC in 1 test
     param_hat_psi5 = {'ksp_converged_reason':None, 'snes_type': 'newtonls','ksp_type': 'gmres', 'pc_type': 'jacobi'} #  2 or 3 to 8 or 9 in 1 (same) test; goes up then fails
     param_hat_psi6 = {'ksp_converged_reason':None, 'snes_type': 'newtonls','ksp_type': 'gmres', 'pc_type': 'lu'} #  1 iteration but then blows up again at some point
-    param_hat_psi = {'snes_type': 'newtonls','ksp_type': 'gmres', 'pc_type': 'lu'} #  1 iteration but then blows up again at some point
+    param_hat_psi7 = {'snes_type': 'newtonls','ksp_type': 'gmres', 'pc_type': 'lu'} #  1 iteration but then blows up again at some point
+    param_hat_psi = {'snes_type': 'newtonls','ksp_type': 'cg', 'pc_type': 'lu'} #  1 iteration but then blows up again at some point
     
     phif_exprnl1 = fd.derivative(VPnl, eta, du=v_W) # du=v_W represents perturbation seems that with these solver_parameters solves quicker: tic-toc it with and without?
-    phif_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_exprnl1, phi, bcs=BC_exclude_beyond_surface), solver_parameters=param_hat_psi6)
+    phif_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_exprnl1, phi, bcs=BC_exclude_beyond_surface), solver_parameters=param_hat_psi)
     #  Step-2: linear solve; ONNO 19-12: how does one enforce that?
     phi_exprnl1 = fd.derivative(VPnl, phi, du=v_W)
     phi_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_exprnl1, phi, bcs = BC_phi), solver_parameters=param_psi) 
