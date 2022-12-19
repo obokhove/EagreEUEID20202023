@@ -54,7 +54,7 @@ with $D = g A/(\omega\cosh(k H_0))$ or $D = -g A/(\omega\cosh(k H_0))$ and $\ome
 
 ## Nonlinear flow VP
 
-No wavemaker, topography $b=0, \partial_y =0$:
+No wavemaker, topography $b=0, \partial_y =0$, $W=L_w$ for case without wavemaker:
 
 $$ 0 = \delta \int_0^T \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W}h (\phi_{x} + (z/h) h_{x})\phi_{z})^2  + \frac12 W \frac{H_{0}^2}{h} (\phi_{z})^2 \Bigr] d z d x 
