@@ -70,4 +70,6 @@ Step-1: Variational derivative wrt $h^n$. Nonlinear solve for $\phi^{n+1}$ at $z
 
 Step=2: Variational derivative wrt $phi^{n+1}$ but in interior with given new solution $\phi^{n+1}$ at $z=H_0$ free surface; linear solve.
 
-Step=2: Variational derivative wrt $phi^{n+1}$ but at free surface $z=H_0$ to solve for $h^{n+1}; linear solve.
+Step=3: Variational derivative wrt $phi^{n+1}$ but at free surface $z=H_0$ to solve for $h^{n+1}; linear solve.
+
+19-12: nonlinear solvers not yet resolved.
