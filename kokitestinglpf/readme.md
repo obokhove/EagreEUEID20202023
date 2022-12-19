@@ -64,5 +64,4 @@ Time-discrete version:
 $$ 0 = \delta \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h} (\phi^{n+1}_{z})^2 \Bigr] d z d x 
 +\int_0^{L_x}  -g H_0 W h (\frac 12 h-H_0) + H_0 W  \phi^{n+1}|_{z=H_{0}} \frac {(h^{n+1}-h^n)}{\Delta t} 
-+ H_0 W  \phi^{n}|_{z=H_{0}} \frac {h^n}{\Delta t} 
-$$
++ H_0 W  \phi^{n}|_{z=H_{0}} \frac {h^n}{\Delta t}  d x$$
