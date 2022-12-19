@@ -63,5 +63,11 @@ $$ 0 = \delta \int_0^T \int_{0}^{L_x} \int_{0}^{H_{0}}
 Time-discrete version:
 
 $$ 0 = \delta \int_{0}^{L_x} \int_{0}^{H_{0}}
--\Bigl[\frac12 \frac{L_{w}^2}{W}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h} (\phi^{n+1}_{z})^2 \Bigr] d z d x 
-+\int_0^{L_x}  -g H_0 W h (\frac 12 h-H_0) + H_0 W  \phi^{n+1}|_{z=H_{0}} \frac {(h^{n+1}-h^n)}{\Delta t}  + H_0 W  \phi^{n}|_{z=H_{0}} \frac {h^n}{\Delta t}  d x$$
+-\Bigl[\frac12 \frac{L_{w}^2}{W}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z d x 
++\int_0^{L_x}  -g H_0 W h^n (\frac 12 h-H_0) + H_0 W  \phi^{n+1}|_{z=H_{0}} \frac {(h^{n+1}-h^n)}{\Delta t}  + H_0 W  \phi^{n}|_{z=H_{0}} \frac {h^n}{\Delta t}  d x$$
+
+Step-1: Variational derivative wrt $h^n$. Nonlinear solve for $\phi^{n+1}$ at $z=H_0$ free surface.
+
+Step=2: Variational derivative wrt $phi^{n+1}$ but in interior with given new solution $\phi^{n+1}$ at $z=H_0$ free surface; linear solve.
+
+Step=2: Variational derivative wrt $phi^{n+1}$ but at free surface $z=H_0$ to solve for $h^{n+1}; linear solve.
