@@ -57,6 +57,8 @@ with $D = g A/(\omega\cosh(k H_0))$ or $D = -g A/(\omega\cosh(k H_0))$ and $\ome
 No wavemaker, topography $b=0, \partial_y =0$:
 
 $$ 0 = \delta \int_0^T \int_{0}^{L_x} \int_{0}^{H_{0}}
-\Bigl[\frac12 \frac{L_{w}^2}{W}h (\phi_{x} + (z/h) h_{x})\phi_{z})^2  + \frac12 W \frac{H_{0}^2}{h} (\phi_{z})^2 \Bigr] d z d x $$
+\Bigl[\frac12 \frac{L_{w}^2}{W}h (\phi_{x} + (z/h) h_{x})\phi_{z})^2  + \frac12 W \frac{H_{0}^2}{h} (\phi_{z})^2 \Bigr] d z d x 
++\int_0^{L_x}  g H_0 W h (\frac 12 h-H_0) - \phi|_{z=H_{0}} H_0 W h_{t} d x dt $$
 
-$$  +\int_0^{L_x} H_{0} \Bigl( g W h (\frac 12 h-H_0) - \phi W h_{t} \Bigr)_{z=H_{0}} d x dt $$
+Time-discrete version:
+
