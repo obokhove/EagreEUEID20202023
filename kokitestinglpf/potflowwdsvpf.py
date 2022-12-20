@@ -27,7 +27,8 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 2 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow.
+nvpcase = 11 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
+            # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve???
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -79,9 +80,9 @@ eta_exact_expr = A * fd.cos(kx * x[0]) * np.cos(omega * t0)
 
 t_end = Tperiod  # time of simulation [s]
 dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
-Nt = 100 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
+Nt = 2*100 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
 dt = Tperiod/Nt  # 0.005  # time step [s]
-dt = 0.1*dtt
+dt = dtt
 print('dtt=',dtt, t_end/dtt,dt,2/omega)
 
 
@@ -114,6 +115,8 @@ if nvpcase == 0:
     ax1.set_title(r'Weak form used:',fontsize=tsize)
 elif nvpcase == 1:
     ax1.set_title(r'Functional derivative VP used:',fontsize=tsize)
+elif nvpcase == 11:
+    ax1.set_title(r'Functional derivative VP used, steps 1 & 2:',fontsize=tsize)
 elif nvpcase == 2:
     ax1.set_title(r'VP nonlinear case used:',fontsize=tsize)
 # end if
@@ -130,6 +133,7 @@ nCG = 1
 V_W = fd.FunctionSpace(mesh, "CG", nCG)
 
 phi = fd.Function(V_W, name="phi")
+varphi = fd.Function(V_W, name="varphi")
 phi_new = fd.Function(V_W, name="phi")
 
 phi_f = fd.Function(V_W, name="phi_f")  # at the free surface
@@ -178,6 +182,7 @@ BC_phi_f = fd.DirichletBC(V_W, phi_f, top_id)
 BC_phif_new = fd.DirichletBC(V_W, phif_new, top_id)
 
 BC_phi = fd.DirichletBC(V_W, phi, top_id)
+BC_varphi = fd.DirichletBC(V_W, 0, top_id)
 
 BC_phi_new = fd.DirichletBC(V_W, phi_new, top_id)
 
@@ -231,7 +236,26 @@ elif nvpcase==1:
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP, phi, du=v_W)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
-elif nvpcase==2: # ONNO 19-12
+elif nvpcase==11: # ONNO 19-12: above case 1 but with steps 1 and 2 solved in tandem? As test for nonlinear case 2?
+    VP = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
+        - ( 1/2 * fd.inner(fd.grad(phi), fd.grad(phi))  ) * fd.dx
+    # phit = phi + varphi with varphi = 0 at top
+    VP11 = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
+        - ( 1/2 * fd.inner(fd.grad(phi+varphi), fd.grad(phi+varphi))  ) * fd.dx
+    # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
+    phif_expr1 = fd.derivative(VP11, eta, du=v_W)  # du=v_W represents perturbation
+    phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, phi, bcs=BC_exclude_beyond_surface))
+    #
+    # Step-2: f-derivative VP wrt varphi to get interior phi given sruface update phi
+    phi_expr1 = fd.derivative(VP11, varphi, du=v_W)
+    phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
+    # ONNO 19-12: KOKI? Solve steps 1 and 2 in tandem, so BC_phi the [hi therein is the unknown in step 1!
+    # phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem({phi_fexpre1,phi_expr1},{phi,phi), bcs = {BC_exclude_beyond_surface,BC_phi}))
+    # 
+    # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
+    eta_expr2 = fd.derivative(VP11, phi, du=v_W)
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))    
+elif nvpcase==2: # ONNO 19-12 Argh: Steps 1 and 2 need solving in unison? How? Probably best to try that in 1 adpated as 11?
     # 
     # Desired VP format of the above
     # 
@@ -243,7 +267,7 @@ elif nvpcase==2: # ONNO 19-12
     fac = 1.0 # now same as linear case above except for constant pref-factors as check; seems same ONNO 19-12: convergence fails FAILS! with 1.0
     VPnl = ( H0*Ww*fd.inner(phi, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds(top_id) \
         - 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2 ) * fd.dx
-    #  Step-1: only nonlinear step just trying these solver_parameter!
+    #  Step-1: only nonlinear step just trying these solver_parameters!
     param_h       = {'ksp_converged_reason':None, 'pc_type': 'fieldsplit','pc_fieldsplit_type': 'schur','pc_fieldsplit_schur_fact_type': 'upper'}  
     param_psi2    = {'ksp_converged_reason':None, 'ksp_type': 'preonly', 'pc_type': 'lu'}
     param_hat_psi2 = {'ksp_converged_reason':None, 'ksp_type': 'preonly', 'pc_type': 'lu'}
@@ -257,8 +281,8 @@ elif nvpcase==2: # ONNO 19-12
     param_hat_psi = {'snes_type': 'newtonls','ksp_type': 'cg', 'pc_type': 'lu'} #  1 iteration but then blows up again at some point
     
     phif_exprnl1 = fd.derivative(VPnl, eta, du=v_W) # du=v_W represents perturbation seems that with these solver_parameters solves quicker: tic-toc it with and without?
-    phif_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_exprnl1, phi, bcs=BC_exclude_beyond_surface), solver_parameters=param_hat_psi)
-    #  Step-2: linear solve; ONNO 19-12: how does one enforce that?
+    phif_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_exprnl1, phi, bcs=BC_exclude_beyond_surface))  # , solver_parameters=param_hat_psi)
+    #  Step-2: linear solve; ONNO 19-12: how does one enforce that? Ouch: Step 1 and Step 2 need to be solved in unison!
     phi_exprnl1 = fd.derivative(VPnl, phi, du=v_W)
     phi_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_exprnl1, phi, bcs = BC_phi), solver_parameters=param_psi) 
     #  Step-3: linear solve; ONNO 19-12: how does one enforce that?
@@ -306,6 +330,9 @@ if nvpcase == 0:
 elif nvpcase == 1:
     EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi),fd.grad(phi))*fd.dx )
     EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
+elif nvpcase == 11:
+    EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
+    EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
 elif nvpcase == 2:    
     EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2) * fd.dx )
     EPot = fd.assemble( gg*Ww*H0*( 0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds(top_id) )
@@ -326,6 +353,9 @@ if nvpcase == 0:
     phi_expr.solve() 
 elif nvpcase == 1:
     plt.title(r'Functional derivative VP used:',fontsize=tsize)
+    phi_expr.solve()
+elif nvpcase == 11:
+    plt.title(r'Functional derivative VP used steps 1 & 2:',fontsize=tsize)
     phi_expr.solve() 
 elif nvpcase == 2:
     plt.title(r'VP nonlinear used:',fontsize=tsize)
@@ -364,26 +394,35 @@ while t <= t_end + dt:
         # # Works: eta_expr.solve() # solves eta^(n+1) at top free surface
         solv3.solve()
     elif nvpcase == 1:
-        # ONNO: to do: VP solve
+        # ONNO: VP solve
         phif_expr.solve() # solves phi^(n+1) at top free surface same as above
         phi_expr.solve() # solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
-        #  ONNO 06-12 cheat old stuff:
         eta_expr.solve() # solves eta^(n+1) at top free surface
-        #  mixed variables needs to be assignd ONNO to do?
-        #  ONNO is this right:
         # ONNO 06-12 commented out eta_new, phi_new = result_mixed.split() # ONNO: issue is that now only nterior has beemn assigned; how is phi_new at top assigned? Automatically or not?
+    elif nvpcase == 11:
+        # ONNO 19-12: VP solve steps 1 and 2 comvined
+        phif_expr.solve() # ONNO 19-12 old solves phi^(n+1) at top free surface same as above
+        phi_expr.solve() # ONNO 10-12 old solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
+        # ONNO 19-12: new solve of phi everywhere steps 1 and 2 combined
+        # phi_combo.solve() #  ONO 19-12 TODO mix variable?
+        
+        eta_expr.solve()
     elif nvpcase == 2:
         phif_exprnl.solve() # solves phi^(n+1) at top free surface same as above
         phi_exprnl.solve() # solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
         heta_exprnl.solve() 
     # end if
 
-    if nvpcase == 0:
+    if nvpcase == 0: # standard linea
         # phi_f.assign(phif_new) ONNO 08-12: that's where it went wrong?
         phi_f.assign(phi) # old phi_f=phi^n at top becomes phi^n1 at top
         phi.assign(phi_new) # not needed? yes for energy 15-12
         eta.assign(eta_new) # old eta=eta^n becomes new eta^n+1
-    elif nvpcase == 1:  #  ONNO new; # is this right? ONNO:
+    elif nvpcase == 1:  # VP linear
+        phi_f.assign(phi)
+        phi.assign(phi)
+        eta.assign(eta_new)
+    elif nvpcase == 11:  # VP linear steps 1 and 2 combined
         phi_f.assign(phi)
         phi.assign(phi)
         eta.assign(eta_new)
@@ -398,6 +437,9 @@ while t <= t_end + dt:
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
     elif nvpcase == 1:
         EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi),fd.grad(phi))*fd.dx )
+        EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
+    elif nvpcase == 11:
+        EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
     elif nvpcase == 2:
         EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2) * fd.dx )
