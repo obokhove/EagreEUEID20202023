@@ -28,7 +28,7 @@ if not os.path.exists(save_path):
 top_id = 4
 
 nvpcase = 11 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
-            # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve???
+            # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve??? 111: case 11 with combo solve
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -117,6 +117,8 @@ elif nvpcase == 1:
     ax1.set_title(r'Functional derivative VP used:',fontsize=tsize)
 elif nvpcase == 11:
     ax1.set_title(r'Functional derivative VP used, steps 1 & 2:',fontsize=tsize)
+elif nvpcase == 111:
+    ax1.set_title(r'Functional derivative VP used, steps 1 & 2:',fontsize=tsize)
 elif nvpcase == 2:
     ax1.set_title(r'VP nonlinear case used:',fontsize=tsize)
 # end if
@@ -151,6 +153,7 @@ trial_phi = fd.TrialFunction(V_W)
 v_W = fd.TestFunction(V_W)
 
 mixed_V = V_W * V_W
+mphi, mvarphi = fd.Function(mixed_V)
 trial_eta, trial_phi = fd.TrialFunctions(mixed_V)
 del_eta, del_phi = fd.TestFunctions(mixed_V)
 result_mixed = fd.Function(mixed_V)
@@ -249,12 +252,26 @@ elif nvpcase==11: # ONNO 19-12: above case 1 but with steps 1 and 2 solved in ta
     # Step-2: f-derivative VP wrt varphi to get interior phi given sruface update phi
     phi_expr1 = fd.derivative(VP11, varphi, du=v_W)
     phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
-    # ONNO 19-12: KOKI? Solve steps 1 and 2 in tandem, so BC_phi the [hi therein is the unknown in step 1!
-    # phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem({phi_fexpre1,phi_expr1},{phi,phi), bcs = {BC_exclude_beyond_surface,BC_phi}))
     # 
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phi, du=v_W)
-    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))    
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
+elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 and 2 solved in tandem? As test for nonlinear case 2?
+    VP11 = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
+        - ( 1/2 * fd.inner(fd.grad(phi+varphi), fd.grad(phi+varphi))  ) * fd.dx
+    # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
+    phif_expr1 = fd.derivative(VP11, eta, du=v_W)  # du=v_W represents perturbation
+    #  phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, phi, bcs=BC_exclude_beyond_surface))
+    #
+    # Step-2: f-derivative VP wrt varphi to get interior phi given sruface update phi
+    phi_expr1 = fd.derivative(VP11, varphi, du=v_W)
+    # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
+    # ONNO 19-12: KOKI? Solve steps 1 and 2 in tandem, so BC_phi the phi therein is the unknown in step 1!
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_fexpre1+phi_expr1,resultmixed, bcs = [BC_exclude_beyond_surface,BC_phi]))
+    # 
+    # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
+    eta_expr2 = fd.derivative(VP11, phi, du=v_W)
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
 elif nvpcase==2: # ONNO 19-12 Argh: Steps 1 and 2 need solving in unison? How? Probably best to try that in 1 adpated as 11?
     # 
     # Desired VP format of the above
@@ -333,6 +350,9 @@ elif nvpcase == 1:
 elif nvpcase == 11:
     EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
     EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
+elif nvpcase == 111:
+    EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
+    EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
 elif nvpcase == 2:    
     EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2) * fd.dx )
     EPot = fd.assemble( gg*Ww*H0*( 0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds(top_id) )
@@ -356,7 +376,10 @@ elif nvpcase == 1:
     phi_expr.solve()
 elif nvpcase == 11:
     plt.title(r'Functional derivative VP used steps 1 & 2:',fontsize=tsize)
-    phi_expr.solve() 
+    phi_expr.solve() # ?
+elif nvpcase == 111:
+    plt.title(r'Functional derivative VP used steps 1 & 2:',fontsize=tsize)
+    phi_expr.solve() # ?
 elif nvpcase == 2:
     plt.title(r'VP nonlinear used:',fontsize=tsize)
     
@@ -403,9 +426,11 @@ while t <= t_end + dt:
         # ONNO 19-12: VP solve steps 1 and 2 comvined
         phif_expr.solve() # ONNO 19-12 old solves phi^(n+1) at top free surface same as above
         phi_expr.solve() # ONNO 10-12 old solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
+        eta_expr.solve()
+    elif nvpcase == 111:
         # ONNO 19-12: new solve of phi everywhere steps 1 and 2 combined
-        # phi_combo.solve() #  ONO 19-12 TODO mix variable?
-        
+        phi_combo.solve() #  ONNO 19-12 TODO mix variable?
+        phi, varphi = result_mixed.split()
         eta_expr.solve()
     elif nvpcase == 2:
         phif_exprnl.solve() # solves phi^(n+1) at top free surface same as above
@@ -426,6 +451,10 @@ while t <= t_end + dt:
         phi_f.assign(phi)
         phi.assign(phi)
         eta.assign(eta_new)
+    elif nvpcase == 111:  # VP linear steps 1 and 2 combined
+        phi_f.assign(phi)
+        phi.assign(phi)
+        eta.assign(eta_new)
     elif nvpcase == 2: # ONNO 19-12
         phi_f.assign(phi)
         phi.assign(phi)
@@ -439,6 +468,9 @@ while t <= t_end + dt:
         EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi),fd.grad(phi))*fd.dx )
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
     elif nvpcase == 11:
+        EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
+        EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
+    elif nvpcase == 111:
         EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds(top_id) )
     elif nvpcase == 2:
