@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 11 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
+nvpcase = 111 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
             # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve??? 111: case 11 with combo solve
 
 #__________________  FIGURE PARAMETERS  _____________________#
@@ -257,6 +257,8 @@ elif nvpcase==11: # ONNO 19-12: above case 1 but with steps 1 and 2 solved in ta
     eta_expr2 = fd.derivative(VP11, phi, du=v_W)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
 elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 and 2 solved in tandem? As test for nonlinear case 2?
+    # eta, varphi = fd.split(result_mixed)
+
     VP11 = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
         - ( 1/2 * fd.inner(fd.grad(phi+varphi), fd.grad(phi+varphi))  ) * fd.dx
     # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
@@ -265,9 +267,15 @@ elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 a
     #
     # Step-2: f-derivative VP wrt varphi to get interior phi given sruface update phi
     phi_expr1 = fd.derivative(VP11, varphi, du=v_W)
-    # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
-    # ONNO 19-12: KOKI? Solve steps 1 and 2 in tandem, so BC_phi the phi therein is the unknown in step 1!
-    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_fexpre1+phi_expr1,resultmixed, bcs = [BC_exclude_beyond_surface,BC_phi]))
+    phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
+    # phi_combo1 = fd.derivative(VP11, result_mixed, du=mixed_V) # fd.deriv wrt eta,varphi
+    # phi_combo1 = replace(phi_combo1, {varphi: varphii})
+    phii, varphii = fd.split(result_mixed)
+    phif_expr1 = fd.replace(phif_expr1, {phi: phii})  # replace if needed.
+    phif_expr1 = fd.replace(phif_expr1, {varphi: varphii})  # replace if needed.
+    phi_expr1 = fd.replace(phi_expr1, {phi: phii})  # replace if needed.
+    phi_expr1 = fd.replace(phi_expr1, {varphi: varphii})  # replace if needed.
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1+phi_expr1,result_mixed, bcs = [BC_exclude_beyond_surface,BC_varphi]))
     # 
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phi, du=v_W)
