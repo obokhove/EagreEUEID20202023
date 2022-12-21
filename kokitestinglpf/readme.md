@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks.
+
 19-12: Coded up VP nonlinear case (nvpcase = 2); can be run with fac=0 such that nonlinearity switched off; that works; poor or failed convergence for fac=1.0 (nonlinear case); not sure which solvers to use. Last two steps are linear: how can that be enforced? How does one choose the solvers?
  
 
