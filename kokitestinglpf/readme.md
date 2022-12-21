@@ -18,7 +18,8 @@ u0, u1 = u.split()  # just to assign values
 u0.interpolate(Constant(100))
 u1.interpolate(Constant(200))
 u0, u1 = split(u)  # Will later "solve" for u.
-v0, v1 = split(v)  # These represent "blocks".
+v0, v1 = split(v)  # These represent blocks.
+
 # First define VP in terms of independent functions, eta and phi.
 VP = (u0 * inner(eta, eta) + inner(phi, phi)) * dx
 F0 = derivative(VP, eta, du=v0)  # use correct du.
