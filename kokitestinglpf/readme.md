@@ -2,7 +2,35 @@
 
 ## Linear potential flow without VP
 
-20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks.
+20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks:
+
+from firedrake import *
+ 
+
+mesh = UnitSquareMesh(1, 1, quadrilateral=True)
+V = FunctionSpace(mesh, "CG", 2)
+W = V * V
+eta = Function(V).interpolate(Constant(1))
+phi = Function(V).interpolate(Constant(2))
+u = Function(W)
+v = TestFunction(W)
+u0, u1 = u.split()  # just to assign values
+u0.interpolate(Constant(100))
+u1.interpolate(Constant(200))
+u0, u1 = split(u)  # Will later "solve" for u.
+v0, v1 = split(v)  # These represent "blocks".
+# First define VP in terms of independent functions, eta and phi.
+VP = (u0 * inner(eta, eta) + inner(phi, phi)) * dx
+F0 = derivative(VP, eta, du=v0)  # use correct du.
+F1 = derivative(VP, phi, du=v1)  # use correct du.
+F1 = replace(F1, {phi: u1})  # replace if needed.
+F = F0 + F1  # contains both u0 and u1.
+A = assemble(F)
+print(A.dat.data[0])
+print(A.dat.data[1])
+solve(F==0, u)
+print(u.dat.data[0])
+print(u.dat.data[1])
 
 19-12: Coded up VP nonlinear case (nvpcase = 2); can be run with fac=0 such that nonlinearity switched off; that works; poor or failed convergence for fac=1.0 (nonlinear case); not sure which solvers to use. Last two steps are linear: how can that be enforced? How does one choose the solvers?
  
