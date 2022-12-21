@@ -2,7 +2,7 @@
 
 ## Linear potential flow without VP
 
-20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks:
+20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks (removed comment sign):
 
 from firedrake import *
  
@@ -14,18 +14,18 @@ eta = Function(V).interpolate(Constant(1))
 phi = Function(V).interpolate(Constant(2))
 u = Function(W)
 v = TestFunction(W)
-u0, u1 = u.split()  # just to assign values
+u0, u1 = u.split()   just to assign values
 u0.interpolate(Constant(100))
 u1.interpolate(Constant(200))
-u0, u1 = split(u)  # Will later "solve" for u.
-v0, v1 = split(v)  # These represent blocks.
+u0, u1 = split(u)   Will later solve for u.
+v0, v1 = split(v)   These represent blocks.
 
-# First define VP in terms of independent functions, eta and phi.
+ First define VP in terms of independent functions, eta and phi.
 VP = (u0 * inner(eta, eta) + inner(phi, phi)) * dx
-F0 = derivative(VP, eta, du=v0)  # use correct du.
-F1 = derivative(VP, phi, du=v1)  # use correct du.
-F1 = replace(F1, {phi: u1})  # replace if needed.
-F = F0 + F1  # contains both u0 and u1.
+F0 = derivative(VP, eta, du=v0)   use correct du.
+F1 = derivative(VP, phi, du=v1)   use correct du.
+F1 = replace(F1, {phi: u1})   replace if needed.
+F = F0 + F1   contains both u0 and u1.
 A = assemble(F)
 print(A.dat.data[0])
 print(A.dat.data[1])
