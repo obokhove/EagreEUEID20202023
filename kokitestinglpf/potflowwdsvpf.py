@@ -157,6 +157,8 @@ mphi, mvarphi = fd.Function(mixed_V)
 trial_eta, trial_phi = fd.TrialFunctions(mixed_V)
 del_eta, del_phi = fd.TestFunctions(mixed_V)
 result_mixed = fd.Function(mixed_V)
+vvp = fd.TestFunction(mixed_V)
+vvp0, vvp1 = fd.split(vvp)  # These represent "blocks".
 
 # KOKI 06-12-2022
 test_mixed = fd.TestFunction(mixed_V)
@@ -262,12 +264,14 @@ elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 a
     VP11 = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
         - ( 1/2 * fd.inner(fd.grad(phi+varphi), fd.grad(phi+varphi))  ) * fd.dx
     # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
-    phif_expr1 = fd.derivative(VP11, eta, du=v_W)  # du=v_W represents perturbation
+    # *-phi/dt + phif/dt - gg*et) delta eta ds a=0 -> (phi-phif)/dt = -gg * eta
+    phif_expr1 = fd.derivative(VP11, eta, du=vvp0)  # du=v_W represents perturbation # 23-12 Make du split variable
     #  phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, phi, bcs=BC_exclude_beyond_surface))
     #
     # Step-2: f-derivative VP wrt varphi to get interior phi given sruface update phi
-    phi_expr1 = fd.derivative(VP11, varphi, du=v_W)
-    phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
+    # nabla (phif+varphi) cdot nabla delta varphi dx = 0
+    phi_expr1 = fd.derivative(VP11, varphi, du=vvp1) # 23-12 Make du split variable
+    # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
     # phi_combo1 = fd.derivative(VP11, result_mixed, du=mixed_V) # fd.deriv wrt eta,varphi
     # phi_combo1 = replace(phi_combo1, {varphi: varphii})
     phii, varphii = fd.split(result_mixed)
@@ -288,7 +292,7 @@ elif nvpcase==2: # ONNO 19-12 Argh: Steps 1 and 2 need solving in unison? How? P
     #
     Lw = 0.5*Lx
     Ww = Lw # Later wavemaker to be added
-    # eta_new -> h_new and eta -> heta ; Nonlinear potential-flow VP:
+     # eta_new -> h_new and eta -> heta ; Nonlinear potential-flow VP:
     fac = 1.0 # now same as linear case above except for constant pref-factors as check; seems same ONNO 19-12: convergence fails FAILS! with 1.0
     VPnl = ( H0*Ww*fd.inner(phi, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds(top_id) \
         - 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2 ) * fd.dx
@@ -387,7 +391,7 @@ elif nvpcase == 11:
     phi_expr.solve() # ?
 elif nvpcase == 111:
     plt.title(r'Functional derivative VP used steps 1 & 2:',fontsize=tsize)
-    phi_expr.solve() # ?
+    # phi_expr.solve() # ?
 elif nvpcase == 2:
     plt.title(r'VP nonlinear used:',fontsize=tsize)
     
