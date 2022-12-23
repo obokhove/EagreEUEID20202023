@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+23-12: Still stuck despite update; defined on incompatible FunctionSpace! See attached file.
+
 20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks (removed comment sign):
 
 from firedrake import *
