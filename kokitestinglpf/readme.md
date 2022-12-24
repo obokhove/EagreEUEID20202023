@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+24-12: Don't understand how system phif_expr1=0 and phi_expr1=0 are imposed in tandem; why is phif_expr1+phi_expr1= doing so?
+
 23-12: Still stuck despite update; defined on incompatible FunctionSpace! See attached file.
 
 20-12: Case 111 in progress; the du's need to be updated next, I think such that right function space is used, per Koki's remarks (removed comment sign):
