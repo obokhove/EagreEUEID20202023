@@ -2,7 +2,7 @@
 
 ## Linear potential flow without VP
 
-24-12: Don't understand how system phif_expr1=0 and phi_expr1=0 are imposed in tandem; why is phif_expr1+phi_expr1= doing so?
+24-12: Case 111. Don't understand how system phif_expr1=0 and phi_expr1=0 are imposed in tandem; why is phif_expr1+phi_expr1==0 doing so? However, version does not work; ufl.log.UFLException: Not an UFL type: <class 'ufl.equation.Equation'>
 
 23-12: Still stuck despite update; defined on incompatible FunctionSpace! See attached file.
 
