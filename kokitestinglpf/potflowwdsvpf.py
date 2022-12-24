@@ -280,7 +280,8 @@ elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 a
     phi_expr1 = fd.replace(phi_expr1, {phi: phii})  # replace if needed.
     phi_expr1 = fd.replace(phi_expr1, {varphi: varphii})  # replace if needed.
     #  24-12 ONNO: incorrect phif_expr1= 0 and phi_expr1=0 need to be solved in tandem; don't know how to do that instead of phif_expr1+phi_expr1; why is phif_expr1+phi_expr1 supposed to do that? Don't understand.
-    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1+phi_expr1,result_mixed, bcs = [BC_exclude_beyond_surface,BC_varphi]))
+    Fexpr = phif_expr1+phi_expr1
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr==0, result_mixed, bcs = [BC_exclude_beyond_surface,BC_varphi]))
     # 
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phi, du=v_W)
