@@ -264,12 +264,12 @@ elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 a
     VP11 = ( fd.inner(phi, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
         - ( 1/2 * fd.inner(fd.grad(phi+varphi), fd.grad(phi+varphi))  ) * fd.dx
     # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
-    # *-phi/dt + phif/dt - gg*et) delta eta ds a=0 -> (phi-phif)/dt = -gg * eta
+    # int -phi/dt + phif/dt - gg*et) delta eta ds a=0 -> (phi-phif)/dt = -gg * eta
     phif_expr1 = fd.derivative(VP11, eta, du=vvp0)  # du=v_W represents perturbation # 23-12 Make du split variable
     #  phif_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1, phi, bcs=BC_exclude_beyond_surface))
     #
     # Step-2: f-derivative VP wrt varphi to get interior phi given sruface update phi
-    # nabla (phif+varphi) cdot nabla delta varphi dx = 0
+    # int nabla (phi+varphi) cdot nabla delta varphi dx = 0
     phi_expr1 = fd.derivative(VP11, varphi, du=vvp1) # 23-12 Make du split variable
     # phi_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phi_expr1, varphi, bcs = BC_varphi))
     # phi_combo1 = fd.derivative(VP11, result_mixed, du=mixed_V) # fd.deriv wrt eta,varphi
@@ -279,6 +279,7 @@ elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 a
     phif_expr1 = fd.replace(phif_expr1, {varphi: varphii})  # replace if needed.
     phi_expr1 = fd.replace(phi_expr1, {phi: phii})  # replace if needed.
     phi_expr1 = fd.replace(phi_expr1, {varphi: varphii})  # replace if needed.
+    #  24-12 ONNO: incorrect phif_expr1= 0 and phi_expr1=0 need to be solved in tandem; don't know how to do that instead of phif_expr1+phi_expr1; why is phif_expr1+phi_expr1 supposed to do that? Don't understand.
     phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phif_expr1+phi_expr1,result_mixed, bcs = [BC_exclude_beyond_surface,BC_varphi]))
     # 
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
