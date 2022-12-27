@@ -6,8 +6,8 @@
 
  https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
 
-(so Gidel and Lu already long solved a similar nearly the same system phi at surface and (var)phi in interior in tandem --this is irritating).
-solver_full.py routine/function WF_psi_star; follow the lead. mixed variable etc. So where is the error/difference in approach; perhaps taking with Gidel/Lu regularly would help? psi1 and psihat there are solved in tandem.
+(so Gidel and Lu already have solved a similar nearly the same system, with in a first step phi at surface and (var)phi in interior solved in tandem --it is irritating that there still is a bug).
+See solver_full.py routine/function WF_psi_star; follow the lead, mixed variable etc. So where is the error/difference in approach; perhaps taking with Gidel/Lu regularly would help? psi1 and psihat there are solved in tandem.
 
 
 24-12: Case 111. Don't understand how system phif_expr1=0 and phi_expr1=0 are imposed in tandem; why is phif_expr1+phi_expr1==0 doing so? However, version does not work; ufl.log.UFLException: Not an UFL type: <class 'ufl.equation.Equation'>
