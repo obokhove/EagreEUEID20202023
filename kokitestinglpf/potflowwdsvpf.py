@@ -187,10 +187,18 @@ BC_phi_f = fd.DirichletBC(V_W, phi_f, top_id)
 BC_phif_new = fd.DirichletBC(V_W, phif_new, top_id)
 
 BC_phi = fd.DirichletBC(V_W, phi, top_id)
-BC_varphi = fd.DirichletBC(V_W, 0, top_id)
+#BC_varphi = fd.DirichletBC(V_W, 0, top_id)
+## WR : define BC_varphi at mixed function space
+BC_varphi = fd.DirichletBC(mixed_V.sub(1), 0, top_id)
 
 BC_phi_new = fd.DirichletBC(V_W, phi_new, top_id)
 
+## WR: redefine the def surface_BC at mixed function space
+def surface_BC_mixed():
+        bc_mixed = fd.DirichletBC(mixed_V.sub(0), 1, top_id)
+        f_mixed = fd.Function(mixed_V.sub(0), dtype=np.int32)
+        bc_mixed.apply(f_mixed)
+        return MyBC(mixed_V.sub(0), 0, f_mixed)
 # 
 #
 #
@@ -281,8 +289,9 @@ elif nvpcase==111: # ONNO 19-12: above case 11 but with combo step for steps 1 a
     phi_expr1 = fd.replace(phi_expr1, {varphi: varphii})  # replace if needed.
     #  24-12 ONNO: incorrect phif_expr1= 0 and phi_expr1=0 need to be solved in tandem; don't know how to do that instead of phif_expr1+phi_expr1; why is phif_expr1+phi_expr1 supposed to do that? Don't understand.
     Fexpr = phif_expr1+phi_expr1
-    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr==0, result_mixed, bcs = [BC_exclude_beyond_surface,BC_varphi]))
-    # 
+    #phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr==0, result_mixed, bcs = [BC_exclude_beyond_surface,BC_varphi]))
+    # WR :  phi_combo should be defined on the mixed function space as follows
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr, result_mixed, bcs = [BC_exclude_beyond_surface_mixed, BC_varphi ]))
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phi, du=v_W)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
