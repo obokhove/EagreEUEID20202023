@@ -3,6 +3,7 @@
 ## Linear potential flow without VP
 
 30-12: mixed variables stuff including their bc's completely incomprehensible; why is there no clear instruction page?
+Put latest copy here as ...copypy and posted on slack. Quite stuck and cannot yet find similar examples. The warning on mixed spaces in the online FD-manual seems to apply but information is too vague for me to be comprehensible.
 
 25/26-12: Quite bizarre that code does not work; in essence, it does the same and is set up similarly as 3D_tank.py at 
 
