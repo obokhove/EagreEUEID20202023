@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+30-12: mixed variables stuff including their bc's completely incomprehensible; why is there no clear instruction page?
+
 25/26-12: Quite bizarre that code does not work; in essence, it does the same and is set up similarly as 3D_tank.py at 
 
  https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
