@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+01-01: Removed ==0 following remark on slack: incompatible function space again.
+
 30-12: mixed variables stuff including their bc's completely incomprehensible; why is there no clear instruction page?
 Put latest copy here as ...copypy and posted on slack. Quite stuck and cannot yet find similar examples. The warning on mixed spaces in the online FD-manual seems to apply but information is too vague for me to be comprehensible.
 
