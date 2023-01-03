@@ -2,6 +2,7 @@
 
 Eagre GitHub codes: https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
 
+## Minutes 22-12-2022 meeting at MARIN have been added.
 
 ## Latest meetings at MARIN: 26-04-2022 and 27-06-2022 (agenda and/or minutes)
 
