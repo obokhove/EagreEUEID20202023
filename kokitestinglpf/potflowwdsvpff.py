@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 2 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
+nvpcase = 111 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
             # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve??? 111: case 11 with combo solve
              # ONNO 01-01 cases 0,1, 11 work; rest 111 fail; 
 
@@ -499,10 +499,11 @@ while t <= t_end + epsmeet:
     elif nvpcase == 111:  # VP linear steps 1 and 2 combined
         phi_f.assign(phii)
         # ONNO 27-12  phi.assign(phii)
+        phi.assign(phii+varphii)
         eta.assign(eta_new)
     elif nvpcase == 2: # ONNO 19-12
         phi_f.assign(phii)
-        # phi.assign(phi)
+        phi.assign(phii+varphii)
         eta.assign(eta_new)
     # end if
     # Energy monitoring:
@@ -546,7 +547,8 @@ while t <= t_end + epsmeet:
         
         eta1vals = np.array([eta.at(x, zslice) for x in xvals])
         if nvpcase == 111: # ONNO 30-12 
-            phi1vals = np.array([phii.at(x, zslice) for x in xvals])
+            # phi1vals = np.array([phii.at(x, zslice) for x in xvals])
+            phi1vals = np.array([phi.at(x, zslice) for x in xvals])
         if nvpcase == 2: # ONNO 03-01 
             phi1vals = np.array([phii.at(x, zslice) for x in xvals])
         else: # ONNO 30-12 
