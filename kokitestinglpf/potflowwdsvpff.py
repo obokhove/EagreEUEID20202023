@@ -564,8 +564,8 @@ while t <= t_end + epsmeet:
         eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
 
         # KOKI: maybe use different markers to distinguish solutions at different times?
-        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
-        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
+        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1, label = f' $\eta_e: t = {t:.3f}$') # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
+        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1, label = f' $\phi_e: t = {t:.3f}$') # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
         
         ax1.legend(loc=4)
         ax2.legend(loc=4)
