@@ -2,6 +2,9 @@
 
 ## Linear potential flow without VP
 
+04-01: Thanks to Koki, case=111 seems to work; case 2 works but is incorrect; phii has a vertical structure (turn facc=0,1 on or off and compare).
+File ..svpff.py uploaded.
+
 01-01: Removed ==0 following remark on slack: incompatible function space again.
 
 30-12: mixed variables stuff including their bc's completely incomprehensible; why is there no clear instruction page?
