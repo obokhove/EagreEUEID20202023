@@ -15,7 +15,7 @@ Lx = 20.0  # length of the tank [m] in x-direction; needed for computing initial
 Lz = 10.0  # height of the tank [m]; needed for computing initial condition
 H0 = Lz # rest water depth [m]
 
-nx = 120
+nx = 120*2
 nz = 6
 
 # control parameters
@@ -27,9 +27,9 @@ if not os.path.exists(save_path):
 
 top_id = 4
 
-nvpcase = 111 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
-            # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve??? 111: case 11 with combo solve
-             # ONNO 01-01 cases 0,1, 11 work; rest 111 fail; 
+nvpcase = 2 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
+              # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve??? 111: case 11 with combo solve
+              # ONNO 04-01 cases 0,1, 11 work; rest 111 works; case 2 works but incorrect 
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -45,8 +45,8 @@ tt = format(t, '.3f')
 mesh = fd.RectangleMesh(nx, nz, Lx, Lz)
 x,z = fd.SpatialCoordinate(mesh)
 
-xvals = np.linspace(0, Lx-10**(-10), nx)
-zvals = np.linspace(0, Lz-10**(-10), nz) # ONNO 07-12 why -0.001 and not at top?
+xvals = np.linspace(0.0, Lx-10**(-10), nx)
+zvals = np.linspace(0.0, Lz-10**(-10), nz) # ONNO 07-12 why -0.001 and not at top?
 zslice = H0
 xslice = 0.5*Lx
 
@@ -564,8 +564,8 @@ while t <= t_end + epsmeet:
         eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
 
         # KOKI: maybe use different markers to distinguish solutions at different times?
-        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1, label = f' $\eta_e: t = {t:.3f}$') # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
-        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1, label = f' $\phi_e: t = {t:.3f}$') # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
+        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
+        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
         
         ax1.legend(loc=4)
         ax2.legend(loc=4)
