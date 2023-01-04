@@ -2,7 +2,10 @@
 
 ## Linear potential flow without VP
 
-04-01: At Dartington Hall. Thanks to Koki, case=111 seems to work; case 2 works but is incorrect; phii has a vertical structure (turn facc=0,1 on or off and compare). File ..svpff.py uploaded. Another question is whether the VP with only $\phi(x,z,t)$ and $\eta(x,t)$ can work, rather than having to split into $\phi=\tilde{phi}(x,t)+\varphi(x,z,t)$.
+04-01: At Dartington Hall. 
+Koki: For query below, use extruded mesh to define a tensor space CGxR space s.t. $\tilde{\phi}$ is uniform in $z$. Then $\varphi$ is CGxCG.
+
+Thanks to Koki, case=111 seems to work; case 2 works but is incorrect; phii has a vertical structure (turn facc=0,1 on or off and compare). File ..svpff.py uploaded. Another question is whether the VP with only $\phi(x,z,t)$ and $\eta(x,t)$ can work, rather than having to split into $\phi=\tilde{phi}(x,t)+\varphi(x,z,t)$.
 
 01-01: Removed ==0 following remark on slack: incompatible function space again.
 
