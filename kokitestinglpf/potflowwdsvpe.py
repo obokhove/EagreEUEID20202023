@@ -285,7 +285,7 @@ elif nvpcase==11: # ONNO 19-12: 3 steps using varphi and phif
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phi, du=v_W)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
-elif nvpcase==111: # as 11 but steps 1 and 2 in combined solve; step 3 separately 03-01-2022 It works like the above ones!
+elif nvpcase==111: # as 11 but steps 1 and 2 in combined solve; step 3 separately 
     phii, varphii = fd.split(result_mixed)
     VP11 = ( fd.inner(phii, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds(top_id) \
         - ( 1/2 * fd.inner(fd.grad(phii+varphii), fd.grad(phii+varphii))  ) * fd.dx
@@ -327,13 +327,13 @@ elif nvpcase==2: # ONNO Steps 1 and 2 need solving in unison
     Ww = Lw # Later wavemaker to be added # eta_new -> h_new and eta -> heta ; Nonlinear potential-flow VP:
     facc = 0.0
     faccc = 1.0
-    fac = 1.0 # now same as linear case above except for constant pref-factors as check; seems same ONNO 19-12: convergence fails FAILS! with 1.0
+    fac = 1.0 # now same as linear case above except for constant pref-factors as check; 
     VPnl = ( H0*Ww*fd.inner(phii, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds(top_id) \
         - 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 + Ww * (H0**2/(H0+fac*eta)) * (faccc*phii.dx(1)+varphii.dx(1))**2 ) * fd.dx
     #  Step-1: only nonlinear step just trying these solver_parameters!    
     phif_exprnl1 = fd.derivative(VPnl, eta, du=vvp0) # du=v_W represents perturbation seems that with these solver_parameters solves quicker: tic-toc it with and without?
 
-    #  Step-2: linear solve; ONNO 19-12: how does one enforce that? Ouch: Step 1 and Step 2 need to be solved in unison!
+    #  Step-2: linear solve; 
     phi_exprnl1 = fd.derivative(VPnl, varphii, du=vvp1)
 
     Fexprnl = phif_exprnl1+phi_exprnl1
