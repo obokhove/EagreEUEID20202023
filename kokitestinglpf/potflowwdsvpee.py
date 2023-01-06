@@ -15,8 +15,8 @@ Lx = 20.0  # length of the tank [m] in x-direction; needed for computing initial
 Lz = 10.0  # height of the tank [m]; needed for computing initial condition
 H0 = Lz # rest water depth [m]
 
-nx = 120
-nz = 6
+nx = 120 # a) 120 and b) 2*120
+nz = 6 # a) 6 and b) 2*6
 
 # control parameters
 output_data_every_x_time_steps = 20  # to avoid saving data every time step
@@ -92,7 +92,7 @@ eta_exact_expr = A * fd.cos(kx * x[0]) * np.cos(omega * t0)
 t_end = Tperiod  # time of simulation [s]
 dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
 Nt = 500 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
-CFL = 0.125
+CFL = 0.125 # run at a) 0.125 and b) 0.5*0.125
 dt = CFL*Tperiod/Nt  # 0.005  # time step [s]
 #dt = dtt
 print('dtt=',dtt, t_end/dtt,dt,2/omega)
@@ -210,18 +210,18 @@ if nvpcase==111: # as 11 but steps 1 and 2 in combined solve; step 3 separately
     
     # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
     # int -phi/dt + phif/dt - gg*et) delta eta ds a=0 -> (phi-phif)/dt = -gg * eta
-    phif_expr1 = fd.derivative(VP11, eta, du=vvp0)  # du=v_W represents perturbation # 23-12 Make du split variable
+    phif_expr1 = fd.derivative(VP11, eta, du=vvp0)  # du represents perturbation
 
     # Step-2: f-derivative VP wrt varphi to get interior phi given surface update phi
     # int nabla (phi+varphi) cdot nabla delta varphi dx = 0
     phi_expr1 = fd.derivative(VP11, varphii, du=vvp1)
     Fexpr = phif_expr1+phi_expr1
-    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr, result_mixed, bcs = [BC_exclude_beyond_surface_mixed,BC_varphi_mixed]))
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr, result_mixed, bcs = BC_varphi_mixed)) # [BC_exclude_beyond_surface_mixed,BC_varphi_mixed])) #  not needed
 
     # 
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phii, du=v_R)
-    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new,bcs=BC_exclude_beyond_surface))
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new)) #  ,bcs=BC_exclude_beyond_surface)) # not needed?
 elif nvpcase==2: # Steps 1 and 2 need solving in unison
     # 
     # Desired VP format of the above
