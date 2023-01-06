@@ -2,7 +2,8 @@
 
 ## Linear potential flow without VP
 
-06-01: 1st attempt (thx Koki and CC) ...ee.py with extruded mesh and only two cases.
+06-01: 21:44pm visual convergence posted latest code. check settings a) and b).
+Afternoon: 1st attempt (thx Koki and CC) ...ee.py with extruded mesh and only two cases.
 
 04-01: At Dartington Hall. 
 Koki: For query below, use extruded mesh to define a tensor space CGxR space s.t. $\tilde{\phi}$ is uniform in $z$. Then $\varphi$ is CGxCG.
