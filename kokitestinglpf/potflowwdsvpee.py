@@ -27,9 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 'top'
 
-nvpcase = 111 # ONNO 07-12 to 18-12: choice 0: standard weak-form approach with 3 steps 1: VP approach with two steps; 2: VP for nonlinear flow;
-              # ONNO 19-12: ???? 11: case 1 with steps 1 and 2 being one solve??? 111: case 11 with combo solve
-              # ONNO 04-01 cases 0,1, 11 work; rest 111 works; case 2 works but incorrect 
+nvpcase = 111 # ONNO 06-01 cases 111 and 1 do not work yet
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -164,7 +162,7 @@ v_W = fd.TestFunction(V_W)
 v_R = fd.TestFunction(V_R)
 
 mixed_V = V_R * V_W
-phi, varphi = fd.Function(mixed_V)
+# phi, varphi = fd.Function(mixed_V)
 result_mixed = fd.Function(mixed_V)
 vvp = fd.TestFunction(mixed_V)
 vvp0, vvp1 = fd.split(vvp)  # These represent "blocks".
@@ -185,21 +183,22 @@ def surface_BC():
     bc.apply(f)
     return MyBC(V_R, 0, f)
 
-def surface_BC_mixed(): # ONNO 30-12 do not understand what is inside: surface_BC() or MyBC() magic; no idea where explanation is
+def surface_BC_mixed(): # ONNO 06-01 I do not understand what is inside: surface_BC() or MyBC() magic; no idea where explanation is; should this be 1 instead of 0; no!
         bc_mixed = fd.DirichletBC(mixed_V.sub(0), 1, top_id)
         f_mixed = fd.Function(mixed_V.sub(0), dtype=np.int32)
         bc_mixed.apply(f_mixed)
         return MyBC(mixed_V.sub(0), 0, f_mixed)
 
-BC_exclude_beyond_surface_mixed = surface_BC_mixed() #
-BC_exclude_beyond_surface = surface_BC() # 
-BC_exclude_beyond_surface_mixed = surface_BC_mixed()
+BC_exclude_beyond_surface = surface_BC()
+BC_exclude_beyond_surface_mixed = surface_BC_mixed() 
+
 #                                      
 BC_phi_f = fd.DirichletBC(V_R, phi_f, top_id)
 BC_phif_new = fd.DirichletBC(V_R, phif_new, top_id)
-BC_phi = fd.DirichletBC(V_W, phi, top_id)
+# BC_phi = fd.DirichletBC(V_W, phi, top_id)
 BC_varphi = fd.DirichletBC(V_W, 0, top_id)
 BC_varphi_mixed = fd.DirichletBC(mixed_V.sub(1), 0, top_id)
+# bc0 = DirichletBC(W.sub(0), as_vector([0.0, -sin(5*x)]), 3)
 
 
 # 
