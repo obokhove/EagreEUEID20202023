@@ -236,7 +236,7 @@ elif nvpcase==2: # Steps 1 and 2 need solving in unison
     facc = 0.0
     faccc = 1.0
     fac = 1.0 # now same as linear case above except for constant pref-factors as check; 
-    VPnl = ( H0*Ww*fd.inner(phii, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds(top_id) \
+    VPnl = ( H0*Ww*fd.inner(phii, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds_t \
         - 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 \
                   + Ww * (H0**2/(H0+fac*eta)) * (faccc*phii.dx(1)+varphii.dx(1))**2 ) * fd.dx
     #  Step-1: only nonlinear step just trying these solver_parameters!    
@@ -266,8 +266,8 @@ eta_exact.interpolate(eta_exact_expr)
 eta.interpolate(eta_exact)
 #  phi.interpolate(phi_exact_expr)
 phi_f.interpolate(phi_exact_expr)
-phii.interpolate(phi_exact_expr0)
-varphii.interpolate(phi_exact_expr-phi_exact_expr0)
+phii.interpolate(phi_exact_exprH0)
+varphii.interpolate(phi_exact_expr-phi_exact_exprH0)
 
 ###### OUTPUT FILES ##########
 outfile_phi = fd.File("results/phi.pvd")
@@ -289,7 +289,7 @@ ax2.plot(xvals, phi1vals, ':k', label = f' $\phi_n: t = {t:.3f}$', linewidth=2)
 
 # output_data()
 if nvpcase == 111:
-    EKin = fd.assemble( 0.5*fd.inner(fd.grad(phi+varphi),fd.grad(phi+varphi))*fd.dx )
+    EKin = fd.assemble( 0.5*fd.inner(fd.grad(phii+varphii),fd.grad(phii+varphii))*fd.dx )
     EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds_t )
 elif nvpcase == 2:    
     EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2) * fd.dx )
@@ -338,11 +338,11 @@ while t <= t_end + epsmeet:
 
     if nvpcase == 111:  # VP linear steps 1 and 2 combined
         phi_f.assign(phii)
-        phi.assign(phii+varphii)
+        # phi.assign(phii+varphii)
         eta.assign(eta_new)
     elif nvpcase == 2: # ONNO 19-12
         phi_f.assign(phii)
-        phi.assign(phii+varphii)
+        # phi.assign(phii+varphii)
         eta.assign(eta_new)
     # end if
     # Energy monitoring:
@@ -351,7 +351,7 @@ while t <= t_end + epsmeet:
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds_t )
     elif nvpcase == 2:
         EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 + Ww * (H0**2/(H0+fac*eta)) * (facc*phii.dx(1)+varphii.dx(1))**2) * fd.dx )
-        EPot = fd.assemble( gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds(top_id) )
+        EPot = fd.assemble( gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
         EKin = EKin/(Lw*H0)
         EPot = EPot/(Lw*H0)
     E = EKin+EPot
@@ -373,15 +373,14 @@ while t <= t_end + epsmeet:
         i += 1
         tmeet = tmeet+dtmeet
 
-        phiii, varphiii = result_mixed.split()
         eta1vals = np.array([eta.at(x, zslice) for x in xvals])
-        if nvpcase == 111: # ONNO 30-12 
+        if nvpcase == 111: #
             phi1vals = np.array([phii.at(x, zslice) for x in xvals])
             #phi1vals = np.array([phi.at(x, zslice) for x in xvals])
-        if nvpcase == 2: # ONNO 03-01 
-            phi1vals = np.array([phiii.at(x, zslice) for x in xvals])
-        else: # ONNO 30-12 
-            phi1vals = np.array([phiiii.at(x, zslice) for x in xvals])
+        elif nvpcase == 2: #
+            phi1vals = np.array([phii.at(x, zslice) for x in xvals])
+        else: # 
+            phi1vals = np.array([phii.at(x, zslice) for x in xvals])
         
         ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
         ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
