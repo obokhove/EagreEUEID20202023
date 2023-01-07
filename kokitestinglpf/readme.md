@@ -2,7 +2,7 @@
 
 ## Linear potential flow without VP
 
-07-01: 21:31 wavemaker added; Please check. Case 21.
+07-01: 21:31 wavemaker added; Please check. Case 21. Bit neater way (than in AR's swe codes) of adding time-dependent wavemaker terms, followed in-code indicated FD-example.
 
 07-01 Nonlinear might work; check it. Might not have enough resolution.
 
