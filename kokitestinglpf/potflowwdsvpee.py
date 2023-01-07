@@ -15,8 +15,8 @@ Lx = 20.0  # length of the tank [m] in x-direction; needed for computing initial
 Lz = 10.0  # height of the tank [m]; needed for computing initial condition
 H0 = Lz # rest water depth [m]
 
-nx = 120 # a) 120 and b) 2*120
-nz = 6 # a) 6 and b) 2*6
+nx = 120 # a) 120 and b) 2*120 c) 2*2*120
+nz = 6 # a) 6 and b,c) 2*6 
 
 # control parameters
 output_data_every_x_time_steps = 20  # to avoid saving data every time step
@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 'top'
 
-nvpcase = 2 # ONNO 07-01 case 111 works and case 2 does not work yet
+nvpcase = 21 # ONNO 07-01 case 111 works and case 2 does not work yet
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -67,53 +67,71 @@ Lx /= L
 Lz /= L
 gg = g
 
-## initial condition in fluid based on analytical solution
-## compute analytical initial phi and eta
-n_mode = 2
-a = 0.0 * T / L ** 2    # in nondim units
-b = 0.005 * T / L ** 2  # in nondim units
+## initial condition nic=0 in fluid based on analytical solution
+## compute analytical initial phi and eta a = 0.0 * T / L ** 2    # in nondim units b = 0.005 * T / L ** 2  # in nondim units
 
-kx = 2 * np.pi * n_mode / Lx
-omega = np.sqrt(gg * kx * np.tanh(kx * Lz))
-A = 0.2*4
-D = -gg*A/(omega*np.cosh(kx*H0))
-
-Tperiod = 2*np.pi/omega
-print('Period: ', Tperiod)
 x = mesh.coordinates
 ## phi_exact_expr = a * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) # ONNO: Huh?
 ## eta_exact_expr = -omega * b * fd.cos(kx * x[0]) * fd.cosh(kx * Lz) # ONNO: Huh?
 
 t0 = 0.0
-phi_exact_expr = D * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
-phi_exact_exprH0 = D * fd.cos(kx * x[0]) * fd.cosh(kx * H0) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
-eta_exact_expr = A * fd.cos(kx * x[0]) * np.cos(omega * t0)
-
-t_end = Tperiod  # time of simulation [s]
-dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
-Nt = 500 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
-CFL = 0.125 # run at a) 0.125 and b) 0.5*0.125
-dt = CFL*Tperiod/Nt  # 0.005  # time step [s]
-#dt = dtt
-print('dtt=',dtt, t_end/dtt,dt,2/omega)
-
-
-##______________  To get results at different time steps ______________##
+nic = 0
+if nvpcase == 21:
+    nic = 1
 
 time = []
 t = 0
-while (t <= t_end+dt):
+    
+if nic == 0:
+    n_mode = 2
+    kx = 2 * np.pi * n_mode / Lx
+    omega = np.sqrt(gg * kx * np.tanh(kx * Lz))
+    A = 0.2*4
+    D = -gg*A/(omega*np.cosh(kx*H0))
+    Tperiod = 2*np.pi/omega
+    print('Period: ', Tperiod)
+    phi_exact_expr = D * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
+    phi_exact_exprH0 = D * fd.cos(kx * x[0]) * fd.cosh(kx * H0) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
+    eta_exact_expr = A * fd.cos(kx * x[0]) * np.cos(omega * t0)
+    t_end = Tperiod  # time of simulation [s]
+    dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
+    Nt = 500 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
+    CFL = 0.125 # run at a) 0.125 and b) 0.5*0.125
+    dt = CFL*Tperiod/Nt  # 0.005  # time step [s]
+    print('dtt=',dtt, t_end/dtt,dt,2/omega)
+    ##______________  To get results at different time steps ______________##
+    while (t <= t_end+dt):
         time.append(t)
         t+= dt
-
-nplot = 4
+    nplot = 4
+elif nic == 1: 
+    n_mode = 2
+    kx = 2 * np.pi * n_mode / Lx
+    omega = np.sqrt(gg * kx * np.tanh(kx * Lz))
+    Tperiod = 2*np.pi/omega
+    
+    t_end = 10*Tperiod  # time of simulation [s]
+    dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
+    Nt = 500 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
+    CFL = 0.125 # run at a) 0.125 and b) 0.5*0.125
+    dt = CFL*Tperiod/Nt  # 0.005  # time step [s]
+    print('dtt=',dtt, t_end/dtt,dt,2/omega)
+    D = 0.0
+    phi_exact_expr = D * x[0] * x[1]
+    phi_exact_exprH0 = D * x[0]
+    eta_exact_expr = D * x[0]
+    ##______________  To get results at different time steps ______________##
+    while (t <= t_end+dt):
+        time.append(t)
+        t+= dt
+    nplot = 8*10
+    
 dtmeet = t_end/nplot # (0:nplot)*dtmeet
 tmeet = dtmeet
 tmeas = np.linspace(0.0, t_end, nplot+1)
 print(' S: tmeet gvd', dtmeet, tmeet)
 print('tmeas', tmeas)
 epsmeet = 10.0**(-10)
-
 nt = int(len(time)/nplot)
 t_plot = time[0::nt]
 print('t_plot', t_plot,nt,nplot, t_end)
@@ -132,6 +150,8 @@ if nvpcase == 111:
     ax1.set_title(r'Functional derivative VP used, varphi, steps 1+2, 3:',fontsize=tsize2)
 elif nvpcase == 2:
     ax1.set_title(r'VP nonlinear case used:',fontsize=tsize2)
+elif nvpcase == 21 :
+    ax1.set_title(r'VP nonlinear case used, wavemaker:',fontsize=tsize2)
 # end if
 ax1.set_ylabel(r'$\eta (x,t) [m]$ ',fontsize=size)
 ax1.grid()
@@ -224,6 +244,26 @@ if nvpcase==111: # as 11 but steps 1 and 2 in combined solve; step 3 separately
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phii, du=v_R)
     eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new)) #  ,bcs=BC_exclude_beyond_surface)) # not needed so omitted
+if nvpcase==1112: # as 11 but steps 1 and 2 in combined solve; step 3 separately; wavemaker
+    VP11 = ( fd.inner(phii, (eta_new - eta)/dt) + fd.inner(phi_f, eta/dt) - (1/2 * gg * fd.inner(eta, eta)) )* fd.ds_t \
+        - ( 1/2 * fd.inner(fd.grad(phii+varphii), fd.grad(phii+varphii))  ) * fd.dx
+    
+    # Step-1 and 2 must be solved in tandem: f-derivative VP wrt eta to find update of phi at free surface
+    # int -phi/dt + phif/dt - gg*et) delta eta ds a=0 -> (phi-phif)/dt = -gg * eta
+    phif_expr1 = fd.derivative(VP11, eta, du=vvp0)  # du represents perturbation
+
+    # Step-2: f-derivative VP wrt varphi to get interior phi given surface update phi
+    # int nabla (phi+varphi) cdot nabla delta varphi dx = 0
+    phi_expr1 = fd.derivative(VP11, varphii, du=vvp1)
+    Fexpr = phif_expr1+phi_expr1
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr, result_mixed, bcs = BC_varphi_mixed))
+    # [BC_exclude_beyond_surface_mixed,BC_varphi_mixed])) #  not needed don't set any exclude http://firedrakeproject.org/variational-problems.html#id22
+    # BC_varphi_mixed sets it for 2nd variable varphi with no. 1
+     
+    # 
+    # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
+    eta_expr2 = fd.derivative(VP11, phii, du=v_R)
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new)) #  ,bcs=BC_exclude_beyond_surface)) # not needed so omitted
 elif nvpcase==2: # Steps 1 and 2 need solving in unison
     # 
     # Desired VP format of the above
@@ -251,7 +291,85 @@ elif nvpcase==2: # Steps 1 and 2 need solving in unison
     #  Step-3: linear solve; 
     heta_exprnl2 = fd.derivative(VPnl, phii, du=v_R)
     heta_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(heta_exprnl2,eta_new))
+    #
+elif nvpcase==21: # Steps 1 and 2 need solving in unison case with wavemaker initial condition nic=1
+    # Using ideas form here for time-dependence of wavemaker: https://www.firedrakeproject.org/demos/higher_order_mass_lumping.py.html
+    # Desired VP format of the above
+    param_psi    = {'ksp_type': 'preonly', 'pc_type': 'lu'}
+    t = 0
+    gam = 0.005
+    sigm = omega
+    tstop = 9*Tperiod
+    def Rwavemaker(t,gam,sigm,tstop):
+        Rh1 = -gam*fd.cos(sigm*t)
+        if t >= tstop:
+            Rh1 = -gam*fd.cos(sigm*tstop)
+        return Rh1
+    def dRwavemakerdt(t,gam,sigm,tstop):
+        Rt1 = gam*sigm*fd.sin(sigm*t)         
+        if t >= tstop:
+            Rt1 = 0*gam*sigm*fd.sin(sigm*tstop)
+        return Rt1
+    Rwave = fd.Constant(0.0)
+    Rwave.assign(Rwavemaker(t,gam,sigm,tstop)) 
+    dRwavedt = fd.Constant(0.0)
+    dRwavedt.assign(dRwavemakerdt(t,gam,sigm,tstop))
+    Lw = 0.5*Lx
+    Ww = fd.Constant(0.0)
+    Ww.assign(Lw-Rwavemaker(t,gam,sigm,tstop))      #  Lw-Ww
+
     # 
+    # VP formulation of above with phi^(n+1)=phi_f at free top surface the same but interior phi^(n+1) and surface eta^(n+1) in one go
+    # 
+    # Ww = Lw - Rwave # With wavemaker at n+1/2 # eta_new -> h_new and eta -> heta ; how does one include time dependence in VP?
+    # Nonlinear potential-flow VP:
+    facc = 1.0
+    faccc = 1.0
+    fac = 1.0 # now same as linear case above except for constant pref-factors as check; 
+    VPnl = ( H0*Ww*fd.inner(phii, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) -H0*phii*(x[0]-Lw)*dRwavedt*eta.dx(0) )* fd.ds_t \
+        - 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 \
+                  + Ww * (H0**2/(H0+fac*eta)) * (faccc*phii.dx(1)+varphii.dx(1))**2 ) * fd.dx - Lw*dRwavedt*(phii+varphii)* fd.ds_v(1)
+    #  Step-1: only nonlinear step just trying these solver_parameters!    
+    phif_exprnl1 = fd.derivative(VPnl, eta, du=vvp0) # du=v_W represents perturbation seems that with these solver_parameters solves quicker: tic-toc it with and without?
+
+    #  Step-2: linear solve; 
+    phi_exprnl1 = fd.derivative(VPnl, varphii, du=vvp1)
+
+    Fexprnl = phif_exprnl1+phi_exprnl1
+    phi_combonl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixed, bcs = BC_varphi_mixed), solver_parameters=param_psi)
+
+    #  Step-3: linear solve; 
+    heta_exprnl2 = fd.derivative(VPnl, phii, du=v_R)
+    heta_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(heta_exprnl2,eta_new))
+    #
+elif nvpcase==22: # Steps 1 and 2 need solving in unison; Stormer-Verlet
+    # 
+    # Desired VP format of the above
+    param_psi    = {'ksp_type': 'preonly', 'pc_type': 'lu'}
+    # 
+    # VP formulation of above with phi^(n+1)=phi_f at free top surface the same but interior phi^(n+1) and surface eta^(n+1) in one go
+    # 
+    Lw = 0.5*Lx
+    Ww = Lw # Later wavemaker to be added # eta_new -> h_new and eta -> heta ; Nonlinear potential-flow VP:
+    facc = 1.0
+    faccc = 1.0
+    fac = 1.0 # now same as linear case above except for constant pref-factors as check; 
+    VPnl = ( H0*Ww*fd.inner(phii, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds_t \
+        - 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 \
+                  + Ww * (H0**2/(H0+fac*eta)) * (faccc*phii.dx(1)+varphii.dx(1))**2 ) * fd.dx
+    #  Step-1: only nonlinear step just trying these solver_parameters!    
+    phif_exprnl1 = fd.derivative(VPnl, eta, du=vvp0) # du=v_W represents perturbation seems that with these solver_parameters solves quicker: tic-toc it with and without?
+
+    #  Step-2: linear solve; 
+    phi_exprnl1 = fd.derivative(VPnl, varphii, du=vvp1)
+
+    Fexprnl = phif_exprnl1+phi_exprnl1
+    phi_combonl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixed, bcs = BC_varphi_mixed), solver_parameters=param_psi)
+
+    #  Step-3: linear solve; 
+    heta_exprnl2 = fd.derivative(VPnl, phii, du=v_R)
+    heta_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(heta_exprnl2,eta_new))
+    #
 # end if
 #  
 # tmp_eta, tmp_phi = result_mixed.split()
@@ -296,6 +414,11 @@ elif nvpcase == 2:
     EPot = fd.assemble( gg*Ww*H0*( 0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
     EKin = EKin/(Lw*H0)
     EPot = EPot/(Lw*H0)
+elif nvpcase == 21: 
+    EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phii.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phii.dx(1))**2) * fd.dx )
+    EPot = fd.assemble( gg*Ww*H0*( 0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
+    EKin = EKin/(Lw*H0)
+    EPot = EPot/(Lw*H0)
     
 E = EKin+EPot
 E0 = E
@@ -311,6 +434,8 @@ if nvpcase == 111:
     # phi_expr.solve() # ?
 elif nvpcase == 2:
     plt.title(r'VP nonlinear used steps 1+2 & 3:',fontsize=tsize)
+elif nvpcase == 21:
+    plt.title(r'VP nonlinear used steps 1+2 & 3 wavemaker:',fontsize=tsize)
     
 # end if
 print('E0=',E,EKin,EPot)
@@ -333,7 +458,14 @@ while t <= t_end + epsmeet:
         # phi_exprnl.solve() # solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
         phi_combonl.solve()
         phii, varphii = result_mixed.split()
-        heta_exprnl.solve() 
+        heta_exprnl.solve()
+    elif nvpcase == 21: # VP nonlinear steps 1 and 2 combined with wavemaker
+        Rwave.assign(Rwavemaker(t+0.5*dt,gam,sigm,tstop)) 
+        dRwavedt.assign(dRwavemakerdt(t+0.5*dt,gam,sigm,tstop))
+        Ww.assign(Lw-Rwavemaker(t+0.5*dt,gam,sigm,tstop))      # Lw-Ww
+        phi_combonl.solve()
+        phii, varphii = result_mixed.split()
+        heta_exprnl.solve()
     # end if
 
     if nvpcase == 111:  # VP linear steps 1 and 2 combined
@@ -344,12 +476,21 @@ while t <= t_end + epsmeet:
         phi_f.assign(phii)
         # phi.assign(phii+varphii)
         eta.assign(eta_new)
+    elif nvpcase == 21: # VP nonlinear steps 1 and 2 combined
+        phi_f.assign(phii)
+        # phi.assign(phii+varphii)
+        eta.assign(eta_new)
     # end if
     # Energy monitoring:
     if nvpcase == 111: # VP linear steps 1 and 2 combined
         EKin = fd.assemble( 0.5*fd.inner(fd.grad(phii+varphii),fd.grad(phii+varphii))*fd.dx )
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds_t )
     elif nvpcase == 2: # VP nonlinear steps 1 and 2 combined
+        EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 + Ww * (H0**2/(H0+fac*eta)) * (facc*phii.dx(1)+varphii.dx(1))**2) * fd.dx )
+        EPot = fd.assemble( gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
+        EKin = EKin/(Lw*H0)
+        EPot = EPot/(Lw*H0)
+    elif nvpcase == 21: # VP nonlinear steps 1 and 2 combined
         EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 + Ww * (H0**2/(H0+fac*eta)) * (facc*phii.dx(1)+varphii.dx(1))**2) * fd.dx )
         EPot = fd.assemble( gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
         EKin = EKin/(Lw*H0)
@@ -369,7 +510,6 @@ while t <= t_end + epsmeet:
         
         print('Plotting starts')
         plt.figure(1)
-        print('t =', t, tmeet, i)
         i += 1
         tmeet = tmeet+dtmeet
 
@@ -382,18 +522,22 @@ while t <= t_end + epsmeet:
         else: # 
             phi1vals = np.array([phii.at(x, zslice) for x in xvals])
         
-        ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
-        ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
+        if nic == 0:
+            ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
+            ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
+            phi_exact_exprv = D * np.cos(kx * xvals) * np.cosh(kx * H0) * np.sin(omega * t) #
+            eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
+            
+            # KOKI: maybe use different markers to distinguish solutions at different times?
+            ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # 
+            ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # 
+            print('t =', t, tmeet, i)
+        elif nic == 1:
+            if t >= tstop:
+                ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
+                ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
+                print('t =', t, tmeet, i)
 
-        # Free-surface exact expressions
-        # phi_exact_expr = D * fd.cos(kx * x[0]) * fd.cosh(kx * x[1]) * np.sin(omega * t0) # D cos(kx*x) cosh(kx*z) cos(omega t)
-        # eta_exact_expr = A * fd.cos(kx * x[0]) * np.cos(omega * t0)
-        phi_exact_exprv = D * np.cos(kx * xvals) * np.cosh(kx * H0) * np.sin(omega * t) #
-        eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
-
-        # KOKI: maybe use different markers to distinguish solutions at different times?
-        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # 
-        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # 
         
         ax1.legend(loc=4)
         ax2.legend(loc=4)
