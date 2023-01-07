@@ -27,7 +27,7 @@ if not os.path.exists(save_path):
 
 top_id = 'top'
 
-nvpcase = 111 # ONNO 06-01 cases 111 and 1 do not work yet
+nvpcase = 2 # ONNO 07-01 case 111 works and case 2 does not work yet
 
 #__________________  FIGURE PARAMETERS  _____________________#
 
@@ -54,7 +54,7 @@ mesh = fd.ExtrudedMesh(mesh1d, nz, layer_height=Lz/nz, extrusion_type='uniform')
 x,z = fd.SpatialCoordinate(mesh)
 
 xvals = np.linspace(0.0, Lx-10**(-10), nx)
-zvals = np.linspace(0.0, Lz-10**(-10), nz) # ONNO 07-12 why -0.001 and not at top?
+zvals = np.linspace(0.0, Lz-10**(-10), nz) # 
 zslice = H0
 xslice = 0.5*Lx
 
@@ -216,23 +216,24 @@ if nvpcase==111: # as 11 but steps 1 and 2 in combined solve; step 3 separately
     # int nabla (phi+varphi) cdot nabla delta varphi dx = 0
     phi_expr1 = fd.derivative(VP11, varphii, du=vvp1)
     Fexpr = phif_expr1+phi_expr1
-    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr, result_mixed, bcs = BC_varphi_mixed)) # [BC_exclude_beyond_surface_mixed,BC_varphi_mixed])) #  not needed
-
+    phi_combo = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexpr, result_mixed, bcs = BC_varphi_mixed))
+    # [BC_exclude_beyond_surface_mixed,BC_varphi_mixed])) #  not needed don't set any exclude http://firedrakeproject.org/variational-problems.html#id22
+    # BC_varphi_mixed sets it for 2nd variable varphi with no. 1
+     
     # 
     # Step-3: f-derivative wrt phi but restrict to free surface to find updater eta_new; only solve for eta_new by using exclude
     eta_expr2 = fd.derivative(VP11, phii, du=v_R)
-    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new)) #  ,bcs=BC_exclude_beyond_surface)) # not needed?
+    eta_expr = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(eta_expr2,eta_new)) #  ,bcs=BC_exclude_beyond_surface)) # not needed so omitted
 elif nvpcase==2: # Steps 1 and 2 need solving in unison
     # 
     # Desired VP format of the above
     param_psi    = {'ksp_type': 'preonly', 'pc_type': 'lu'}
     # 
     # VP formulation of above with phi^(n+1)=phi_f at free top surface the same but interior phi^(n+1) and surface eta^(n+1) in one go
-    #
-    phii, varphii = fd.split(result_mixed)
+    # 
     Lw = 0.5*Lx
     Ww = Lw # Later wavemaker to be added # eta_new -> h_new and eta -> heta ; Nonlinear potential-flow VP:
-    facc = 0.0
+    facc = 1.0
     faccc = 1.0
     fac = 1.0 # now same as linear case above except for constant pref-factors as check; 
     VPnl = ( H0*Ww*fd.inner(phii, (eta_new - eta)/dt) + H0*Ww*fd.inner(phi_f, eta/dt) - gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-(H0+eta)*H0+0.5*H0**2) )* fd.ds_t \
@@ -245,11 +246,11 @@ elif nvpcase==2: # Steps 1 and 2 need solving in unison
     phi_exprnl1 = fd.derivative(VPnl, varphii, du=vvp1)
 
     Fexprnl = phif_exprnl1+phi_exprnl1
-    phi_combonl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixed, bcs = [BC_exclude_beyond_surface_mixed,BC_varphi_mixed]), solver_parameters=param_psi)
+    phi_combonl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixed, bcs = BC_varphi_mixed), solver_parameters=param_psi)
 
     #  Step-3: linear solve; 
-    heta_exprnl2 = fd.derivative(VPnl, phii, du=v_W)
-    heta_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(heta_exprnl2,eta_new,bcs=BC_exclude_beyond_surface))
+    heta_exprnl2 = fd.derivative(VPnl, phii, du=v_R)
+    heta_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(heta_exprnl2,eta_new))
     # 
 # end if
 #  
@@ -291,7 +292,7 @@ if nvpcase == 111:
     EKin = fd.assemble( 0.5*fd.inner(fd.grad(phii+varphii),fd.grad(phii+varphii))*fd.dx )
     EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds_t )
 elif nvpcase == 2:    
-    EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phi.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phi.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phi.dx(1))**2) * fd.dx )
+    EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*phii.dx(1))**2 + Ww * (H0**2/(H0+fac*eta)) * (phii.dx(1))**2) * fd.dx )
     EPot = fd.assemble( gg*Ww*H0*( 0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
     EKin = EKin/(Lw*H0)
     EPot = EPot/(Lw*H0)
@@ -306,10 +307,10 @@ plt.plot(t,EKin,'.r')
 plt.xlabel(f'$t$')
 plt.ylabel(f'$E(t)$')
 if nvpcase == 111:
-    plt.title(r'Functional derivative VP used steps 1 & 2:',fontsize=tsize)
+    plt.title(r'Functional derivative VP used steps 1+2 & 3:',fontsize=tsize)
     # phi_expr.solve() # ?
 elif nvpcase == 2:
-    plt.title(r'VP nonlinear used:',fontsize=tsize)
+    plt.title(r'VP nonlinear used steps 1+2 & 3:',fontsize=tsize)
     
 # end if
 print('E0=',E,EKin,EPot)
@@ -322,14 +323,14 @@ while t <= t_end + epsmeet:
     # symplectic Euler scheme
     tt = format(t, '.3f') 
 
-    if nvpcase == 111:
+    if nvpcase == 111: # VP linear steps 1 and 2 combined
         # solve of phi everywhere steps 1 and 2 combined
         phi_combo.solve() # 
         phii, varphii = result_mixed.split()
         eta_expr.solve()
-    elif nvpcase == 2:
+    elif nvpcase == 2: # VP nonlinear steps 1 and 2 combined
         # phif_exprnl.solve() # solves phi^(n+1) at top free surface same as above
-        #  phi_exprnl.solve() # solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
+        # phi_exprnl.solve() # solves phi^(n+1) in interior and eta^(n+1) at top surface simulataneously
         phi_combonl.solve()
         phii, varphii = result_mixed.split()
         heta_exprnl.solve() 
@@ -339,16 +340,16 @@ while t <= t_end + epsmeet:
         phi_f.assign(phii)
         # phi.assign(phii+varphii)
         eta.assign(eta_new)
-    elif nvpcase == 2: # ONNO 19-12
+    elif nvpcase == 2: # VP nonlinear steps 1 and 2 combined
         phi_f.assign(phii)
         # phi.assign(phii+varphii)
         eta.assign(eta_new)
     # end if
     # Energy monitoring:
-    if nvpcase == 111:
+    if nvpcase == 111: # VP linear steps 1 and 2 combined
         EKin = fd.assemble( 0.5*fd.inner(fd.grad(phii+varphii),fd.grad(phii+varphii))*fd.dx )
         EPot = fd.assemble( 0.5*gg*fd.inner(eta,eta)*fd.ds_t )
-    elif nvpcase == 2:
+    elif nvpcase == 2: # VP nonlinear steps 1 and 2 combined
         EKin = fd.assemble( 1/2 * ( (Lw**2/Ww) * (H0+fac*eta) * (phii.dx(0)+varphii.dx(0)-(z/(H0+fac*eta))*fac*eta.dx(0)*(facc*phii.dx(1)+varphii.dx(1)))**2 + Ww * (H0**2/(H0+fac*eta)) * (facc*phii.dx(1)+varphii.dx(1))**2) * fd.dx )
         EPot = fd.assemble( gg*Ww*H0*(0.5*fd.inner(H0+eta, H0+eta)-fd.inner(H0+eta,H0)+0.5*H0**2) * fd.ds_t )
         EKin = EKin/(Lw*H0)
@@ -373,10 +374,10 @@ while t <= t_end + epsmeet:
         tmeet = tmeet+dtmeet
 
         eta1vals = np.array([eta.at(x, zslice) for x in xvals])
-        if nvpcase == 111: #
+        if nvpcase == 111: # VP linear
             phi1vals = np.array([phii.at(x, zslice) for x in xvals])
             #phi1vals = np.array([phi.at(x, zslice) for x in xvals])
-        elif nvpcase == 2: #
+        elif nvpcase == 2: # VP nonlinear
             phi1vals = np.array([phii.at(x, zslice) for x in xvals])
         else: # 
             phi1vals = np.array([phii.at(x, zslice) for x in xvals])
@@ -391,8 +392,8 @@ while t <= t_end + epsmeet:
         eta_exact_exprv = A * np.cos(kx * xvals) * np.cos(omega * t)
 
         # KOKI: maybe use different markers to distinguish solutions at different times?
-        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
-        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # ONNO 18-12 still does not look to converge with nvpcase == 0,1; wrong exact solution or at wrong time?
+        ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # 
+        ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # 
         
         ax1.legend(loc=4)
         ax2.legend(loc=4)
