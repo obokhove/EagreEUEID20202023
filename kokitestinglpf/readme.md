@@ -125,8 +125,9 @@ $$ 0 = \delta \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W^{n+1/2}}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W^{n+1/2} \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z d x $$
 
 $$+\int_0^{L_x}  -g H_0 W^{n+1/2} h^n (\frac 12 h^n-H_0) + H_0 W^{n+1/2}  \phi^{n+1}|_{z=H_{0}} \frac {(h^{n+1}-h^n)}{\Delta t}  + H_0 W^{n+1/2}  \phi^{n}|_{z=H_{0}} \frac {h^n}{\Delta t}  d x. $$
--\Bigl[\frac12 \frac{L_{w}^2}{W}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z
-- \int_0^{H_0}  {L_w R^{n+1/2}_t \phi^{n+1} h^n} |_{x=0}  d z dt$
+
+$$-\Bigl[\frac12 \frac{L_{w}^2}{W}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z
+- \int_0^{H_0}  {L_w R^{n+1/2}_t \phi^{n+1} h^n} |_{x=0}  d z dt$$
 
 Step-1: Variational derivative wrt $h^n$. Nonlinear solve for $\phi^{n+1}$ at $z=H_0$ free surface.
 
