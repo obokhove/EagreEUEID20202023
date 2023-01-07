@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+07-01 Nonlinear might work; check it.
+
 06-01: 21:44pm visual convergence posted latest code. check settings a) and b).
 Afternoon: 1st attempt (thx Koki and CC) ...ee.py with extruded mesh and only two cases.
 
