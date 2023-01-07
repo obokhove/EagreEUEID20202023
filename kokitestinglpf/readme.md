@@ -116,7 +116,8 @@ No wavemaker, topography $b=0, \partial_y =0$, $W=L_w-R(t)$ for case with wavema
 
 $$ 0 = \delta \int_0^T \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W}h (\phi_{x} + (z/h) h_{x})\phi_{z})^2  + \frac12 W \frac{H_{0}^2}{h} (\phi_{z})^2 \Bigr] d z d x$$
-$$+ \int_0^{L_x}  -g H_0 W h (\frac 12 h-H_0) + H_0 W  \phi|_{z=H_{0}} h_{t} d x + \int_0^{H_0} L_w R_t phi h |_{x=0} dt$$
+
+$$ + \int_0^{L_x}  -g H_0 W h (\frac 12 h-H_0) + H_0 W  \phi|_{z=H_0} h_{t} d x + \int_0^{H_0} {L_w R_t phi h} |_{x=0} dt$$
 
 Time-discrete version:
 
