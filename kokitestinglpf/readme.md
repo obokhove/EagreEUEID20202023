@@ -2,6 +2,8 @@
 
 ## Linear potential flow without VP
 
+07-01: 21:31 wavemaker added; Please check. Case 21.
+
 07-01 Nonlinear might work; check it. Might not have enough resolution.
 
 06-01: 21:44pm visual convergence posted latest code. check settings a) and b).
