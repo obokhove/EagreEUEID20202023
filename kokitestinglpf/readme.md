@@ -141,7 +141,11 @@ $$+ \int_0^{H_0} H_0 W^{n+1/2} \phi^{n+1/2}  \frac {(h^{n+1} -h^n)}{\Delta t}- H
 
 $$-\int_0^{H_0} {L_w R^{n+1/2}_t \phi^{n+1/2} h^{n+1/2}} |_{x=0} dz  $$
 
-Variations wrt $\h^{n+1/2},\phi^{n+1/2}|_{z=H_0},\phi^{n+1/2}}$ interior or $\phi=\phi|_{z=H_0}+\varphi$ with latter $0$ at $z=H_0$.
+Variations wrt 
+
+$$\h^{n+1/2},\phi^{n+1/2}|_{z=H_0},\phi^{n+1/2}}$$
+
+in interior or $\phi=\phi|_{z=H_0}+\varphi$ with latter $0$ at $z=H_0$.
 
 Step-1: Variational derivative wrt $h^n$. Nonlinear solve for $\phi^{n+1}$ at $z=H_0$ free surface.
 
