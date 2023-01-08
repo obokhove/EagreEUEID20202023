@@ -135,7 +135,11 @@ Time-discrete version mid-point:
 $$ 0 = \delta  \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W^{n+1/2}}h^{n+1/2} (\phi^{n+1/2}_{x} + (z/h^{n+1/2}) h^{n+1/2}_{x})\phi^{n+1/2}_{z})^2  + \frac 12 W^{n+1/2} \frac{H_{0}^2}{h} (\phi^{n+1/2}_{z})^2 \Bigr] d z d x $$
 
-$$ + \int_0^{L_x}  -g H_0 W^{n+1/2} h^{n+1/2} (\frac 12 h^{n+1/2}-H_0) -H_0 \phi^{n+1/2}(x-L_w)R^{n+1/2}_t h^{n+1/2}_x + H_0 W\phi  h_{t} d x + -\int_0^{H_0} {L_w R^{n+1/2}_t \phi^{n+1/2} h^{n+1/2}} |_{x=0} dz  $$
+$$ + \int_0^{L_x}  -g H_0 W^{n+1/2} h^{n+1/2} (\frac 12 h^{n+1/2}-H_0) -H_0 \phi^{n+1/2}(x-L_w)R^{n+1/2}_t h^{n+1/2}_x d x $$
+
+$$+ \int_0^{H_0} H_0 W^{n+1/2} \phi^{n+1/2}  \frac {(h^n -h^n)}{\Delta t}- H_0 h^{n+1/2}\frac {(W^{n+1} \phi^{n+1}-W^n\phi^n)}{\Delta t}  - H_0 W^{n+1} \phi^{n+1}  \frac {(h^{n+1}-h^n)}{\Delta t} + H_0 W^ \phi^n  \frac {h^n}{\Delta t} d x $$
+
+$$-\int_0^{H_0} {L_w R^{n+1/2}_t \phi^{n+1/2} h^{n+1/2}} |_{x=0} dz  $$
 
 
 Step-1: Variational derivative wrt $h^n$. Nonlinear solve for $\phi^{n+1}$ at $z=H_0$ free surface.
