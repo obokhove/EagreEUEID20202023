@@ -121,14 +121,14 @@ $$ 0 = \delta \int_0^T \int_{0}^{L_x} \int_{0}^{H_{0}}
 
 $$ + \int_0^{L_x}  -g H_0 W h (\frac 12 h-H_0) + H_0 \phi|_{z=H_0} (W h_{t}-(x-L_w)R_t h_x ) d x - \int_0^{H_0} {L_w R_t \phi h} |_{x=0} dz  dt$$
 
-Time-discrete version SE:
+Time-discrete version SE (not sure if I have done this correctly on $W$ if $W\phi$ are seen as conjugate pair):
 
 $$ 0 = \delta \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W^{n+1/2}}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W^{n+1/2} \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z d x $$
 
 $$+\int_0^{L_x}  -g H_0 W^{n+1/2} h^n (\frac 12 h^n-H_0) + H_0 W^{n+1/2}  \phi^{n+1}|_{z=H_{0}} \frac {(h^{n+1}-h^n)}{\Delta t}  + H_0 W^{n+1/2}  \phi^{n}|_{z=H_{0}} \frac {h^n}{\Delta t}  -H_0 \phi^{n+1}|_{z=H_0}(x-L_w) R_t^{n+1/2} h_x^{n}  d x$$
 
-$$ -\Bigl[\frac12 \frac{L_{w}^2}{W}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z- \int_0^{H_0}  {L_w R^{n+1/2}_t \phi^{n+1} h^n} |_{x=0}  d z dt$$
+$$ -\Bigl[\frac12 \frac{L_{w}^2}{W^{n+1/2}}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z- \int_0^{H_0}  {L_w R^{n+1/2}_t \phi^{n+1} h^n} |_{x=0}  d z dt$$
 
 Time-discrete version mid-point:
 
