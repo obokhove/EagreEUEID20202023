@@ -13,10 +13,16 @@ g = 9.81  # gravitational acceleration [m/s^2]
 # water
 Lx = 20.0  # length of the tank [m] in x-direction; needed for computing initial condition
 Lz = 10.0  # height of the tank [m]; needed for computing initial condition
+nx = 120 # a) 120 and b) 2*120 c) 2*2*120 d) 200
+nz = 6 # a) 6 and b,c) 2*6 d) 
+
+Lx = 140
+Lz = 1
+nx = 200*2*3
+nz = 6
+
 H0 = Lz # rest water depth [m]
 
-nx = 120 # a) 120 and b) 2*120 c) 2*2*120
-nz = 6 # a) 6 and b,c) 2*6 
 
 # control parameters
 output_data_every_x_time_steps = 20  # to avoid saving data every time step
@@ -108,12 +114,20 @@ elif nic == 1:
     n_mode = 2
     kx = 2 * np.pi * n_mode / Lx
     omega = np.sqrt(gg * kx * np.tanh(kx * Lz))
-    Tperiod = 2*np.pi/omega
+
+    lambd = 70
+    omega = np.sqrt(gg*H0)*2.0*np.pi/lambd 
+    
+    Tperiod = 2.0*np.pi/omega
+
+    nTfac = 2
     
     t_end = 10*Tperiod  # time of simulation [s]
+    t_end = nTfac*Tperiod 
+    
     dtt = np.minimum(Lx/nx,Lz/nz)/(np.pi*np.sqrt(gg*H0)) # i.e. dx/max(c0) with c0 =sqrt(g*H0)
     Nt = 500 # check with print statement below and adjust dt towards dtt vi Nt halving time step seems to half energy oscillations
-    CFL = 0.125 # run at a) 0.125 and b) 0.5*0.125
+    CFL = 0.25*0.125 # run at a) 0.125 and b) 0.5*0.125
     dt = CFL*Tperiod/Nt  # 0.005  # time step [s]
     print('dtt=',dtt, t_end/dtt,dt,2/omega)
     D = 0.0
@@ -121,10 +135,11 @@ elif nic == 1:
     phi_exact_exprH0 = D * x[0]
     eta_exact_expr = D * x[0]
     ##______________  To get results at different time steps ______________##
-    while (t <= t_end+dt):
+    while (t <= t_end+0*dt):
         time.append(t)
         t+= dt
-    nplot = 8*10
+    nplot = 8*nTfac
+    nplot = 2 
     
 dtmeet = t_end/nplot # (0:nplot)*dtmeet
 tmeet = dtmeet
@@ -297,9 +312,13 @@ elif nvpcase==21: # Steps 1 and 2 need solving in unison case with wavemaker ini
     # Desired VP format of the above
     param_psi    = {'ksp_type': 'preonly', 'pc_type': 'lu'}
     t = 0
-    gam = 0.005
+    gam = 0.05
     sigm = omega
+    gam = 0.5 #0.002 gam = 0.7
+    
     tstop = 9*Tperiod
+    tstop = Tperiod
+    
     def Rwavemaker(t,gam,sigm,tstop):
         Rh1 = -gam*fd.cos(sigm*t)
         if t >= tstop:
@@ -308,7 +327,7 @@ elif nvpcase==21: # Steps 1 and 2 need solving in unison case with wavemaker ini
     def dRwavemakerdt(t,gam,sigm,tstop):
         Rt1 = gam*sigm*fd.sin(sigm*t)         
         if t >= tstop:
-            Rt1 = 0*gam*sigm*fd.sin(sigm*tstop)
+            Rt1 = 0.0*gam*sigm*fd.sin(sigm*tstop)
         return Rt1
     Rwave = fd.Constant(0.0)
     Rwave.assign(Rwavemaker(t,gam,sigm,tstop)) 
@@ -427,8 +446,8 @@ plt.figure(2)
 plt.plot(t,E,'.k')
 plt.plot(t,EPot,'.b')
 plt.plot(t,EKin,'.r')
-plt.xlabel(f'$t$')
-plt.ylabel(f'$E(t)$')
+plt.xlabel(f'$t$ [s]',fontsize=size)
+plt.ylabel(f'$E(t), K(t), P(t)$',fontsize=size)
 if nvpcase == 111:
     plt.title(r'Functional derivative VP used steps 1+2 & 3:',fontsize=tsize)
     # phi_expr.solve() # ?
@@ -443,7 +462,7 @@ print('E0=',E,EKin,EPot)
 
 print('Time Loop starts')
 
-while t <= t_end + epsmeet:
+while t <= t_end + dt: # epsmeet:
     # print("time = ", t * T)
     # symplectic Euler scheme
     tt = format(t, '.3f') 
@@ -500,8 +519,8 @@ while t <= t_end + epsmeet:
     plt.plot(t,E,'.k')
     plt.plot(t,EPot,'.b')
     plt.plot(t,EKin,'.r')
-    plt.xlabel(f'$t$')
-    plt.ylabel(f'$E(t)$')
+    plt.xlabel(f'$t$ [s]',fontsize=size)
+    plt.ylabel(f'$E(t), K(t), P(t)$',fontsize=size)
     
     
     t+= dt
@@ -530,21 +549,25 @@ while t <= t_end + epsmeet:
             
             # KOKI: maybe use different markers to distinguish solutions at different times?
             ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # 
-            ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) # 
+            ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) #
+            ax1.legend(loc=4)
+            ax2.legend(loc=4)
             print('t =', t, tmeet, i)
         elif nic == 1:
-            if t >= tstop:
+            if t >= 0*tstop:
                 ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
                 ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
                 print('t =', t, tmeet, i)
+                #ax1.legend(loc=4)
+                #ax2.legend(loc=4)
 
         
-        ax1.legend(loc=4)
-        ax2.legend(loc=4)
-        # output_data()
+        # ax1.legend(loc=4)
+        # ax2.legend(loc=4)
+       # utput_data()
      
     # print('t=',t)
 
-
+print('t=',t,'tmeet=',tmeet,'tplot',t_plot)
 plt.show() 
 print('*************** PROGRAM ENDS ******************')
