@@ -139,6 +139,8 @@ $$+\int_0^{L_x}  -g H_0 W^{n+1} h^n (\frac 12 h^n-H_0) + H_0 W^{n+1}  \phi^{n+1}
 
 $$ - \int_0^{H_0}  {L_w R^{n+1}_t \phi^{n+1} h^n} |_{x=0}  d z dt$$
 
+
+
 Time-discrete version mid-point:
 
 $$ 0 = \delta  \int_{0}^{L_x} \int_{0}^{H_{0}}
