@@ -130,7 +130,7 @@ $$+\int_0^{L_x}  -g H_0 W^{n+1/2} h^n (\frac 12 h^n-H_0) + H_0 W^{n+1}  \phi^{n+
 
 $$ - \int_0^{H_0}  {L_w R^{n+1/2}_t \phi^{n+1} h^n} |_{x=0}  d z dt$$
 
-Sinc $W, R$ and $\phi$ as much as possble so at $n+1$ except in one time-step term:
+Sinc $W, R$ and $\phi$ as much as possble so at $n+1$ except in one time-step term (calcuate and monitor Kamiltonian):
 
 $$ 0 = \delta \int_{0}^{L_x} \int_{0}^{H_{0}}
 -\Bigl[\frac12 \frac{L_{w}^2}{W^{n+1}}h^n (\phi^{n+1}_{x} + (z/h^n) h^n_{x})\phi^{n+1}_{z})^2  + \frac12 W^{n+1} \frac{H_{0}^2}{h^n} (\phi^{n+1}_{z})^2 \Bigr] d z d x $$
