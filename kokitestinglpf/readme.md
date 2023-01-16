@@ -2,6 +2,12 @@
 
 ## Linear potential flow without VP
 
+16-01-2023: SV and midpoint seem to work. Working on wave-buoy case; useful https://github.com/mm13jmb/waveEnergyDevice
+To do:
+- Add split with phi(x,z,t)=psi(x,t)*f(z)+varphi(x,z,t) with suitable f(z) st f(H0)=1.
+- wavemaker case midpoint.
+- 3D case with topography
+
 07-01: 21:31 wavemaker added; Please check. Case 21. Bit neater way (than in AR's swe codes) of adding time-dependent wavemaker terms, followed in-code indicated FD-example.
 
 07-01 Nonlinear might work; check it. Might not have enough resolution.
