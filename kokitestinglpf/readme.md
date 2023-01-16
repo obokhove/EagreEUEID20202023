@@ -7,6 +7,7 @@ To do:
 - Add split with phi(x,z,t)=psi(x,t)*f(z)+varphi(x,z,t) with suitable f(z) st f(H0)=1.
 - wavemaker case midpoint.
 - 3D case with topography
+- energy expressions may need clean up for t=0?
 
 07-01: 21:31 wavemaker added; Please check. Case 21. Bit neater way (than in AR's swe codes) of adding time-dependent wavemaker terms, followed in-code indicated FD-example.
 
