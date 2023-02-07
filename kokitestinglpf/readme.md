@@ -2,6 +2,13 @@
 
 ## Linear potential flow without VP
 
+08-02-2023:
+- a) 3D PF code (modified midpoint or SV in time)
+- b) add vertical structure function
+- c) use one element and Chebychev polynomials
+- use for SP2 and SP3.
+Fingers crossed a,b,c) 1st set up done late February.
+
 16-01-2023: SV and midpoint seem to work. Working on wave-buoy case; useful https://github.com/mm13jmb/waveEnergyDevice
 To do:
 - Add split with phi(x,z,t)=psi(x,t)*f(z)+varphi(x,z,t) with suitable f(z) st f(H0)=1.
