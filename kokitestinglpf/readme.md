@@ -1,5 +1,7 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
+18-02-2023: Put dated copy of code here; case 233 can be run in nowaveflap=0 (piston limit) or nowaveflap=1 mode (waveflap); both seem to work. To do: CG2-= to CG4; $f(z)\ne 1$ function but with $f(H_0)=1$ at top.
+
 ## Linear potential flow without VP
 
 08-02-2023:
