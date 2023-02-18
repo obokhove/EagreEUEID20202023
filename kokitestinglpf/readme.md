@@ -13,7 +13,7 @@ Fingers crossed a,b,c) 1st set up done late February.
 
 16-01-2023: SV and midpoint seem to work. Working on wave-buoy case; useful https://github.com/mm13jmb/waveEnergyDevice
 To do:
-- Add split with phi(x,z,t)=psi(x,t)*f(z)+varphi(x,z,t) with suitable f(z) st f(H0)=1.
+- Add split with $\phi(x,z,t)=\psi(x,t) f(z)+\varphi(x,z,t)$ with suitable $f(z)$ st $f(H_0)=1$.
 - wavemaker case midpoint.
 - 3D case with topography
 - energy expressions may need clean up for t=0?
@@ -28,7 +28,7 @@ Afternoon: 1st attempt (thx Koki and CC) ...ee.py with extruded mesh and only tw
 04-01: At Dartington Hall. 
 Koki: For query below, use extruded mesh to define a tensor space CGxR space s.t. $\tilde{\phi}$ is uniform in $z$. Then $\varphi$ is CGxCG.
 
-Thanks to Koki, case=111 seems to work; case 2 works but is incorrect; phii has a vertical structure (turn facc=0,1 on or off and compare). File ..svpff.py uploaded. Another question is whether the VP with only $\phi(x,z,t)$ and $\eta(x,t)$ can work, rather than having to split into $\phi=\tilde{phi}(x,t)+\varphi(x,z,t)$.
+Thanks to Koki, case=111 seems to work; case 2 works but is incorrect; phii has a vertical structure (turn facc=0,1 on or off and compare). File ..svpff.py uploaded. Another question is whether the VP with only $\phi(x,z,t)$ and $\eta(x,t)$ can work, rather than having to split into $\phi=\tilde{\phi}(x,t)+\varphi(x,z,t)$.
 
 01-01: Removed ==0 following remark on slack: incompatible function space again.
 
