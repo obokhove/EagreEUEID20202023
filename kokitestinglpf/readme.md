@@ -1,6 +1,6 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
-22-02-2023: Dated update of the code; I am trying to put in a split $\phi(x,z,)=\psi(x,t) \hat{\phi}(z) + \varphi(x,z,t)$ for $\hat{\phi}(z)\ne 1$ but with $\hat{\phi}(z=H_0)=1$. See lines 617-629 for a failed attempt.
+22-02-2023: Dated update of the code; I am trying to put in a split $\phi(x,z,)=\psi(x,t) \hat{\phi}(z) + \varphi(x,z,t)$ for $\hat{\phi}(z)\ne 1$ but with $\hat{\phi}(z=H_0)=1$. See lines 617-629 for a failed attempt. CG1, CG2, CG3 work. 
 
 18-02-2023: Put dated copy of code here; case 233 can be run in nowaveflap=0 (piston limit) or nowaveflap=1 mode (waveflap); both seem to work. To do: CG2-= to CG4; $f(z)\ne 1$ function but with $f(H_0)=1$ at top.
 
