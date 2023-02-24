@@ -6,6 +6,7 @@ Problme solved, used (thanks):
 phihat = fd.product( (x[1]-(H0/nCGvert)*(nCGvert+1-kk))/(H0-(H0/nCGvert)*(nCGvert+1-kk)) for kk in range(2,nCGvert+1,1) )
 # phihat = x[1]/H0
 and phihat.dx(1) to get its derivative.
+https://www.mdpi.com/2297-8747/27/4/63
 
 22-02-2023: Dated update of the code; I am trying to put in a split $\phi(x,z,)=\psi(x,t) \hat{\phi}(z) + \varphi(x,z,t)$ for $\hat{\phi}(z)\ne 1$ but with $\hat{\phi}(z=H_0)=1$. See lines 617-629 for a failed attempt. CG1, CG2, CG3 work. 
 
