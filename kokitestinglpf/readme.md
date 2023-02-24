@@ -1,5 +1,12 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
+24-02: GLL now used for CG elements: see https://link.springer.com/article/10.1007/s11831-019-09385-1
+
+Problme solved, used (thanks):
+phihat = fd.product( (x[1]-(H0/nCGvert)*(nCGvert+1-kk))/(H0-(H0/nCGvert)*(nCGvert+1-kk)) for kk in range(2,nCGvert+1,1) )
+# phihat = x[1]/H0
+and phihat.dx(1) to get its derivative.
+
 22-02-2023: Dated update of the code; I am trying to put in a split $\phi(x,z,)=\psi(x,t) \hat{\phi}(z) + \varphi(x,z,t)$ for $\hat{\phi}(z)\ne 1$ but with $\hat{\phi}(z=H_0)=1$. See lines 617-629 for a failed attempt. CG1, CG2, CG3 work. 
 
 18-02-2023: Put dated copy of code here; case 233 can be run in nowaveflap=0 (piston limit) or nowaveflap=1 mode (waveflap); both seem to work. To do: CG2-= to CG4; $f(z)\ne 1$ function but with $f(H_0)=1$ at top.
