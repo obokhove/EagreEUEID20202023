@@ -1,10 +1,40 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
+25-02 Get weights of GLL points (by Koki on Slack):
+from FIAT.reference_element import UFCInterval
+from FIAT.quadrature import GaussLobattoLegendreQuadratureLineRule
+
+n = 3
+fiat_rule = GaussLobattoLegendreQuadratureLineRule(UFCInterval(), n)
+print(fiat_rule.get_points())
+print(fiat_rule.get_weights())
+
+Order of quadrature in assemble (to get rid of warning):
+orders = [1, 3]  # horizontal and vertical
+quad_rules = []
+for order in orders:
+    fiat_rule = GaussLegendreQuadratureLineRule(UFCInterval(), order)
+    # Check:
+    # print(fiat_rule.get_points())
+    # print(fiat_rule.get_weights())
+    point_set = GaussLegendrePointSet(fiat_rule.get_points())
+    quad_rule = QuadratureRule(point_set, fiat_rule.get_weights())
+    quad_rules.append(quad_rule)
+quad_rule = TensorProductQuadratureRule(quad_rules)
+
+mesh = UnitIntervalMesh(2)
+extm = ExtrudedMesh(mesh, 4)
+V = FunctionSpace(extm, "CG", 2, vfamily="CG", vdegree=6)
+x, z = SpatialCoordinate(extm)
+f = Function(V).interpolate(x**2 * z**6)
+# reduced integration
+print(assemble(f * dx(scheme=quad_rule)))
+
 24-02: GLL now used for CG elements: see https://link.springer.com/article/10.1007/s11831-019-09385-1
 
 Problme solved, used (thanks):
 phihat = fd.product( (x[1]-(H0/nCGvert)*(nCGvert+1-kk))/(H0-(H0/nCGvert)*(nCGvert+1-kk)) for kk in range(2,nCGvert+1,1) )
-# phihat = x[1]/H0
+or phihat = x[1]/H0
 and phihat.dx(1) to get its derivative.
 https://www.mdpi.com/2297-8747/27/4/63
 
