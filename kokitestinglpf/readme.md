@@ -1,6 +1,7 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
 25-02 Get weights of GLL points (by Koki on Slack):
+```Python
 from FIAT.reference_element import UFCInterval
 from FIAT.quadrature import GaussLobattoLegendreQuadratureLineRule
 
@@ -29,12 +30,15 @@ x, z = SpatialCoordinate(extm)
 f = Function(V).interpolate(x**2 * z**6)
 # reduced integration
 print(assemble(f * dx(scheme=quad_rule)))
+```
 
 24-02: GLL now used for CG elements: see https://link.springer.com/article/10.1007/s11831-019-09385-1
 
 Problme solved, used (thanks):
+```Python
 phihat = fd.product( (x[1]-(H0/nCGvert)*(nCGvert+1-kk))/(H0-(H0/nCGvert)*(nCGvert+1-kk)) for kk in range(2,nCGvert+1,1) )
 or phihat = x[1]/H0
+```
 and phihat.dx(1) to get its derivative.
 https://www.mdpi.com/2297-8747/27/4/63
 
