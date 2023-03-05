@@ -19,7 +19,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 # parameters in SI units REMIS error of polynomials
 gg = 9.81  # gravitational acceleration [m/s^2]
 
-# water domain and discretisation parameters
+## water domain and discretisation parameters
 Lx = 140 # [m]
 Ly = 2 # [m]
 Lz = 1 # [m]
