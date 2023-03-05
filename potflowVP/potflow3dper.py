@@ -19,7 +19,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 # parameters in SI units REMIS error of polynomials
 gg = 9.81  # gravitational acceleration [m/s^2]
 
-## water domain and discretisation parameters
+# water domain and discretisation parameters
 Lx = 140 # [m]
 Ly = 2 # [m]
 Lz = 1 # [m]
@@ -167,16 +167,27 @@ h_old = fd.Function(V_R, name="h_old") # water depth old at level n
 h_new = fd.Function(V_R, name="h_new") # water depth new at level n+1
 btopo = fd.Function(V_R, name="btopo") # topography fixed in time
 varphi = fd.Function(V_W, name="varphi") # total velocity potential
-                
-# Variables at midpoint for modified midpoint waves
-mixed_Vmp = V_R * V_R * V_W
-result_mixedmp = fd.Function(mixed_Vmp)
-vvmp = fd.TestFunction(mixed_Vmp)
-vvmp0, vvmp1, vvmp2 = fd.split(vvmp) # These represent "blocks".
-psimp, hmp, varphimp= fd.split(result_mixedmp)
+
+if nvpcase=="MMP":
+    # Variables at midpoint for modified midpoint waves
+    mixed_Vmp = V_R * V_R * V_W
+    result_mixedmp = fd.Function(mixed_Vmp)
+    vvmp = fd.TestFunction(mixed_Vmp)
+    vvmp0, vvmp1, vvmp2 = fd.split(vvmp) # These represent "blocks".
+    psimp, hmp, varphimp= fd.split(result_mixedmp)
+elif nvpcase=="SV":
+    mixed_Vsv = V_R * V_W
+    result_mixedsv = fd.Function(mixed_Vsv)
+    vvsv = fd.TestFunction(mixed_Vsv)
+    vvsv0, vvsv1, = fd.split(vvsv) # These represent "blocks".
+    psisv, varphisv = fd.split(result_mixedsv)
 
 # Initialise variables; projections on main variables at initial time
 if nvpcase=="MMP":
+    h_old.interpolate(H0*(fac-1.0)+eta_exact_expr)
+    psi_f.interpolate(psi_exact_exprH0)
+    btopo.interpolate(btopoexpr)
+elif nvpcase=="SV":
     h_old.interpolate(H0*(fac-1.0)+eta_exact_expr)
     psi_f.interpolate(psi_exact_exprH0)
     btopo.interpolate(btopoexpr)
@@ -202,6 +213,7 @@ def surface_BC_mixed(): #
         return MyBC(mixed_V.sub(0), 0, f_mixed)
 
 BC_varphi_mixedmp = fd.DirichletBC(mixed_Vmp.sub(2), 0, top_id) # varphimp condition for modified midpoint
+BC_varphi_mixedsv = fd.DirichletBC(mixed_Vsv.sub(1), 0, top_id) # varphisv condition for modified midpoint
 
 if nvpcase=="MMP": # modfied midpoint for solving psimp, hmp, varphimp= fd.split(result_mixedmp)
     param_h       = {'ksp_converged_reason':None, 'pc_type': 'fieldsplit','pc_fieldsplit_type': 'schur','pc_fieldsplit_schur_fact_type': 'upper'}               
@@ -269,7 +281,46 @@ if nvpcase=="MMP": # modfied midpoint for solving psimp, hmp, varphimp= fd.split
     Fexprnl = psif_exprnl1+h_exprnl1+phi_exprnl1
     phi_combonl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixedmp, bcs = BC_varphi_mixedmp), solver_parameters=param_psi)
     # phi_combonl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixedmp, bcs = BC_varphi_mixedmp), solver_parameters=parameters)
-# elif nvpcase=="SV": # Stormer-Verlet to to
+elif nvpcase=="SV": # Stormer-Verlet to to
+    param_psi = {'ksp_type': 'preonly', 'pc_type': 'lu'}
+    Ww = Lx
+    Lw = Lx
+    if nphihatz=="GLL1":
+        fiat_rule = GaussLobattoLegendreQuadratureLineRule(UFCInterval(), nCGvert+1) # GLL
+        zk = (H0*fiat_rule.get_points())
+        phihat = fd.product( (x[1]-zk.item(kk))/(H0-zk.item(kk)) for kk in range(0,nCGvert-1,1) )
+        dphihat = phihat.dx(1) # May not work and in that case specify the entire product: dpsidxi3 = psimp*phihat.dx(1)
+    elif nphihatz=="Unity":
+        phihat = 1.0
+        dphihat = 0.0
+
+    # Variables [psisv, varphisv], h_new, psii
+    VP3dpf = (- H0*Ww*fd.inner(psisv, (h_new - h_old)/dt) + H0*Ww*fd.inner(psii, h_new/dt) - H0*Ww*fd.inner(psi_f, h_old/dt) \
+              + 0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_new, fac*H0+h_new)-(fac*H0+h_new)*H0+0.5*H0**2 ) \
+              + 0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_old, fac*H0+h_old)-(fac*H0+h_old)*H0+0.5*H0**2 )  ) * fd.ds_t \
+                + 0.25*( (Lw**2/Ww)*(fac*H0+h_new)*(psisv.dx(0)*phihat+varphisv.dx(0)-(1.0/(fac*H0+h_new))*(H0*btopo.dx(0)+x[2]*h_new.dx(0))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                        + Ww*(fac*H0+h_new)*(psisv.dx(1)*phihat+varphisv.dx(1)-(1.0/(fac*H0+h_new))*(H0*btopo.dx(1)+x[2]*h_new.dx(1))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                        + Ww*(H0**2/(fac*H0+h_new)) * (psisv*dphihat+varphisv.dx(2))**2 \
+                         (Lw**2/Ww)*(fac*H0+h_old)*(psisv.dx(0)*phihat+varphisv.dx(0)-(1.0/(fac*H0+h_old))*(H0*btopo.dx(0)+x[2]*h_old.dx(0))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                        + Ww*(fac*H0+h_old)*(psisv.dx(1)*phihat+varphisv.dx(1)-(1.0/(fac*H0+h_old))*(H0*btopo.dx(1)+x[2]*h_old.dx(1))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                        + Ww*(H0**2/(fac*H0+h_old)) * (psisv*dphihat+varphisv.dx(2))**2  ) * fd.dx
+
+    #  Step-1-2: solve psisv, varphisv variation wrt h_old (eta_old) and varphisv
+    psif_exprnl1 = fd.derivative(VP3dpf, h_old, du=vvsv0) # du=v_W represents perturbation 
+    phi_exprnl1 = fd.derivative(VP3dpf, varphipsv, du=vvsv1)
+    Fexprnl = psif_exprnl1+h_phi_exprnl1
+    phi_combonlsv = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(Fexprnl, result_mixedsv, bcs = BC_varphi_mixedsv), solver_parameters=param_psi)
+    
+    #  Step-3: solve h_new=h^(n+1/2) variation wrt psi^(n+1/2)
+    h_exprnl1 = fd.derivative(VP3dpf, psisv, du=v_R)
+    h_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(h_exprnl1,h_new))
+
+    #  Step-4: variation wrt h_new fsolve psii=psi^(n+1)
+    psin_exprnl1 = fd.derivative(VP3dpf, phii, du=v_R)
+    phin_exprnl = fd.NonlinearVariationalSolver(fd.NonlinearVariationalProblem(phin_exprnl1 ,phii))
+
+# 
+    
 
     
 ###### OUTPUT FILES and initial PLOTTING ##########
@@ -295,20 +346,39 @@ print('Time Loop starts')
 while t <= t_end + dt: #  t_end + dt
     tt = format(t, '.3f')
 
-    if nvpcase == "MMP":
+    if nvpcase == "MMP": # VP MMP
         phi_combonl.solve()
         psimp, hmp, varphimp = result_mixedmp.split()
         psi_f.interpolate(2.0*psimp-psi_f) # update n+1 -> n
         h_old.interpolate(2.0*hmp-h_old) # update n+1 -> n
         varphi.interpolate(varphimp+psi_f) # total velociy potential for plotting
-    # elif nvpcase == "SV": # VP SV to do
+    elif nvpcase == "SV": # VP SV
+        phi_combonl.solve()
+        psisv, varphisv = result_mixedsv.split()
+        h_exprnl.solve()
+        phin_exprnl.solve()
+        phi_f.assign(phii)
+        # Done later since needed in energy EKin: h_old.assign(h_new)
+        varphi.interpolate(varphisv+psi_f) # total velociy potential for plotting
+        
 
     # Energy monitoring: bit too frequent reduce
     if t>=0.0:
-        EKin = fd.assemble( 0.5*( (Lw**2/Ww)*(fac*H0+hmp)*(psimp.dx(0)*phihat+varphimp.dx(0)-(1.0/(fac*H0+hmp))*(H0*btopo.dx(0)+x[2]*hmp.dx(0))*(psimp*dphihat+varphimp.dx(2)))**2 \
-                                  + Ww*(fac*H0+hmp)*(psimp.dx(1)*phihat+varphimp.dx(1)-(1.0/(fac*H0+hmp))*(H0*btopo.dx(1)+x[2]*hmp.dx(1))*(psimp*dphihat+varphimp.dx(2)))**2 \
-                                  + Ww*(H0**2/(fac*H0+hmp))*(psimp*dphihat+varphimp.dx(2))**2 ) * fd.dx )
-        EPot = fd.assemble( H0*gg*Ww*( 0.5*fd.inner(fac*H0+hmp,fac*H0+hmp)-(fac*H0+hmp)*H0+0.5*H0**2 ) * fd.ds_t )
+        if nvpcase=="MMP":
+            EKin = fd.assemble( 0.5*( (Lw**2/Ww)*(fac*H0+hmp)*(psimp.dx(0)*phihat+varphimp.dx(0)-(1.0/(fac*H0+hmp))*(H0*btopo.dx(0)+x[2]*hmp.dx(0))*(psimp*dphihat+varphimp.dx(2)))**2 \
+                                      + Ww*(fac*H0+hmp)*(psimp.dx(1)*phihat+varphimp.dx(1)-(1.0/(fac*H0+hmp))*(H0*btopo.dx(1)+x[2]*hmp.dx(1))*(psimp*dphihat+varphimp.dx(2)))**2 \
+                                      + Ww*(H0**2/(fac*H0+hmp))*(psimp*dphihat+varphimp.dx(2))**2 ) * fd.dx )
+            EPot = fd.assemble( H0*gg*Ww*( 0.5*fd.inner(fac*H0+hmp,fac*H0+hmp)-(fac*H0+hmp)*H0+0.5*H0**2 ) * fd.ds_t )
+        elif nvpcase=="SV":
+            EKin = fd.assemble( 0.25*( (Lw**2/Ww)*(fac*H0+h_new)*(psisv.dx(0)*phihat+varphisv.dx(0)-(1.0/(fac*H0+h_new))*(H0*btopo.dx(0)+x[2]*h_new.dx(0))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                                       + Ww*(fac*H0+h_new)*(psisv.dx(1)*phihat+varphisv.dx(1)-(1.0/(fac*H0+h_new))*(H0*btopo.dx(1)+x[2]*h_new.dx(1))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                                       + Ww*(H0**2/(fac*H0+h_new)) * (psisv*dphihat+varphisv.dx(2))**2 \
+                                       (Lw**2/Ww)*(fac*H0+h_old)*(psisv.dx(0)*phihat+varphisv.dx(0)-(1.0/(fac*H0+h_old))*(H0*btopo.dx(0)+x[2]*h_old.dx(0))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                                       + Ww*(fac*H0+h_old)*(psisv.dx(1)*phihat+varphisv.dx(1)-(1.0/(fac*H0+h_old))*(H0*btopo.dx(1)+x[2]*h_old.dx(1))*(psisv*dphihat+varphisv.dx(2)))**2 \
+                                       + Ww*(H0**2/(fac*H0+h_old)) * (psisv*dphihat+varphisv.dx(2))**2  ) * fd.dx  )
+            Epot = fd.assemble(0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_new, fac*H0+h_new)-(fac*H0+h_new)*H0+0.5*H0**2 ) \
+                               + 0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_old, fac*H0+h_old)-(fac*H0+h_old)*H0+0.5*H0**2 )  ) * fd.ds_t  )
+            
         Etot = EKin+EPot
         plt.figure(2)
         plt.plot(t,Etot,'.k')
@@ -317,6 +387,8 @@ while t <= t_end + dt: #  t_end + dt
         plt.xlabel(f'$t$',fontsize=size)
         plt.ylabel(f'$E(t), K(t), P(t)$',fontsize=size)
         
+    if nvpcase == "SV": # VP SV
+        h_old.assign(h_new)
 
     t+= dt
     if (t in t_plot): # if (t >= tmeet-0.5*dt): # t > tmeet-epsmeet
