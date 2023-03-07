@@ -357,7 +357,7 @@ while t <= t_end + dt: #  t_end + dt
         psisv, varphisv = result_mixedsv.split()
         h_exprnl.solve()
         phin_exprnl.solve()
-        phi_f.assign(psii)
+        psi_f.assign(psii)
         # Done later since needed in energy EKin: h_old.assign(h_new)
         varphi.interpolate(varphisv+psi_f) # total velociy potential for plotting
         
