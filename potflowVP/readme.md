@@ -10,7 +10,7 @@ $$+\int_0^{H_0} \bigg[\dfrac12 \dfrac{L_w^2}{W}h^{n+1/2} \big(\psi^{n+1/2}_x\hat
 
 $$ +\frac12 W{h^{n+1/2}}\bigg( \psi^{n+1/2}_y\hat{\phi}+\varphi^{n+1/2}_y -\dfrac{1}{h^{n+1/2}}\big(H_0 {b_y}+z h^{n+1/2}_y\big)(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z) \bigg)^2$$
 
-$$ +\dfrac12W\dfrac{H_0^2}{h^{n+1/2}}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]\,{\rm d}z\,\bigg]{\rm d}x \, {\rm d}y.$$
+$$ +\dfrac12W\dfrac{H_0^2}{h^{n+1/2}}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg] {\rm d}z \bigg]{\rm d}x {\rm d}y.$$
 
 The time-discrete VP corresponding to SV reads
 
@@ -32,6 +32,6 @@ $$ +\frac 12 \int_0^{H_0} \bigg[\dfrac12 \dfrac{L_w^2}{W}h^{n}
 $$ +\frac12 W{h^{n}}\bigg(
 \psi^{n+1/2}_y\hat{\phi}+\varphi^{n+1/2}_y -\dfrac{1}{h^{n}}\big(H_0 {b_y}+z h^{n}_y\big)(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z) \bigg)^2$$
 
-$$+\dfrac12W\dfrac{H_0^2}{h^n}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]\,{\rm d}z
-\,\bigg]{\rm d}x \, {\rm d}y.$$
+$$+\dfrac12W\dfrac{H_0^2}{h^n}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]{\rm d}z
+\bigg]{\rm d}x {\rm d}y.$$
 
