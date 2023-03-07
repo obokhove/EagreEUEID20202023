@@ -397,26 +397,26 @@ while t <= t_end + dt: #  t_end + dt
         i += 1
         tmeet = tmeet+dtmeet
 
-        if nvpcase == "MMP": # 
-            phi1vals = np.array([psi_f.at(x, yslice, zslice) for x in xvals])
-            eta1vals = np.array([h_old.at(x, yslice, zslice) for x in xvals])
-            if nic == "linearw":
-                ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
-                ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
-                phi_exact_exprv = D * np.sin(kx * xvals-omega * t) * np.cosh(kx * H0)
-                eta_exact_exprv = A * np.cos(kx * xvals-omega * t)
-                ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # 
-                ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) #
-                ax1.legend(loc=4)
-                ax2.legend(loc=4)
-            else:
-                ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
-                ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
-            print('t =', t, tmeet, i)
-            #
-            outfile_height.write(h_old, time=t)
-            outfile_psi.write(psi_f, time=t)
-            outfile_varphi.write(varphi, time=t)
+        #if nvpcase == "MMP": # 
+        phi1vals = np.array([psi_f.at(x, yslice, zslice) for x in xvals])
+        eta1vals = np.array([h_old.at(x, yslice, zslice) for x in xvals])
+        if nic == "linearw":
+            ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
+            ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
+            phi_exact_exprv = D * np.sin(kx * xvals-omega * t) * np.cosh(kx * H0)
+            eta_exact_exprv = A * np.cos(kx * xvals-omega * t)
+            ax1.plot(xvals, eta_exact_exprv, '-c', linewidth=1) # 
+            ax2.plot(xvals, phi_exact_exprv, '-c', linewidth=1) #
+            ax1.legend(loc=4)
+            ax2.legend(loc=4)
+        else:
+            ax1.plot(xvals, eta1vals, color[int(i-1) % 4], label = f' $\eta_n: t = {t:.3f}$')
+            ax2.plot(xvals, phi1vals, color[int(i-1) % 4], label = f' $\phi_n: t = {t:.3f}$')
+        print('t =', t, tmeet, i)
+        #
+        outfile_height.write(h_old, time=t)
+        outfile_psi.write(psi_f, time=t)
+        outfile_varphi.write(varphi, time=t)
 
             
 print('t=',t,'tmeet=',tmeet,'tplot',t_plot)
