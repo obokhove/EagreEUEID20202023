@@ -35,3 +35,16 @@ $$ +\frac12 W{h^{n}}\bigg(
 $$+\dfrac12W\dfrac{H_0^2}{h^n}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]{\rm d}z
 \bigg]{\rm d}x {\rm d}y.$$
 
+# SP1 test: one soliton
+
+To do: write down (dimensional) expressions.
+
+# SP2 test: two interacting solitons
+
+To do: write down (dimensional) expressions.
+
+# SP3 test: three interacting solitons
+
+To do: write down (dimensional) expressions.
+
+
