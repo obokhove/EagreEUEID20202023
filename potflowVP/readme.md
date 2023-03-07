@@ -1,4 +1,4 @@
-## Potential-flow dynmamics 3D VP-based
+## Potential-flow dynamics 3D VP-based
 
 07-03-2023 MMP and SV via VP now both work (by Onno with ".solve" and "psi_f", use psisv, EPot corrections by Junho). Note that I have cleaned up the code a bit more as well. Parameter settings need to be improved. See Appendix G in pdf-pp1718.  Also added the tic-tic timing around the time loop ("import time as tijd").
 
@@ -35,15 +35,15 @@ $$ +\frac12 W{h^{n}}\bigg(
 $$+\dfrac12W\dfrac{H_0^2}{h^n}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]{\rm d}z
 \bigg]{\rm d}x {\rm d}y.$$
 
-# SP1 test: one soliton
+## SP1 test: one soliton
+
+To do: write down (dimensional) expressions. Strategy (since what I have seen is incomprehensible): use one for BL-system (dimensionless) and then scale back to dimensional case.
+
+## SP2 test: two interacting solitons
 
 To do: write down (dimensional) expressions.
 
-# SP2 test: two interacting solitons
-
-To do: write down (dimensional) expressions.
-
-# SP3 test: three interacting solitons
+## SP3 test: three interacting solitons
 
 To do: write down (dimensional) expressions.
 
