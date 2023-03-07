@@ -1,6 +1,6 @@
 ## Potential-flow dynmamics 3D VP-based
 
-07-03-2023 MMP and SV via VP now both work (by Onno with ".solve" and "psi_f", EPot corrections by Junho). Note that I have cleaned up the code a bit more as well. Parameter settings need to be improved. See Appendix G in pdf-pp1718. 
+07-03-2023 MMP and SV via VP now both work (by Onno with ".solve" and "psi_f", use psisv, EPot corrections by Junho). Note that I have cleaned up the code a bit more as well. Parameter settings need to be improved. See Appendix G in pdf-pp1718.  Also added the tic-tic timing around the time loop ("import time as tijd").
 
 Upon making the splitting $\phi(x,y,z,t)=\psi(x,y,t)\hat{\phi}(z)+\varphi(x,y,z,t)$ with $\hat{\phi}(H_0=1)$ and $\varphi(x,y,H_0,t)=0$ (or another splitting with $z$-dependence), the MMP time discretisation reads
 
