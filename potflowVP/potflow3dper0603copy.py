@@ -353,7 +353,7 @@ while t <= t_end + dt: #  t_end + dt
         h_old.interpolate(2.0*hmp-h_old) # update n+1 -> n
         varphi.interpolate(varphimp+psi_f) # total velociy potential for plotting
     elif nvpcase == "SV": # VP SV
-        phi_combonlsv()
+        phi_combonlsv.solve()
         psisv, varphisv = result_mixedsv.split()
         h_exprnl.solve()
         phin_exprnl.solve()
