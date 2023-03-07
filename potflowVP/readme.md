@@ -8,7 +8,7 @@ $$ 0=  \int_{\hat{\Omega}_{x,y}}\bigg[ \Big( -H_0 W\psi^{n+1/2}\frac {(h^{n+1}-h
 
 $$+\int_0^{H_0} \bigg[\dfrac12 \dfrac{L_w^2}{W}h^{n+1/2} \big(\psi^{n+1/2}_x\hat{\phi}+\varphi^{n+1/2}_x- \dfrac{1}{h^{n+1/2}}\big(H_0 {b_x}+z h^{n+1/2}_x\big)(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z) \big)^2$$
 
-$$ +\frac12 W{h^{n+1/2}}\bigg( \psi^{n+1/2}_y\hat{\phi}+\varphi^{n+1/2}_y -\dfrac{1}{h^{n+1/2}}\big(H_0 \uuline{b_y}+z h^{n+1/2}_y\big)(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z) \bigg)^2$$
+$$ +\frac12 W{h^{n+1/2}}\bigg( \psi^{n+1/2}_y\hat{\phi}+\varphi^{n+1/2}_y -\dfrac{1}{h^{n+1/2}}\big(H_0 {b_y}+z h^{n+1/2}_y\big)(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z) \bigg)^2$$
 
 $$ +\dfrac12W\dfrac{H_0^2}{h^{n+1/2}}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]\,{\rm d}z\,\bigg]{\rm d}x \, {\rm d}y.$$
 
