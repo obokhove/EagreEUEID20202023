@@ -2,7 +2,7 @@
 
 07-03-2023 MMP and SV via VP now both work (by Onno with ".solve" and "psi_f", EPot corrections by Junho). Note that I have cleaned up the code a bit more as well. Parameter settings need to be improved. See Appendix G in pdf-pp1718. 
 
-Upon making the splitting $\phi(x,y,z,t)=\psi(x,y,t)\hat{\phi}(z)+\varphi(x,y,z,t)$ with $\hat{\phi}(H_0=1)$ and $\varphi(x,y,H_0,t)=0$, the MMP time discretisation o reads
+Upon making the splitting $\phi(x,y,z,t)=\psi(x,y,t)\hat{\phi}(z)+\varphi(x,y,z,t)$ with $\hat{\phi}(H_0=1)$ and $\varphi(x,y,H_0,t)=0$ (or another splitting with $z$-dependence), the MMP time discretisation reads
 
 $$ 0=  \int_{\hat{\Omega}_{x,y}}\bigg[ \Big( -H_0 W\psi^{n+1/2}\frac {(h^{n+1}-h^n)}{\Delta t}  + H_0 h^{n+1/2}\frac {(W\psi^{n+1}-W\psi^n)}{\Delta t} +H_0 g W h^{n+1/2}(\dfrac12 h^{n+1/2} -H_0) \Big)$$
 
