@@ -333,7 +333,7 @@ ax2.plot(xvals, phi1vals, ':k', label = f' $\phi_n: t = {t:.3f}$', linewidth=2)
 
 ###### TIME LOOP ##########
 print('Time Loop starts')
-# Junho?
+# Timer:
 tic = tijd.time()
 while t <= t_end + dt: #  t_end + dt
     tt = format(t, '.3f')
@@ -410,9 +410,7 @@ while t <= t_end + dt: #  t_end + dt
             outfile_psi.write(psi_f, time=t)
             outfile_varphi.write(varphi, time=t)
 # End time loop
-# Junho?
 toc = tijd.time() - tic
-# Junho?
 print('Elapsed time (min):', toc/60)
 print('t=',t,'tmeet=',tmeet,'tplot',t_plot)
 plt.show() 
