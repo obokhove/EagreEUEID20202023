@@ -376,8 +376,8 @@ while t <= t_end + dt: #  t_end + dt
                                        +(Lw**2/Ww)*(fac*H0+h_old)*(psisv.dx(0)*phihat+varphisv.dx(0)-(1.0/(fac*H0+h_old))*(H0*btopo.dx(0)+x[2]*h_old.dx(0))*(psisv*dphihat+varphisv.dx(2)))**2 \
                                        + Ww*(fac*H0+h_old)*(psisv.dx(1)*phihat+varphisv.dx(1)-(1.0/(fac*H0+h_old))*(H0*btopo.dx(1)+x[2]*h_old.dx(1))*(psisv*dphihat+varphisv.dx(2)))**2 \
                                        + Ww*(H0**2/(fac*H0+h_old)) * (psisv*dphihat+varphisv.dx(2))**2  ) * fd.dx  )
-            Epot = fd.assemble( 0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_new, fac*H0+h_new)-(fac*H0+h_new)*H0+0.5*H0**2 ) \
-                                + 0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_old, fac*H0+h_old)-(fac*H0+h_old)*H0+0.5*H0**2 ) * fd.ds_t )
+            EPot = fd.assemble( (0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_new, fac*H0+h_new)-(fac*H0+h_new)*H0+0.5*H0**2 ) \
+                                + 0.5*H0*gg*Ww*( 0.5*fd.inner(fac*H0+h_old, fac*H0+h_old)-(fac*H0+h_old)*H0+0.5*H0**2 )) * fd.ds_t )
             
         Etot = EKin+EPot
         plt.figure(2)
