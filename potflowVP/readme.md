@@ -37,7 +37,7 @@ $$+\dfrac12W\dfrac{H_0^2}{h^n}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bi
 
 ## SP1 test: one soliton
 
-To do: write down (dimensional) expressions. Strategy (since what I have seen is incomprehensible): use one for BL-system (dimensionless) and then scale back to dimensional case.
+To do: write down (dimensional) expressions. Strategy (since what I have seen is incomprehensible): use one for BL-system (dimensionless) and then scale back to dimensional case. Done. Tests seem to work.
 
 ## SP2 test: two interacting solitons
 
