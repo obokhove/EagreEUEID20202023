@@ -35,6 +35,8 @@ $$ +\frac12 W{h^{n}}\bigg(
 $$+\dfrac12W\dfrac{H_0^2}{h^n}(\psi^{n+1/2}\hat{\phi}_z+\varphi^{n+1/2}_z)^2 \bigg]{\rm d}z
 \bigg]{\rm d}x {\rm d}y.$$
 
+References on the (fd.)derivative command and such: https://fenicsproject.org/pub/book/book/fenics-book-2011-06-14.pdf (section 17.5.1) https://arxiv.org/abs/1211.4047 (section 6.4)
+
 ## SP1 test: one soliton
 
 To do: write down (dimensional) expressions. Strategy (since what I have seen is incomprehensible): use one for BL-system (dimensionless) and then scale back to dimensional case. Done. Tests seem to work.
