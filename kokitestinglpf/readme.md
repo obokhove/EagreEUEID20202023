@@ -1,5 +1,8 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
+16-03-2023, use:
+param_psi    = {'ksp_type': 'preonly', 'pc_type': 'lu', 'pc_factor_mat_solver_type':'mumps','snes_monitor':None, 'ksp_monitor':None}
+
 25-02 Get weights of GLL points (by Koki on Slack):
 ```Python
 from FIAT.reference_element import UFCInterval
