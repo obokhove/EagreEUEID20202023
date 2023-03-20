@@ -1,6 +1,6 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
-20-03-03 Latest waveflap code (sorry should go in other folder); case 233 waveflap. Choice of energy unclear; halving dt does not 1/4 energy after t>=28Tp. To do: (a) check whether it does for piston case; (b) compare piston case 233 and case 23; c) compare b) with Yang's code for nz=1 (and other nz) choice;  (d) fix energy issue; (e) fix why using g(z-H0) does not yield same result as integrated/manipulated version at xi3=H0 and xi=0.
+20-03-03 Latest waveflap code; case 233 waveflap. Choice of energy unclear; halving dt does not 1/4 energy after t>=28Tp. To do: (a) check whether it does for piston case; (b) compare piston case 233 and case 23; c) compare b) with Yang's code for nz=1 (and other nz) choice;  (d) fix energy issue; (e) fix why using g(z-H0) does not yield same result as integrated/manipulated version at xi3=H0 and xi=0.
 
 16-03-2023, use:
 param_psi    = {'ksp_type': 'preonly', 'pc_type': 'lu', 'pc_factor_mat_solver_type':'mumps','snes_monitor':None, 'ksp_monitor':None}
