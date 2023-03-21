@@ -1,5 +1,7 @@
 # Testing ground for (linear) potential flow (from variational principle -VP)
 
+21-03-2023: Hence, updated code as dated.
+
 20-03-03 Note line 638 has a typo; now fixed and redone piston & waveflap for CFL=0.5, 10 for 2 Tp with wavemaker switch off at Tp (plateau energy for waveflap at 1.5*10^(-07); piston case converges/reduces 4x from 7.5*10^(-8) to 1.8*10^(-8). Latest waveflap code; case 233 waveflap. Choice of energy unclear; halving dt does not 1/4 energy after t>=28Tp. To do: (a) check whether it does for piston case; (b) compare piston case 233 and case 23; c) compare b) with Yang's code for nz=1 (and other nz) choice;  (d) fix energy issue; (e) fix why using g(z-H0) does not yield same result as integrated/manipulated version at xi3=H0 and xi=0.
 
 16-03-2023, use:
