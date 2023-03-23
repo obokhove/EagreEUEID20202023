@@ -1,6 +1,6 @@
 ## Potential-flow dynamics 3D VP-based
 
-22-03-2022 The SP2 paraview movie blows up 10^43. However the yslice's (at y=0, Ly/2 and Ly) seem fine and periodic. No idea what is going on. Note that time loop switched off. See start of while loop.
+22-03-2022 Partially fixed by correcting name phi_f into psi_f. However, corrsp2 still does not work. The SP2 paraview movie blows up 10^43. However the yslice's (at y=0, Ly/2 and Ly) seem fine and periodic. No idea what is going on. Note that time loop switched off. See start of while loop.
 Newer file added: can't figure out why psi_f does not show normally in paraview; same for U0y, c0y and the combination. I had it at some point but something has changed.
 
 20-03-03 Latest waveflap code (sorry should go in other folder); case 233 waveflap. Choice of energy unclear; halving dt does not 1/4 energy after t>=28Tp. To do: (a) check whether it does for piston case; (b) compare piston case 233 and case 23; c) compare b) with Yang's code for nz=1 (and other nz) choice;  (d) fix energy issue; (e) fix why using g(z-H0) does not yield same result as integrated/manipulated version at xi3=H0 and xi=0.
