@@ -1,4 +1,6 @@
 ## Potential-flow dynamics 3D VP-based
+25-03: Updated code. Maybe SP2 works. Put on HPC? Put depth dependence in U0(y,z). Tested SP1: converges in time now.
+
 23-03 Updated code. Switch off time-loop for plots. Now segmentation error on SP2.
 
 22-03-2022 Partially fixed by correcting name phi_f into psi_f. However, corrsp2 still does not work. The SP2 paraview movie blows up 10^43. However the yslice's (at y=0, Ly/2 and Ly) seem fine and periodic. No idea what is going on. Note that time loop switched off. See start of while loop.
