@@ -1,4 +1,6 @@
 ## Potential-flow dynamics 3D VP-based
+28-03-2023: SP3 initial condition seems to work for that0=0 but not that0=-200 (see "JUNHO" in code). Any ideas how to deal with the shifting?
+
 27-03-2023: Works. Junho Choi runs code on HPC. See Appendix and soliton paper. Buys implementing SP3.
 
 25-03: Updated code. Maybe SP2 works. Put on HPC? Put depth dependence in U0(y,z). Tested SP1: converges in time now.
