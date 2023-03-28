@@ -1,5 +1,5 @@
 ## Potential-flow dynamics 3D VP-based
-27-03-2023: Works. Junho Choi runs code on HPC. See Appendix and soliton paper.
+27-03-2023: Works. Junho Choi runs code on HPC. See Appendix and soliton paper. Buys implementing SP3.
 
 25-03: Updated code. Maybe SP2 works. Put on HPC? Put depth dependence in U0(y,z). Tested SP1: converges in time now.
 
