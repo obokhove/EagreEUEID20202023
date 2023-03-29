@@ -452,7 +452,7 @@ elif nic=="SP3": # SP3 solitons periodic dimensional; extend VP?
     KKXY2 = (k4**2+k5**2+k6**2)*KKX2 \
         +4*k4*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
     KKXYY2 = (k4**2+k5**2+k6**2)**2*KKXY2 \
-        +4*k4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
+        +4*k4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
         +4*k4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
     GX2 = 2*Fx**2*( KKXXX2/KK2-3*KKXX2*KKX2/KK2**2+2*KKX2**3/KK2**3 )
     GY2 = 2*Fy**2*( KKXYY2/KK2-2*KKXY2*KKY2/KK2**2-KKX2*KKYY2/KK2**2+2*KKX2*(KKY2)**2/KK2**3 )
