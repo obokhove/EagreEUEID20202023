@@ -388,7 +388,7 @@ elif nic=="SP2": # SP2 solitons periodic dimensional; extend VP? Define eta and 
 elif nic=="SP3": # SP3 solitons periodic dimensional; extend VP?
     ttilde = 0.1 # time units used for SP2 in BLE
     t_end = ttilde*(H0/np.sqrt(gg*H0*muu)) # dimensionless BLE end-time of BokhoveKalogirou2016 times time-scaling factor
-    t0 = that0**(H0/np.sqrt(gg*H0*muu)) 
+    t0 = that0*(H0/np.sqrt(gg*H0*muu)) 
     # xx1, xx2, yy2=Ly
     Fx = np.sqrt(eps/muu)*(3/np.sqrt(2))**(1/3)
     Fy = (eps/np.sqrt(muu))*(3/np.sqrt(2))**(2/3)
@@ -401,29 +401,30 @@ elif nic=="SP3": # SP3 solitons periodic dimensional; extend VP?
     print('xx1, xx2, yy1, yy2', xx1, xx2, yy1, yy2)
     alphaa = -np.log(np.sqrt(aa*cc))
     XX1 = (np.sqrt(eps)/H0)*(3/np.sqrt(2))**(1/3)*(xx11-xs-np.sqrt(gg*H0)*t0)
+    print('XX1',XX1)
     Y2 = (eps/H0)*(3/np.sqrt(2))**(2/3)*(x[1]-ys)
-    KK1 = 2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( A135*fd.exp(-alphaa)*fd.cosh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.cosh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKX1 = 2*k4*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-3*A135*fd.exp(-alphaa)*fd.sinh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.sinh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKXX1 = 2*k4**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( 9*A135*fd.exp(-alphaa)*fd.cosh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.cosh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKXXX1 =  2*k4**3*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-27*A135*fd.exp(-alphaa)*fd.sinh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.sinh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KK1 = 2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( A135*np.exp(-alphaa)*np.cosh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.cosh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KKX1 = 2*k4*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-3*A135*np.exp(-alphaa)*np.sinh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.sinh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KKXX1 = 2*k4**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( 9*A135*np.exp(-alphaa)*np.cosh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.cosh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KKXXX1 =  2*k4**3*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-27*A135*np.exp(-alphaa)*np.sinh(-3*k4*XX1+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.sinh(k4*XX1+(k4**3+k5**3-k6**3)*tau0-alphaa) )
     KKY1 = (k4**2+k5**2+k6**2)*KK1 \
-        +4*A136*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
+        +4*A136*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
     KKYY1 = (k4**2+k5**2+k6**2)**2*KKY1 \
-        +4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
-        +4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
+        +4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
+        +4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
     KKXY1 = (k4**2+k5**2+k6**2)*KKX1 \
-        +4*k4*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
+        +4*k4*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
     KKXYY1 = (k4**2+k5**2+k6**2)**2*KKXY1 \
-        +4*k4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
-        +4*k4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
+        +4*k4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX1-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
+        +4*k4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX1-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
     GX1 = 2*Fx**2*( KKXXX1/KK1-3*KKXX1*KKX1/KK1**2+2*KKX1**3/KK1**3 )
     GY1 = 2*Fy**2*( KKXYY1/KK1-2*KKXY1*KKY1/KK1**2-KKX1*KKYY1/KK1**2+2*KKX1*(KKY1)**2/KK1**3 )
     etax1y = 2.0*eps*H0*((4/3)**(1/3))*( KKXX1/KK1 -(KKX1/KK1)**2 )
@@ -432,28 +433,28 @@ elif nic=="SP3": # SP3 solitons periodic dimensional; extend VP?
 
     # xx2 used x[1]=y function ; can this be automated via general case?
     XX2 = (np.sqrt(eps)/H0)*(3/np.sqrt(2))**(1/3)*(xx22-xs-np.sqrt(gg*H0)*t0)
-    KK2 = 2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( A135*fd.exp(-alphaa)*fd.cosh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.cosh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKX2 = 2*k4*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-3*A135*fd.exp(-alphaa)*fd.sinh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.sinh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKXX2 = 2*k4**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( 9*A135*fd.exp(-alphaa)*fd.cosh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.cosh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKXXX2 = 2*k4**3*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-27*A135*fd.exp(-alphaa)*fd.sinh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
-                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
-                                +A236*np.exp(alphaa)*fd.sinh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KK2 = 2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( A135*np.exp(-alphaa)*np.cosh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.cosh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KKX2 = 2*k4*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-3*A135*np.exp(-alphaa)*np.sinh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.sinh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KKXX2 = 2*k4**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( 9*A135*np.exp(-alphaa)*np.cosh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.cosh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
+    KKXXX2 = 2*k4**3*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-27*A135*np.exp(-alphaa)*np.sinh(-3*k4*XX2+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+                                +2*A136*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
+                                +A236*np.exp(alphaa)*np.sinh(k4*XX2+(k4**3+k5**3-k6**3)*tau0-alphaa) )
     KKY2 = (k4**2+k5**2+k6**2)*KK2 \
-        +4*A136*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2 -Ystar))
+        +4*A136*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2 -Ystar))
     KKYY2 = (k4**2+k5**2+k6**2)**2*KKY2 \
-        +4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
-        +4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
+        +4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
+        +4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.cosh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
     KKXY2 = (k4**2+k5**2+k6**2)*KKX2 \
-        +4*k4*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
+        +4*k4*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar))
     KKXYY2 = (k4**2+k5**2+k6**2)**2*KKXY2 \
-        +4*k4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
-        +4*k4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
+        +4*k4*A136*(k4**2+k5**2+k6**2)*(k6**2-k5**2)*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX2-k4**3*tau0)*fd.sinh((k6**2-k5**2)*(Y2-Ystar)) \
+        +4*k4*A136*(k6**2-k5**2)**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*np.exp((k6**2-k5**2)*Ystar)*np.sinh(k4*XX2-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar))
     GX2 = 2*Fx**2*( KKXXX2/KK2-3*KKXX2*KKX2/KK2**2+2*KKX2**3/KK2**3 )
     GY2 = 2*Fy**2*( KKXYY2/KK2-2*KKXY2*KKY2/KK2**2-KKX2*KKYY2/KK2**2+2*KKX2*(KKY2)**2/KK2**3 )
     etax2y = 2.0*eps*H0*((4/3)**(1/3))*( KKXX2/KK2 -(KKX2/KK2)**2 )
@@ -475,16 +476,16 @@ elif nic=="SP3": # SP3 solitons periodic dimensional; extend VP?
 
     # X = (np.sqrt(eps)/H0)*(3/np.sqrt(2))**(1/3) )*(x[0]-np.sqrt(gg*H0)*t0) ; Y = ( (eps/H0)*(3/np.sqrt(2))**(2/3) )*x[1]
     XX = (np.sqrt(eps)/H0)*(3/np.sqrt(2))**(1/3)*(x[0]-xs-np.sqrt(gg*H0)*t0)
-    KK = 2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( A135*fd.exp(-alphaa)*fd.cosh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+    KK = 2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( A135*np.exp(-alphaa)*fd.cosh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
                                 +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
                                 +A236*np.exp(alphaa)*fd.cosh(k4*XX+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKX = 2*k4*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-3*A135*fd.exp(-alphaa)*fd.sinh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+    KKX = 2*k4*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-3*A135*np.exp(-alphaa)*fd.sinh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
                                 +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
                                 +A236*np.exp(alphaa)*fd.sinh(k4*XX+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKXX = 2*k4**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( 9*A135*fd.exp(-alphaa)*fd.cosh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+    KKXX = 2*k4**2*fd.exp((k4**2+k5**2+k6**2)*Y2)*( 9*A135*np.exp(-alphaa)*fd.cosh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
                                 +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.cosh(k4*XX-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
                                 +A236*np.exp(alphaa)*fd.cosh(k4*XX+(k4**3+k5**3-k6**3)*tau0-alphaa) )
-    KKXXX =  2*k4**3*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-27*A135*fd.exp(-alphaa)*fd.sinh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
+    KKXXX =  2*k4**3*fd.exp((k4**2+k5**2+k6**2)*Y2)*(-27*A135*np.exp(-alphaa)*fd.sinh(-3*k4*XX+(k4**3+k6**3-k5**3)*tau0+alphaa) \
                                 +2*A136*np.exp((k6**2-k5**2)*Ystar)*fd.sinh(k4*XX-k4**3*tau0)*fd.cosh((k6**2-k5**2)*(Y2-Ystar)) \
                                 +A236*np.exp(alphaa)*fd.sinh(k4*XX+(k4**3+k5**3-k6**3)*tau0-alphaa) )
     KKY = (k4**2+k5**2+k6**2)*KK \
