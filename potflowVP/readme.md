@@ -1,5 +1,7 @@
 ## Potential-flow dynamics 3D VP-based
 
+30-03-2023: Line 112 fixed by Junho; now it works better but at that=-200 the image is somewhat different from Fig 7a in WW-paper, likely due to an error or difference in O(mu^2) terms or the for-now missing eta corrections in the O(mu^2) terms.
+
 29-03-2023: Fixed a whole set of fd.cosh into np.cosh in SP3 but for that=-200 overflow errors occur since values too large; issue is that Junho's in section 4.3.2. of WW-paper are completely unclear to me; they seem mandatory from a computational viewpoint. Incomprehrensible at the moment. Latest code updated.
 
 29-03-2023: Code updated to date; typo/error in definition of Fx in SP2. ()**(1/3) and not ()*(1/3), although it was in a mu^2 correction term. SP3 issue still remaining but I a, checking and added comments. Plus an error in SP3 fixed; XX1 in one spot should  have been XX2.
