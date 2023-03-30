@@ -109,7 +109,7 @@ elif nic=="SP3": # three-soliton case made x-periodic
     muu = eps**2
     H0 = 1.0
     that0 = -200 # BLE time all seems to work for that0=0 but not for that0=-200 JUNHO: please check.
-    tau0 = that0*np.sqrt(0.5*muu/eps)/eps # KPE time
+    tau0 = that0*np.sqrt(2*eps/muu)*eps # KPE time
     #
     tantheta = (2/9)**(1/6)/(4*np.sqrt(eps)) # np.tan(thetaa)
     deltaa = 0.00140455    
@@ -142,8 +142,8 @@ elif nic=="SP3": # three-soliton case made x-periodic
     # To do: from SP2 into SP3; approximations! wrong still
     X2KPE =  (k6+k5)*Y2KPE+(k6**2+k5*k6+k5**2)*tau0-np.log(A246/A146)/(k6-k5)
     X1KPE = -(k6+k5)*Y2KPE+(k6**2+k5*k6+k5**2)*tau0-np.log(A136/A135)/(k6-k5)
-    x2hat = (np.sqrt(muu/eps)*(np.sqrt(2)/3)**(1/3)*X2KPE+(1/eps)*np.sqrt(0.5*muu/eps)*tau0)
-    x1hat = (np.sqrt(muu/eps)*(np.sqrt(2)/3)**(1/3)*X1KPE+(1/eps)*np.sqrt(0.5*muu/eps)*tau0)
+    x2hat = (np.sqrt(muu/eps)*(np.sqrt(2)/3)**(1/3)*X2KPE)
+    x1hat = (np.sqrt(muu/eps)*(np.sqrt(2)/3)**(1/3)*X1KPE)
     xx1 = (H0/np.sqrt(muu))*x1hat
     xx2 = (H0/np.sqrt(muu))*x2hat
     Lx = xx2-xx1
