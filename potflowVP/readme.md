@@ -1,4 +1,5 @@
 ## Potential-flow dynamics 3D VP-based
+31-03-2023: Dreadful difference remains and results seem to change; I added a flag ntflag; ntflag=0 should be Junho's result (although I have not received a working code confirming that without the minor errors reported below corrected) and ntflag=1 are my results, which follow the scalings written down in draft and WW-paper. I also added a flag ntflag2 to check whether Junho's it can be put for ntflag=1 into a shift of xs but then all hell breaks loose (code flares up and breaks own, no idea why).
 
 30-03-2023: Line 112 fixed by Junho; now it works better but at that=-200 the image is somewhat different from Fig 7a in WW-paper, likely due to an error or difference in O(mu^2) terms or the for-now missing eta corrections in the O(mu^2) terms.
 
