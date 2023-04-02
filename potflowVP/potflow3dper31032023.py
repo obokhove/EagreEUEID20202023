@@ -129,7 +129,7 @@ elif nic=="SP3": # three-soliton case made x-periodic
     A136 = 2*cc*k6*(k6**2-k4**2)
     A246 = aa*bb*cc*A135
     A146 = bb*A136
-    A236 = aa*cc*(-k4*k6**2-k6*k4**2+k5*k6**2+k5*k6**2-k5*k4**2+k6*k5**2+k4*k5**2)
+    A236 = aa*cc*(-k4*k6**2-k6*k4**2+k5*k6**2+k6*k5**2-k5*k4**2+k4*k5**2)
     #
     Lyhat = 47 # BLE yhat-scale 
     Ystar = 0.5*np.log(A235/A136)/(k6**2-k5**2) # KPE Y-scale
