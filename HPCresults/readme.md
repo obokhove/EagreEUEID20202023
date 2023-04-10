@@ -10,6 +10,8 @@ mkdir: cannot create directory ‘/nobackup/cscmaw’: File exists
 [amtob@login1.arc4 ~]$ mkdir  /nobackup/cscmaw/amtob
 mkdir: cannot create directory ‘/nobackup/cscmaw/amtob’: Permission denied
 [amtob@login1.arc4 ~]$ 
+[amtob@login2.arc4 ~]$ ln -s /nobackup/amtob/  .singularity
+ln: failed to create symbolic link ‘.singularity’: File exists
 ```
 )
 
