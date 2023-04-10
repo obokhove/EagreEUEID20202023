@@ -1,10 +1,10 @@
 ## Instruction to install Firedrake in a Singularity docker on ARC4.
 
-[OB et al. To do: Describe singularity. Virtual environment. HPC provides module singularity.
-Onno 09-04-2023: I can virtually not follow a word: from which directory & machine are these commands given?
-Poor editting as well, as usual, which I started to fix -my, my.]
+( OB et al. To do: Describe singularity. Virtual environment. HPC provides module singularity.
+Onno 09-04-2023: from which directory & machine are these commands given?
+Poor editting as well, which I have started to fix. )
 
-[Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png)]
+( Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png) )
 
 
 Junho's instructions to date 09-04-2023:
