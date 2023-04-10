@@ -1,4 +1,4 @@
-# Instruction to install Firedrake in a Singularity docker on ARC4.
+## Instruction to install Firedrake in a Singularity docker on ARC4.
 
 [OB et al. To do: Describe singularity. Virtual environment. HPC provide module singularity. Where does on get this.
 Onno 09-04-2023: I can virtually not follow a word: from which directory & machine are these commands given?
