@@ -6,7 +6,7 @@ Describe singularity. Virtual environment. HPC provide module singularity. Where
 Instruction to install Firedrake in a Singularity docker on ARC4.
 
 Onno 09-04-2023: I can virtually not follow a word: from which directory & machine are these commands given?
-Poor editting as well, as usual.
+Poor editting as well, as usual, which I started to fix -my, my.
 
 Junho's instructions:
 
@@ -34,7 +34,7 @@ Junho's instructions:
   ```
 4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made.
 After that, move the Firedrake image into a directory where you want to compute.
-   ```Python
+```Python
    $mv firedrake_latest.sif /home/home02/$USER
 ```
 
@@ -42,9 +42,11 @@ After that, move the Firedrake image into a directory where you want to compute.
 (a)	Command directly at a linux window. First, load Singularity as 
 ```Python
         $ module add singularity/3.6.4
-        ```
-    And then, command the follows 
-        ```Python
+```
+  
+  And then, use the following command:
+  
+```Python
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
 
