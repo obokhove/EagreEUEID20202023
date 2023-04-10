@@ -2,7 +2,16 @@
 
 ( OB et al. To do: Describe singularity. Virtual environment. HPC provides module singularity.
 Onno 09-04-2023: from which directory & machine are these commands given?
-Poor editting as well, which I have started to fix. )
+Poor editting as well, which I have started to fix. Steps 2 and 3 do not work (sigh):
+```Python
+[amtob@login1.arc4 ~]$ mkdir /nobackup/cscmaw
+mkdir: cannot create directory ‘/nobackup/cscmaw’: File exists
+[amtob@login1.arc4 ~]$ 
+[amtob@login1.arc4 ~]$ mkdir  /nobackup/cscmaw/amtob
+mkdir: cannot create directory ‘/nobackup/cscmaw/amtob’: Permission denied
+[amtob@login1.arc4 ~]$ 
+```
+)
 
 ( Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png) )
 
