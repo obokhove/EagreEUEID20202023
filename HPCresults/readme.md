@@ -10,7 +10,7 @@ Poor editting as well, which I have started to fix. )
 Junho's instructions to date 09-04-2023:
 0. [OB] Log onto the ARC4 HPC (?), see: https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
 
-1.	Make directories [OB: presumable on ARC4] to save a Singularity docker.
+1.	Make directories [OB: presumably on ARC4] to save a Singularity docker.
   ```Python
   $cd
   $mkdir  /nobackup/cscmaw
