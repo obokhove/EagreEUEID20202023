@@ -4,6 +4,7 @@
 Onno 09-04-2023: I can virtually not follow a word: from which directory & machine are these commands given?
 Poor editting as well, as usual, which I started to fix -my, my.]
 
+UoL HPC instructions at https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
 
 Junho's instructions to date 09-04-2023:
 
