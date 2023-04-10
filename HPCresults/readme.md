@@ -4,14 +4,13 @@
 Onno 09-04-2023: I can virtually not follow a word: from which directory & machine are these commands given?
 Poor editting as well, as usual, which I started to fix -my, my.]
 
-UoL HPC instructions at https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
-
-Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png)
+[Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png)]
 
 
 Junho's instructions to date 09-04-2023:
+0. [OB] Log onto the ARC4 HPC (?), see :https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
 
-1.	Make directories [OB: where, which machine etc?] to save a Singularity docker.
+1.	Make directories [OB: presumable on ARC4] to save a Singularity docker.
   ```Python
   $cd
   $mkdir  /nobackup/cscmaw
@@ -52,5 +51,8 @@ After that, move the Firedrake image into a directory where you want to compute.
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
 
-(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached.
+(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached:
+```Python
+[OB Add script]
+```
 
