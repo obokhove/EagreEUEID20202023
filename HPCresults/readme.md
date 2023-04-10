@@ -19,6 +19,10 @@ mkdir: cannot create directory ‘/nobackup/cscmaw/amtob’: Permission denied
 Junho's instructions to date 09-04-2023:
 0. [OB] Log onto the ARC4 HPC (?), see: https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
 
+To run larger jobs use queu:
+https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.githubusercontent.com/16267535/230985749-956052ea-645c-41e8-aa70-27254b8e750b.png)
+
+
 1. Onno's 1. Presumable it is:
   ```Python
   $cd
