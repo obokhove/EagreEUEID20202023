@@ -36,6 +36,7 @@ After that, move the Firedrake image into a directory where you want to compute.
 ```
 
 5.	Now, the installation ends. To run a Firedrake code, there are two ways.
+
 (a)	Command directly at a linux window. First, load Singularity as 
 ```Python
         $ module add singularity/3.6.4
