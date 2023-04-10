@@ -45,25 +45,30 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $ mkdir /nobackup/cscmaw/firedrake
   
 ```
-2.	Load modules required for installation.
+2.	Load modules required for installation. ( ONNO: unclear: from which directory are commands typed? )
 ```Python
  $ module swap openmpi mvapich
  $ module add apptainer
  $ module add anaconda
 ```
        
-3.	Install Firedrake using Singularity
+3.	Install Firedrake using Singularity ( ONNO: unclear: from which directory are commands typed? )
 ```Python
   $ cd /nobackup/cscmaw/firedrake
   $  apptainer pull docker://firedrakeproject/firedrake
   ```
 4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made.
 After that, move the Firedrake image into a directory where you want to compute.
+
+( ONNO: unclear: from which directory are commands typed? )
+
 ```Python
    $mv firedrake_latest.sif /home/home02/$USER
 ```
 
 5.	Now, the installation ends. To run a Firedrake code, there are two ways.
+
+( ONNO: unclear: from which directory are commands typed? )
 
 (a)	Command directly at a linux window. First, load Singularity as 
 ```Python
