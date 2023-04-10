@@ -8,7 +8,7 @@ UoL HPC instructions at https://arcdocs.leeds.ac.uk/getting_started/logon/logon-
 
 Junho's instructions to date 09-04-2023:
 
-1.	Make directories to save a Singularity docker.
+1.	Make directories [OB: where, which machine etc?] to save a Singularity docker.
   ```Python
   $cd
   $mkdir  /nobackup/cscmaw
