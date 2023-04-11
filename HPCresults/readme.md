@@ -57,14 +57,24 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $ mkdir /nobackup/cscmaw/firedrake
   
 ```
-2.	Load modules required for installation. ( ONNO: unclear: from which directory are commands typed? )
+2.	Load modules required for installation. ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory:
+```Python
+/nobackup/$USER/firedrake
+```
+
+
 ```Python
  $ module swap openmpi mvapich
  $ module add apptainer
  $ module add anaconda
 ```
        
-3.	Install Firedrake using Singularity ( ONNO: unclear: from which directory are commands typed? )
+3.	Install Firedrake using Singularity ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory:
+```Python
+/nobackup/$USER/firedrake
+```
+
+
 ```Python
   $ cd /nobackup/cscmaw/firedrake
   $  apptainer pull docker://firedrakeproject/firedrake
@@ -72,7 +82,10 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
 4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made.
 After that, move the Firedrake image into a directory where you want to compute.
 
-( ONNO: unclear: from which directory are commands typed? )
+( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are issued form directory:
+```Python
+/home/home02/$USER
+```
 
 ```Python
    $mv firedrake_latest.sif /home/home02/$USER
