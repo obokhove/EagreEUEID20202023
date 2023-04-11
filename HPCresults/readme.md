@@ -39,7 +39,7 @@ To run larger jobs use queu:
 https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.githubusercontent.com/16267535/230985749-956052ea-645c-41e8-aa70-27254b8e750b.png)
 
 
-1. Onno's 1. Presumably it is:
+1. Onno's 1. Presumably it is (ln -s command does not work, see above):
   ```Python
   $cd
   $mkdir  /nobackup/$USER
@@ -60,7 +60,7 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $ mkdir /nobackup/cscmaw/firedrake
   
 ```
-2.	Load modules required for installation. ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory:
+2.	Load modules required for installation. ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory (command module swap openmpi mvapich does not work, see above):
 ```Python
 /nobackup/$USER/firedrake
 ```
