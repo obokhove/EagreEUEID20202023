@@ -12,6 +12,9 @@ mkdir: cannot create directory ‘/nobackup/cscmaw/amtob’: Permission denied
 [amtob@login1.arc4 ~]$ 
 [amtob@login2.arc4 ~]$ ln -s /nobackup/amtob/  .singularity
 ln: failed to create symbolic link ‘.singularity’: File exists
+
+[amtob@login1.arc4 firedrake]$ module swap openmpi mvapich
+ModuleCmd_Switch.c(215):ERROR:105: Unable to locate a modulefile for 'mvapich'
 ```
 )
 
