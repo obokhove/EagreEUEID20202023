@@ -51,14 +51,17 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
  $ module add apptainer
  $ module add anaconda
 ```
+(Junho: Any directory where you are.)
        
 3.	Install Firedrake using Singularity ( ONNO: unclear: from which directory are commands typed? )
 ```Python
   $ cd /nobackup/cscmaw/firedrake
   $  apptainer pull docker://firedrakeproject/firedrake
   ```
-4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made.
-After that, move the Firedrake image into a directory where you want to compute.
+(Junho: Type them from a directory where you are now. cd /nobackup/cscmaw/firedrake means you move to "/nobackup/cscmaw/firedrake" where you made the directory at the first step.)
+ 
+4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made at /nobackup/cscmaw/firedrake.
+After that, move the Firedrake image from /nobackup/cscmaw/firedrake into a directory where you want to compute.
 
 ( ONNO: unclear: from which directory are commands typed? )
 
