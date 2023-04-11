@@ -15,7 +15,18 @@ ln: failed to create symbolic link ‘.singularity’: File exists
 ```
 )
 
-( Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png) )
+( Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png) 
+
+Reply Junho (not tested yet), there are two directories:
+```Python
+/nobackup/$USER/firedrake
+/home/home02/$USER
+```
+
+The former is where Singularity docker for Firedrake is installed, the latter is where you run Firedrake. So when you install Singularity, go to the former, type the commands at the former directory. To run Firedrake, go to the latter directory. 
+
+
+)
 
 
 Junho's instructions to date 09-04-2023:
@@ -25,13 +36,14 @@ To run larger jobs use queu:
 https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.githubusercontent.com/16267535/230985749-956052ea-645c-41e8-aa70-27254b8e750b.png)
 
 
-1. Onno's 1. Presumable it is:
+1. Onno's 1. Presumably it is:
   ```Python
   $cd
-  $mkdir  /nobackup/cscmaw/$USER
+  $mkdir  /nobackup/$USER
   $touch  .singularity
   $ln -s /nobackup/$USER/  .singularity
   $ mkdir /nobackup/$USER/firedrake
+  
   
 ```
 
