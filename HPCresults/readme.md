@@ -57,7 +57,7 @@ $cd /nobackup/$USER/firedrake
    $mv firedrake_latest.sif /home/home02/$USER
 ```
 
-5.	Now, the installation ends. To run a Firedrake code (from where: the home directory where .sif file is), there are two ways.
+5.	Now, the installation ends. To run a Firedrake code (from where: the home directory where .sif file is), there are two ways. 
 
 (a)	Command directly at a linux window. First, load Singularity as 
 ```Python
@@ -65,11 +65,11 @@ $cd /nobackup/$USER/firedrake
 ```
   
   And then, use the following command (after adding a test file, here named as a "BL_test.py" file):
-  
+  ( ONNO: fails for me and fix from Mark Walkley does not work yet )
 ```Python
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
-error: fix came via mark walkley:
+error: fix came via mark walkley ( ONNO: fails for me and fix from Mark Walkley does not work yet ):
 ```Python
 cd
 mv  .apptainer  /nobackup/$USER/
