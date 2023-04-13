@@ -64,14 +64,15 @@ cd /nobackup/$USER/firedrake
         $ module add singularity/3.6.4
 ```
   
-  And then, use the following command (after adding a test file, here named BL_test.py file):
+  And then, use the following command (after adding a test file, here named as a "BL_test.py" file):
   
 ```Python
-$singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
+$singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' \
+-B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
 
-(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached:
+(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.pdf":
 ```Python
-[OB Add script]
+[OB Add script?]
 ```
 
