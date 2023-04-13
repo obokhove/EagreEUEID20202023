@@ -18,7 +18,7 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $ mkdir /nobackup/firedrake
   
 ```
-2.	Load modules required for installation. Can be done from home directory or Firedrake directorytype "module avail" to check names of mvapich (it had changed):
+2.	Load modules required for installation. Can be done from home directory or Firedrake directory type "module avail" to check names of mvapich (it had changed):
 ```Python
 /nobackup/$USER/firedrake
 ```
