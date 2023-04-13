@@ -1,54 +1,12 @@
 ## Instruction to install Firedrake in a Singularity docker on HPC-ARC4
 
-( OB et al. To do: Describe singularity. Virtual environment. HPC provides module singularity.
-Onno 09-04-2023: from which directory & machine are these commands given?
-Poor editting as well, which I have started to fix. Steps 2 and 3 do not work (sigh):
-```Python
-[amtob@login1.arc4 ~]$ mkdir /nobackup/cscmaw
-mkdir: cannot create directory ‘/nobackup/cscmaw’: File exists
-[amtob@login1.arc4 ~]$ 
-[amtob@login1.arc4 ~]$ mkdir  /nobackup/cscmaw/amtob
-mkdir: cannot create directory ‘/nobackup/cscmaw/amtob’: Permission denied
-[amtob@login1.arc4 ~]$ 
-[amtob@login2.arc4 ~]$ ln -s /nobackup/amtob/  .singularity
-ln: failed to create symbolic link ‘.singularity’: File exists
-
-[amtob@login1.arc4 firedrake]$ module swap openmpi mvapich
-ModuleCmd_Switch.c(215):ERROR:105: Unable to locate a modulefile for 'mvapich'
-```
-)
-
-( Via JB from Firedrake; there is a guide to using Singularity/Apptainer using the Docker image as a starting point here: https://github.com/firedrakeproject/firedrake/wiki/singularity![image](https://user-images.githubusercontent.com/16267535/230949453-6f2c3661-a080-46ff-8779-704679c56ea6.png) 
-
-Reply Junho (not tested yet), there are two directories:
-```Python
-/nobackup/$USER/firedrake
-/home/home02/$USER
-```
-
 The former is where Singularity docker for Firedrake is installed, the latter is where you run Firedrake. So when you install Singularity, go to the former, type the commands at the former directory. To run Firedrake, go to the latter directory. 
 
-
-)
-
-
-Junho's instructions to date 09-04-2023:
-0. [OB] Log onto the ARC4 HPC (?), see: https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
+Instructions to date 13-04-2023:
+0.  Log onto the ARC4 HPC, see: https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
 
 To run larger jobs use queu:
 https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.githubusercontent.com/16267535/230985749-956052ea-645c-41e8-aa70-27254b8e750b.png)
-
-
-1. Onno's 1. Presumably it is (ln -s command does not work, see above):
-  ```Python
-  $cd
-  $mkdir  /nobackup/$USER
-  $touch  .singularity
-  $ln -s /nobackup/$USER/  .singularity
-  $ mkdir /nobackup/$USER/firedrake
-  
-  
-```
 
 1.	JUNHO 1. Make directories from home directory /home/home02/$USER [OB: presumably on ARC4] to save a Singularity docker (see instructions under 0.).
   ```Python
