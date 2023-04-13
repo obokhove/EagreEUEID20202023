@@ -24,7 +24,7 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $mkdir /nobackup/$USER
   $touch .singularity
   $ln -s /nobackup/$USER/ .singularity [did not work but could be ignored?]
-  $ mkdir /nobackup/$USER/firedrake
+  $mkdir /nobackup/$USER/firedrake
   
 ```
 2.	Load modules required for installation. Can be done from home directory or Firedrake directory; type "module avail" to check names of mvapich or other modules (it had changed to name stated below):
