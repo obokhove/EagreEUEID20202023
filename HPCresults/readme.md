@@ -55,7 +55,7 @@ cd /nobackup/$USER/firedrake
         $ module add singularity/3.6.4
 ```
   
-  And then, use the following command:
+  And then, use the following command (after adding a test file, here named BL_test.py file):
   
 ```Python
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
