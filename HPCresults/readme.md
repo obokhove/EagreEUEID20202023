@@ -67,8 +67,7 @@ cd /nobackup/$USER/firedrake
   And then, use the following command (after adding a test file, here named as a "BL_test.py" file):
   
 ```Python
-$singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' \
--B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
+$singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
 
 (b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.pdf":
