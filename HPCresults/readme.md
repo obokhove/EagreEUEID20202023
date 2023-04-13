@@ -50,17 +50,17 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   
 ```
 
-1.	JUNHO 1. Make directories [OB: presumably on ARC4] to save a Singularity docker (see instructions under 0.).
+1.	JUNHO 1. Make directories from home directory /home/home02/$USER [OB: presumably on ARC4] to save a Singularity docker (see instructions under 0.).
   ```Python
   $cd
-  $mkdir  /nobackup/cscmaw
-  $mkdir  /nobackup/cscmaw/$USER
-  $touch  .singularity
-  $ln -s /nobackup/cscmaw/$USER/  .singularity
-  $ mkdir /nobackup/cscmaw/firedrake
+  $mkdir /nobackup
+  $mkdir /nobackup/$USER
+  $touch .singularity
+  $ln -s /nobackup/$USER/ .singularity [did not work]
+  $ mkdir /nobackup/firedrake
   
 ```
-2.	Load modules required for installation. ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory (command module swap openmpi mvapich does not work, see above):
+2.	Load modules required for installation. Can be done from home directory or Firedrake directory ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory (command module swap openmpi mvapich does not work, see above):
 ```Python
 /nobackup/$USER/firedrake
 ```
