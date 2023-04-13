@@ -34,24 +34,21 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
 3.	Install Firedrake using Singularity:
 
 ```Python
-  $ cd /nobackup/amtob/firedrake
+  $ cd /nobackup/$USER/firedrake
   $  apptainer pull docker://firedrakeproject/firedrake
   ```
 4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made.
-After that, move the Firedrake image into a directory where you want to compute.
+After that, move the Firedrake image into a directory where you want to compute. From directory where Firedrake has been installed, i.e.:
 
-( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are issued form directory:
 ```Python
-/home/home02/$USER
+cd /nobackup/$USER/firedrake
 ```
 
 ```Python
    $mv firedrake_latest.sif /home/home02/$USER
 ```
 
-5.	Now, the installation ends. To run a Firedrake code, there are two ways.
-
-( ONNO: unclear: from which directory are commands typed? )
+5.	Now, the installation ends. To run a Firedrake code (from where: the home directory where .sif file is), there are two ways.
 
 (a)	Command directly at a linux window. First, load Singularity as 
 ```Python
