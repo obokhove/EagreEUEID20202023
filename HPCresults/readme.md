@@ -1,6 +1,14 @@
 ## Instruction to install Firedrake in a Singularity docker on HPC-ARC4
 
-The former is where Singularity docker for Firedrake is installed, the latter is where you run Firedrake. So when you install Singularity, go to the former, type the commands at the former directory. To run Firedrake, go to the latter directory. 
+The former 
+```Python
+/nobackup/$USER/firedrake
+```
+is where Singularity docker for Firedrake is installed, the latter
+```Python
+/home/home02/$USER
+```
+is where you run Firedrake. So when you install Singularity, go to the former, type the commands at the former directory. To run Firedrake, go to the latter directory. 
 
 Instructions to date 13-04-2023:
 0.  Log onto the ARC4 HPC, see: https://arcdocs.leeds.ac.uk/getting_started/logon/logon-off-campus.html#connecting-from-linux-macos-systems
