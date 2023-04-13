@@ -69,6 +69,17 @@ $cd /nobackup/$USER/firedrake
 ```Python
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
+error: fix came via mark walkley:
+```Python
+cd
+mv  .apptainer  /nobackup/$USER/
+ln -s  /nobackup/$USER/ .apptainer
+```
+Then use /nobackup/$USER as the working directory.
+
+```Python
+cd  /nobackup/$USER/firedrake
+```
 
 (b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.pdf":
 ```Python
