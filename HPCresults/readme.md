@@ -60,26 +60,23 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $ mkdir /nobackup/firedrake
   
 ```
-2.	Load modules required for installation. Can be done from home directory or Firedrake directory ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory (command module swap openmpi mvapich does not work, see above):
+2.	Load modules required for installation. Can be done from home directory or Firedrake directorytype "module avail" to check names of mvapich (it had changed):
 ```Python
 /nobackup/$USER/firedrake
 ```
 
 
 ```Python
- $ module swap openmpi mvapich
+ $ module swap openmpi 
+ $ module swap openmpi mvapich2/2.3.1
  $ module add apptainer
  $ module add anaconda
 ```
        
-3.	Install Firedrake using Singularity ( ONNO: unclear: from which directory are commands typed? ) presumably (OB???) commands are typed from directory:
-```Python
-/nobackup/$USER/firedrake
-```
-
+3.	Install Firedrake using Singularity:
 
 ```Python
-  $ cd /nobackup/cscmaw/firedrake
+  $ cd /nobackup/amtob/firedrake
   $  apptainer pull docker://firedrakeproject/firedrake
   ```
 4.	When finishing the installation, a Firedrake image named firedrake_latest.sif is made.
