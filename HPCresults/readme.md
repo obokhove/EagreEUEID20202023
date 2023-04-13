@@ -8,7 +8,7 @@ Instructions to date 13-04-2023:
 To run larger jobs use queu:
 https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.githubusercontent.com/16267535/230985749-956052ea-645c-41e8-aa70-27254b8e750b.png)
 
-1.	JUNHO Make directories from home directory /home/home02/$USER to save a Singularity docker (see instructions under 0.).
+1. Make directories from home directory /home/home02/$USER to save a Singularity docker (see instructions under 0.).
   ```Python
   $cd
   $mkdir /nobackup
@@ -18,7 +18,7 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $ mkdir /nobackup/firedrake
   
 ```
-2.	Load modules required for installation. Can be done from home directory or Firedrake directory type "module avail" to check names of mvapich (it had changed):
+2.	Load modules required for installation. Can be done from home directory or Firedrake directory; type "module avail" to check names of mvapich (it had changed):
 ```Python
 /nobackup/$USER/firedrake
 ```
