@@ -23,11 +23,11 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
   $mkdir /nobackup
   $mkdir /nobackup/$USER
   $touch .singularity
-  $ln -s /nobackup/$USER/ .singularity [did not work]
+  $ln -s /nobackup/$USER/ .singularity [did not work but could be ignored?]
   $ mkdir /nobackup/firedrake
   
 ```
-2.	Load modules required for installation. Can be done from home directory or Firedrake directory; type "module avail" to check names of mvapich (it had changed):
+2.	Load modules required for installation. Can be done from home directory or Firedrake directory; type "module avail" to check names of mvapich or other modules (it had changed to name stated below):
 ```Python
 /nobackup/$USER/firedrake
 ```
