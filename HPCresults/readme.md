@@ -50,7 +50,7 @@ https://arcdocs.leeds.ac.uk/usage/batchjob.html![image](https://user-images.gith
 After that, move the Firedrake image into a directory where you want to compute. From directory where Firedrake has been installed, i.e.:
 
 ```Python
-cd /nobackup/$USER/firedrake
+$cd /nobackup/$USER/firedrake
 ```
 
 ```Python
@@ -61,7 +61,7 @@ cd /nobackup/$USER/firedrake
 
 (a)	Command directly at a linux window. First, load Singularity as 
 ```Python
-        $ module add singularity/3.6.4
+        $module add singularity/3.6.4
 ```
   
   And then, use the following command (after adding a test file, here named as a "BL_test.py" file):
