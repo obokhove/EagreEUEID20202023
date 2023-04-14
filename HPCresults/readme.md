@@ -1,6 +1,6 @@
 ## Instruction to install Firedrake in a Singularity docker on HPC-ARC4 13-04-2023
 
-By Junho, 감사합니다 (kamza hamnida), with OB
+By Junho, 감사합니다 (Gamsa hamnida), with OB
 
 The former 
 ```Python
@@ -58,6 +58,10 @@ $cd /nobackup/$USER/firedrake
 ```Python
    $mv firedrake_latest.sif /home/home02/$USER
 ```
+ And then, make a .cache dirctory in the home directory:
+ ```Python
+mkdir .cache
+```
 
 5.	Now, the installation ends. To run a Firedrake code (from where: the home directory where .sif file is), there are two ways. 
 
@@ -66,23 +70,19 @@ $cd /nobackup/$USER/firedrake
         $module add singularity/3.6.4
 ```
   
-  And then, use the following command (after adding a test file, here named as a "BL_test.py" file and making a .cache dirctory in the home directory):
- 
+ (b) Command for checking a Firedrake code here named as a "BL_test.py" file:
 ```Python
-mkdir .cache
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
 
-
-(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.sh", to submit type (from home directory --see https://arcdocs.leeds.ac.uk/usage/batchjob.html):
+(c)	Second way is to submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.sh", to submit type (from home directory --see https://arcdocs.leeds.ac.uk/usage/batchjob.html):
 ```Python
 qsub example.sh
 ```
 
-(c) Save in nobackup:
+(d) Save in nobackup:
 save_path =  "/nobackup/$USER/lin_pot_flow/"
 
-(d) Command for checking Firedrake:
 
 
 
