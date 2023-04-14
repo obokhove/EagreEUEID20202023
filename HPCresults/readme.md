@@ -83,7 +83,10 @@ save_path =  "/nobackup/$USER/lin_pot_flow/"
 (d) Command for checking Firedrake:
 
 
-Visualisation
+
+
+
+## Visualisation
 
 Paraview
 
