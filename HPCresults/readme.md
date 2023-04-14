@@ -72,9 +72,9 @@ $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /n
 ```
 
 
-(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.pdf":
+(b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.sh", to submit type (from home directory --see https://arcdocs.leeds.ac.uk/usage/batchjob.html):
 ```Python
-[OB Add script?]
+qsub example.sh
 ```
 
 (c) Save in nobackup:
