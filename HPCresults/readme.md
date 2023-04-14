@@ -64,22 +64,13 @@ $cd /nobackup/$USER/firedrake
         $module add singularity/3.6.4
 ```
   
-  And then, use the following command (after adding a test file, here named as a "BL_test.py" file):
-  ( ONNO: fails for me and fix from Mark Walkley does not work yet )
+  And then, use the following command (after adding a test file, here named as a "BL_test.py" file and making a .cache dirctory in the home directory):
+ 
 ```Python
+mkdir .cache
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
-error: fix came via mark walkley ( ONNO: fails for me and fix from Mark Walkley does not work yet ; we made a .cache directory in the home directory):
-```Python
-cd
-mv  .apptainer  /nobackup/$USER/
-ln -s  /nobackup/$USER/ .apptainer
-```
-Then use /nobackup/$USER as the working directory.
 
-```Python
-cd  /nobackup/$USER/firedrake
-```
 
 (b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.pdf":
 ```Python
