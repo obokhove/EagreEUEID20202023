@@ -77,6 +77,12 @@ $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /n
 [OB Add script?]
 ```
 
+(c) Save in nobackup:
+save_path =  "/nobackup/$USER/lin_pot_flow/"
+
+(d) Command for checking Firedrake:
+
+
 Visualisation
 
 Paraview
