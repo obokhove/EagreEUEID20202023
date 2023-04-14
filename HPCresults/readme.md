@@ -81,6 +81,9 @@ qsub example.sh
 save_path =  "/nobackup/$USER/lin_pot_flow/"
 
 (d) Command for checking Firedrake:
+```Python
+$singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
+```
 
 
 
