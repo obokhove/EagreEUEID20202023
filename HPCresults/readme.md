@@ -69,7 +69,7 @@ $cd /nobackup/$USER/firedrake
 ```Python
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
-error: fix came via mark walkley ( ONNO: fails for me and fix from Mark Walkley does not work yet ):
+error: fix came via mark walkley ( ONNO: fails for me and fix from Mark Walkley does not work yet ; we made a .cache directory in the home directory):
 ```Python
 cd
 mv  .apptainer  /nobackup/$USER/
