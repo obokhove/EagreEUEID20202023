@@ -77,3 +77,12 @@ $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /n
 [OB Add script?]
 ```
 
+Visualisation
+
+Paraview
+
+Download data on arc4 from local machine, e.g (change to your USER):
+scp amtjch@arc4.leeds.ac.uk:/home/home02/helm.py .
+
+
+
