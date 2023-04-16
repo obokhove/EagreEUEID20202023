@@ -1,7 +1,8 @@
 ## Potential-flow dynamics 3D VP-based
 15-04-2023: Problems with xvals slicing/matplotlib of Wajiha (one piece I kept); code keeps crashing. Added a flag to comment it out on 16-04-2023. Probably should put the crap in a file.
+```Python
 mpiexec -n 4 python3 potflow3dper.py
-
+```
 
 11-04-2023: Added latest code (OB). Junho has included max amplification now in another slightly different code. For BLE dtBLEtime=0.5 crashes while dtBLEtime=0.02 still works with energy oscillation. For PFE dtBLEtime=0.02 leads to energy increases while dtBLEtime=0.005 and 0.0025 work. For PFE dtBLEtime=0.01 not known yet. Short time tests.
 
