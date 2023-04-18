@@ -1,4 +1,6 @@
 ## Potential-flow dynamics 3D VP-based
+18-04-2023: Draft presentation for CFC2023 posted here as pdf.
+
 15-04-2023: Problems with xvals slicing/matplotlib of Wajiha (one piece I kept); code keeps crashing. Added a flag to comment it out on 16-04-2023. Probably should put the crap in a file.
 ```Python
 mpiexec -n 4 python3 potflow3dper.py
