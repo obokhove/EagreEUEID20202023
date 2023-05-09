@@ -1,4 +1,12 @@
 ## Potential-flow dynamics 3D VP-based
+09-05:
+"I compared elapsed time between two settings; first: nCG=CG2, nx=132, ny=480, second: nCG=CG4, nx=132/2, ny=480/2. Please note that they have the same degree of freedom (dof), that is, dof=(nCG*nx)*(nCG*ny+1)=253704 in the code. Thus, I expected both of them to take a similar amount of time to compute under the same settings except nCG, nx, and ny. However, CG4 spent 1.5 times more time than CG2.
+Except dof,  Is there anything else which affects speed of computation?"
+
+" I suspect that the most intensive part of your computation is the additive Schwarz method on an extruded hexahedral mesh. Here your patches seem to be columns on each of the faces of the base mesh. As the polynomial degree p is increased, the number of flops to assemble the matrix scales with p^{2d+1}, and the number of operations to factor and solve the patch problems will grow cubically and quadratically on the number of DOFs on each column (if you fix the DOFs, at high order you have fewer columns with more DOFs compared to low-order). Because of the nonlinear dependence you should expect the solution of patch problems to be more expensive at high order."
+
+"Is there any reason to use the columnwise patches? Also, if the degree is moderate enough and the problem sufficiently benign (say it's just Poisson) then you could try to go entirely matrix free and use P1PC with a Jacobi smoother".
+
 18-04-2023: Draft presentation for CFC2023 posted here as pdf.
 
 15-04-2023: Problems with xvals slicing/matplotlib of Wajiha (one piece I kept); code keeps crashing. Added a flag to comment it out on 16-04-2023. Probably should put the crap in a file.
