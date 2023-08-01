@@ -1,4 +1,10 @@
 ## Potential-flow dynamics 3D VP-based
+
+01-08
+Other links:
+https://github.com/cjunho/cjh/tree/master/PFE
+
+
 09-05:
 "I compared elapsed time between two settings; first: nCG=CG2, nx=132, ny=480, second: nCG=CG4, nx=132/2, ny=480/2. Please note that they have the same degree of freedom (dof), that is, dof=(nCG*nx)*(nCG*ny+1)=253704 in the code. Thus, I expected both of them to take a similar amount of time to compute under the same settings except nCG, nx, and ny. However, CG4 spent 1.5 times more time than CG2.
 Except dof,  Is there anything else which affects speed of computation?"
