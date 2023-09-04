@@ -2,6 +2,10 @@
 
 Eagre GitHub codes: https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
 
+## Seminar 04-09-2023 at Technical University Denmark visit 30-09 to 06-09
+pdf of seminar "Nonlinear water-wave and wave-impact dynamics using 
+variational principles and automated numerics in Firedrake": tud2023.pdf
+
 ## Minutes 22-12-2022 meeting at MARIN have been added.
 
 ## Latest meetings at MARIN: 26-04-2022 and 27-06-2022 (agenda and/or minutes)
