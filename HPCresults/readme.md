@@ -73,19 +73,25 @@ mkdir .cache
 $singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 ```
 
+(b) Save in nobackup:
+save_path =  "/nobackup/$USER/lin_pot_flow/"
+
+
+(c) Command for checking Firedrake:
+```Python
+$singularity exec --env 'PATH=/home/firedrake/firedrake/bin:$PATH' -B /run -B /nobackup -B ~/.cache:/home/firedrake/firedrake/.cache firedrake_latest.sif python BL_test.py
 
 (b)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.sh", to submit type (from home directory --see https://arcdocs.leeds.ac.uk/usage/batchjob.html):
 ```Python
 qsub example.sh
+
 ```
 
-(c) Save in nobackup:
-save_path =  "/nobackup/$USER/lin_pot_flow/"
-
-(d) Command for checking Firedrake:
-
-
-
+(d)	Submit a job script to job scheduler of ARC4. An example of a job script is attached in file "example.pdf".  The command to submit a job script is
+```Python
+$qsub example.sh
+```
+For more information, refer to https://arcdocs.leeds.ac.uk/usage/batchjob.html.
 
 
 ## Visualisation
