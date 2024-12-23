@@ -1,6 +1,8 @@
 # Eagre/Aegir European Industry Doctorates GitHub pages
 
-Eagre GitHub codes: https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
+Eagre GitHub codes: https://github.com/EAGRE-water-wave-impact-modelling
+and
+https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
 
 ## Seminar 04-09-2023 at Technical University Denmark visit 30-09 to 06-09
 pdf of seminar "Nonlinear water-wave and wave-impact dynamics using 
@@ -11,11 +13,11 @@ variational principles and automated numerics in Firedrake": tud2023.pdf
 ## Latest meetings at MARIN: 26-04-2022 and 27-06-2022 (agenda and/or minutes)
 
 ## Introduction
-See Eagre website at: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html
+See Eagre website at: (Old-UoL site disfunctional: http://www1.maths.leeds.ac.uk/eagreEUEID/index.html)
 
-Webpage Yang Lu: https://www1.maths.leeds.ac.uk/~mmyl/index.html
+Webpage Yang Lu: https://luyanggeorge.github.io/ (Old-UoL: https://www1.maths.leeds.ac.uk/~mmyl/index.html)
 
-Webpage Wajiha Rehman (including outreach): https://www1.maths.leeds.ac.uk/~mmwr/
+Webpage Wajiha Rehman (including outreach): https://wajiha11.github.io/ (Old-UoL: https://www1.maths.leeds.ac.uk/~mmwr/)
 
 
 ## Data Management plan
