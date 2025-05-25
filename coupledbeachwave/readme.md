@@ -12,3 +12,5 @@ Analyse energy and waterline (OB: NB. current waterline analysis is incorrect 22
 Python and paraview files to be run (I guess in data directory): dwswbeach2025.pvsm, dwswbeachwave2025.pvsm, dwswbeachwave2025.py (OB: untested)
 
 Paraview instructions in Paraview5.docx file (OB; untested)
+
+Added run-up heights to the code in order to assess where the "water line" resides as it does not reside at the h=0-contour when water is receding. See !["Water line" proxy's](energy_and_xw.png)
