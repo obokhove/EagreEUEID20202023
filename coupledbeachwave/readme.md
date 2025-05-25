@@ -13,4 +13,4 @@ Python and paraview files to be run (I guess in data directory): dwswbeach2025.p
 
 Paraview instructions in Paraview5.docx file (OB; untested)
 
-Added run-up heights to the code in order to assess where the "water line" resides as it does not reside at the h=0-contour when water is receding. See !["Water line" proxy's](energy_and_xw.png)
+Added run-up heights to the code in order to assess where the "water line" resides as it does not reside at the h=0-contour when water is receding. Added new energy-plotting and main files. For comparison of PF and MSA, using h=0 may be okay, but it is not the waterline; percentage change in water line xw is artificial since xw average value is artificial. See !["Water line" proxy's](energy_and_xw.png)
