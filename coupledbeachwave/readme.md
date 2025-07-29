@@ -11,7 +11,7 @@ Run times:
 
 Analyse energy and waterline (OB: NB. h=0 waterline analysis updated 22-05-2025) run in main directory: python3 pp_energy1234.py 
 
-Python and paraview files to be run (I guess in data directory): dwswbeach2025.pvsm, dwswbeachwave2025.pvsm, dwswbeachwave2025.py (OB: untested)
+Python and paraview files to be run (I guess in data directory): dwswbeach2025.pvsm, dwswbeachwave2025.pvsm, dwswbeachwave2025.py (OB)
 
 Paraview instructions in Paraview5.docx file (OB)
 
