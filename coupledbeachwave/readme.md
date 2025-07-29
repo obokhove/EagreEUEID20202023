@@ -10,7 +10,7 @@ Run times:
 - M2 macbook Native: 39:23min; memory usage: 387.98MB. So 1.5x faster on M2 macbook.
 
 Analyse energy and waterline (OB: NB. h=0 waterline analysis updated 22-05-2025) run in main directory:
-- Figs. 4 and 7: python3 pp_energy.py (check output in main code)
+- Figs. 4 and 7 (referring to pdf document [29-07-2025]): python3 pp_energy.py (check output in main code)
 - Fig. 8: python3 pp_energy1234.py (check multiple h=c outputs in main code)
 
 Figs. 5 and 6:
