@@ -3,11 +3,13 @@ Coupled beach and wave: basic codes and analysis codes
 Main code(s) FG&YL: python3 coupled_tank.py (creates data files).
 See also theses Floriane Gidel (2018) and Yang Lu (2025) University of Leeds.
 
-Run time OB macbook 2020 via Dockers installation FD: Before time loop: 102.00s Computation time: 2h15min21.46s Total:8121.46s Memory usage less than ~406MB
+Run times:
+- OB macbook 2020 via Dockers installation FD: Before time loop: 102.00s Computation time: 2h15min21.46s Total:8121.46s Memory usage less than ~406MB . 
+- YL macbook Intel installation FD: ~1:27hr Memory usage less than ~300MB
+- M2 macbook Docker: 59:38min; memory usage 459.84MB.
+- M2 macbook Native: 39:23min; memory usage: 387.98MB. So 1.5x faster on M2 macbook.
 
-Run time YL macbook Intel installation FD: ~1:27hr Memory usage less than ~300MB
-
-Analyse energy and waterline (OB: NB. h=0 waterline analysis updated 22-05-2025) run in main directory: python3 pp_energy1244.py 
+Analyse energy and waterline (OB: NB. h=0 waterline analysis updated 22-05-2025) run in main directory: python3 pp_energy1234.py 
 
 Python and paraview files to be run (I guess in data directory): dwswbeach2025.pvsm, dwswbeachwave2025.pvsm, dwswbeachwave2025.py (OB: untested)
 
