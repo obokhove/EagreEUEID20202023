@@ -9,9 +9,12 @@ Run times:
 - M2 macbook Docker: 59:38min; memory usage 459.84MB.
 - M2 macbook Native: 39:23min; memory usage: 387.98MB. So 1.5x faster on M2 macbook.
 
-Analyse energy and waterline (OB: NB. h=0 waterline analysis updated 22-05-2025) run in main directory: python3 pp_energy1234.py 
+Analyse energy and waterline (OB: NB. h=0 waterline analysis updated 22-05-2025) run in main directory:
+- Figs. 4 and 7: python3 pp_energy.py (check output in main code)
+- Fig. 8: python3 pp_energy1234.py (check multiple h=c outputs in main code)
 
-Python and paraview files to be run (I guess in data directory): dwswbeach2025.pvsm, dwswbeachwave2025.pvsm, dwswbeachwave2025.py (OB)
+Figs. 5 and 6:
+- Python and paraview files to be run (e.g., in data directory): dwswbeach2025.pvsm, dwswbeachwave2025.pvsm, dwswbeachwave2025.py (OB)
 
 Paraview instructions in Paraview5.docx file (OB)
 
