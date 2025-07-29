@@ -1,4 +1,4 @@
-Coupled beach and wave: basic codes and analysis codes
+ ## Coupled beach and wave: basic codes and analysis codes
 
 Main code(s) FG&YL: python3 coupled_tank.py (creates data files).
 See also theses Floriane Gidel (2018) and Yang Lu (2025) University of Leeds.
