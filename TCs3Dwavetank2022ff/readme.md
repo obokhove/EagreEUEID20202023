@@ -3,8 +3,8 @@ OB reproducing, testing and plotting 28-07 to 29-07.
 
 TC4:
 - SV 10 cores on M2 Macbook 2024: 17:11:47.1hr
-- SV plotting tests of Figs. 10, 12, 13: reprodueced. TBD 12.
-- MMP 10 cores on M2 Macbook 2024: ???hr
+- SV plotting tests of Figs. 10, 12, 13: reproduced. TBD 12.
+- MMP 10 cores on M2 Macbook 2024: 35:01:50.5hr
 - MMP plotting tests of Figs. 12, 13: TBD.
 
 All post-processing files have all been heavily adapted/corrected and made more user-friendly:
