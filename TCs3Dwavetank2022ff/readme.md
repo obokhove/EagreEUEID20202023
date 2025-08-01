@@ -65,7 +65,7 @@ The numerical solutions can be processed and visualised using the post-processin
 
 
 ## Notes on test cases TC1, TC2, TC3, TC4 (OB all done on Docker on M2 Macbook)
-OB reproducing, testing and plotting 28-07-2025 to 01-08-2025.
+OB reproducing, testing and plotting 28-07-2025 to 01-08-2025. Draft of manuscript for figure reference added.
 
 TC4 used MPI 10 cores 28-07-2025 to 30-07-2025:
 - datapath set in settings_TC4.py (should be set right)
@@ -88,7 +88,7 @@ TC2 untested but adapted post-processing files.
 
 TC1 (serial) 01-08-2025:
 - files adapated
-- SV-dt:38.6s
+- SV-dt: 38.6s
 - SV-dt/2: 48.6s
 - MMP-dt: 40.4s
 - MMP-dt/2: 57.4s
