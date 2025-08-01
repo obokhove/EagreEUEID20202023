@@ -20,7 +20,7 @@ adata_path='/Users/amtob/werkvuurdraak2025/Wavetank2022-2025-main/'
 #data_path5 = 'data_VP/MMP/TC1_2D_series2(1ele,phiGLL)/Nx800_nz32_32dtf'
 #data_path6 = 'data_VP/MMP/TC1_2D_series2(1ele,phiGLL)/Nx800_nz32_64dtf'
 
-# New (untested):
+# New (untested, run in post-processing directory):
 data_path = adata_path+'data/MMP/TC1_2D_series2(1ele,phiGLL)/Nx3200_nz64_dtf'
 data_path1 = adata_path+'data/MMP/TC1_2D_series2(1ele,phiGLL)/Nx800_nz32_2dtf'
 data_path2 = adata_path+'data/MMP/TC1_2D_series2(1ele,phiGLL)/Nx800_nz32_4dtf'
