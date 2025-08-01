@@ -64,7 +64,7 @@ The numerical solutions can be processed and visualised using the post-processin
 | TC5       |**`pot_sp2.py`,`PFE_sp2max.py`,** <br/> `PFE_sp2maxA.py`, `PFE_sp2A.py`, `PFE_sp2energy.py`<br/> in the folder TC5_codes <br/> :white_check_mark: Done. 20240724
 
 
-## Notes on test cases TC1, TC2, TC3, TC4 (OB all done on Docker on M2 Macbook)
+## Notes on test cases TC1, TC2, TC3, TC4 (OB all done via Docker installation on M2 Macbook)
 OB reproducing, testing and plotting 28-07-2025 to 01-08-2025. Draft of manuscript for figure reference added.
 
 TC4 used MPI 10 cores 28-07-2025 to 30-07-2025:
