@@ -36,7 +36,7 @@ The NWT has been verified and validated through a series of test cases (TCs). Th
 | TC2b      |  Six computations with different temporal resolutions: `dt = ((Lx/3200)/(2*pi))*{2/4/8/16/32/64}` (`dt_save = dt*{32/16/8/4/2/1}`), where `res_x = 2*pi/800`, `n_z = 32` remain unchanged. |
 | TC2c      | Thirteen computations needed. The coarsest resolution for $u_{crc}$ is choosen as `res_x = 2*pi/50`, `n_z = 4`, `dt = ((Lx/3200)/(2*pi))*64`, `dt_save = dt`. The other two finer vertical resolutions are chosen as `n_z = 6` and `n_z = 8`. |
 | TC3       | Two simulations for MMP and SV (serial or parallel): <br/> 1. `dt = 0.001` in function `set_time`; <br/> 2. `dt = 0.002` (`dt_save = 0.002` remains unchanged). |
-| TC4       | One simulation with both methods (serial or parallel): switch between `scheme = "SV"` and `scheme = "MMP"`. |
+| TC4       | One simulation with both methods (serial or parallel): switch between `scheme = "SV"` and `scheme = "MMP"`, 'Tend=120', 't_save=0.01'. |
 
 3. **Output files**
     - After the simulation completes, output files will be saved to the specified directory. The expected files vary by test case: 
