@@ -64,31 +64,36 @@ The numerical solutions can be processed and visualised using the post-processin
 | TC5       |**`pot_sp2.py`,`PFE_sp2max.py`,** <br/> `PFE_sp2maxA.py`, `PFE_sp2A.py`, `PFE_sp2energy.py`<br/> in the folder TC5_codes <br/> :white_check_mark: Done. 20240724
 
 
-
-
-
-
-## Notes on test cases TC1, TC2, TC3, TC4
+## Notes on test cases TC1, TC2, TC3, TC4 (OB all done on Docker on M2 Macbook)
 OB reproducing, testing and plotting 28-07-2025 to 01-08-2025.
 
-TC4:
+TC4 used MPI 10 cores 28-07-2025 to 30-07-2025:
+- datapath set in settings_TC4.py (should be set right)
+- set dt_save = 0.02 and Tend = 120 (0.1 for a short test)
+- New file FFT_202002.m (only works from main directory not yet from post-processing)
 - SV 10 cores on M2 Macbook 2024: 17:11:47.1hr
-- SV plotting tests of Figs. 10, 12, 13: reproduced. TBD 12.
 - MMP 10 cores on M2 Macbook 2024: 35:01:50.5hr
-- MMP plotting tests of Figs. 12, 13: TBD.
+- all figures reproduced
+- All post-processing files have all been heavily adapted/corrected and made more user-friendly: pp_wavemaker_TC4VP.py , pp_probes_TC4VP.py , FFT_202002.m
 
-All post-processing files have all been heavily adapted/corrected and made more user-friendly:
-- pp_wavemaker_TC4VP.py , pp_probes_TC4VP.py , FFT_202002.m
+TC3 used MPI 10 cores 30-07-2025 to 01-08-2025:
+- made changes in, new files: settings_TC3.py, pp_energy_figs_TC3VP.py 
+- Started 3D_tank.py on 10 processes dt=0.002: 1:37:25.5hr
+- Started 3D_tank.py on 10 processes dt=0.001: 3:06:17.2hr
+- Started 3D_tank_VP.py on 10 processes dt = 0.001: 8:50:1.6hr
+- Started 3D_tank_VP.py on 10 processes dt = 0.002: 4:25:57.5hr
+- Figs. 7, 8: reproduced.
 
-TC3:
-- SV: 
-- MMP: 
+TC2 untested but adapted post-processing files.
 
-TC2:
+TC1 (serial) 01-08-2025:
+- files adapated
+- SV-dt:38.6s
+- SV-dt/2: 48.6s
+- MMP-dt: 40.4s
+- MMP-dt/2: 57.4s
 
-TC1:
-
-TC5:
+TC5: not tested again.
 
 
 
