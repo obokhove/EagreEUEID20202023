@@ -52,11 +52,11 @@ The numerical solutions can be processed and visualised using the post-processin
 | Test Case| Figure/Table No. | Data Sources | Post-Processing Script  | Notes |
 |  :----:  |  :----:    |    :----:    |      :----:           | :--- |
 |   TC1    |   Fig.3    |  `energy.csv`, <br/> `.npy` files | `pp_SWS_TC1VP.py` | Set `scheme`, and `data_path{1/2}` for both methods |
-|   TC2a   |   Fig.4(a),(b)  |  `.npy` files | `pp-TC1-convergence-dx.py` | Set `data_path{/1/2/3/4/5}`, and `path` in `save_figure`. |
-|   TC2a   |   Fig.4(c),(d)  |  `.npy` files | `pp-TC1-convergence-nz.py` | Set `data_path{/1/2/3/4/5/6/7/8}`, and `path` in `save_figure`. |
-|   TC2b   |   Fig.4(e),(f)  |  `.npy` files | `pp-TC1-convergence-dt.py` | Set `data_path{/1/2/3/4/5/6}`, and `path` in `save_figure`. |
-|   TC2c   |   Table 1, 2    |  `.npy` files | `pp-TC1-Atiken.py` | Set `data_path{1/2/3}` for a group computations with coarse/medium/fine meshes. The time-averaged order of convergence is shown in the bottom figure. |
-|   TC2    |   Fig.5, Fig.6  |  `.npy` files |  `pp-TC1-advanced-convergence.py` | Set `data_folder` and thirteen `data_path_xxx`; switch `results` between `'h'/'psi'`. |
+|   TC2a   |   Fig.4(a),(b)  |  `.npy` files | `pp-TC2a-convergence-dx.py` | Set `data_path{/1/2/3/4/5}`, and `path` in `save_figure`. |
+|   TC2a   |   Fig.4(c),(d)  |  `.npy` files | `pp-TC2a-convergence-nz.py` | Set `data_path{/1/2/3/4/5/6/7/8}`, and `path` in `save_figure`. |
+|   TC2b   |   Fig.4(e),(f)  |  `.npy` files | `pp-TC2b-convergence-dt.py` | Set `data_path{/1/2/3/4/5/6}`, and `path` in `save_figure`. |
+|   TC2c   |   Table 1, 2    |  `.npy` files | `pp-TC2c-Atiken.py` | Set `data_path{1/2/3}` for a group computations with coarse/medium/fine meshes. The time-averaged order of convergence is shown in the bottom figure. |
+|   TC2    |   Fig.5, Fig.6  |  `.npy` files |  `pp-TC2-advanced-convergence.py` | Set `data_folder` and thirteen `data_path_xxx`; switch `results` between `'h'/'psi'`. |
 |   TC3    |   Fig.7, Fig.8  |  `checkpoints.csv` | `pp_energy_figs_TC3VP.py` | Set the four directories `file_MMP{1/2}` and `file_SV{1/2}`. |
 |   TC4    |   Fig.10    |  `probes.csv` <br/> folder `202002` | `pp_wavemaker_TC4VP.py`  | Set the directories of the wavemaker data `file_exp{1/2}` and numerical results `data_path`. |
 |   TC4    |   Fig.12   |  `probes.csv` <br/> folder `202002` | `pp_probes_TC4VP.py`  | Set the measurements directory via `measurements`, and the output directories of the two methods via `data_path` and `data_path1` respectively. |
