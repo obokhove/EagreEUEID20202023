@@ -67,7 +67,7 @@ The numerical solutions can be processed and visualised using the post-processin
 ## Notes on test cases TC1, TC2, TC3, TC4 (OB all done via Docker installation on M2 Macbook)
 OB reproducing, testing and plotting 28-07-2025 to 01-08-2025. Draft of manuscript for figure reference added.
 
-TC4 used MPI 10 cores 28-07-2025 to 30-07-2025:
+TC4 used MPI 10 cores 28-07-2025 to 30-07-2025 nCG=1:
 - datapath set in settings_TC4.py (should be set right)
 - set dt_save = 0.02 and Tend = 120 (0.1 for a short test)
 - New file FFT_202002.m (only works from main directory not yet from post-processing)
@@ -75,8 +75,9 @@ TC4 used MPI 10 cores 28-07-2025 to 30-07-2025:
 - MMP 10 cores on M2 Macbook 2024: 35:01:50.5hr
 - all figures reproduced
 - All post-processing files have all been heavily adapted/corrected and made more user-friendly: pp_wavemaker_TC4VP.py , pp_probes_TC4VP.py , FFT_202002.m
+- 07-08 nCG=2 test at res_x=0.02 (twice as large), but with degree=(2*nCG,4*nz)): ::hr TBD
 
-TC3 used MPI 10 cores 30-07-2025 to 01-08-2025:
+TC3 used MPI 10 cores 30-07-2025 to 01-08-2025, with nCG=1:
 - made changes in, new files: settings_TC3.py, pp_energy_figs_TC3VP.py 
 - Started 3D_tank.py on 10 processes dt=0.002: 1:37:25.5hr
 - Started 3D_tank.py on 10 processes dt=0.001: 3:06:17.2hr
@@ -86,7 +87,7 @@ TC3 used MPI 10 cores 30-07-2025 to 01-08-2025:
 
 TC2 untested but adapted post-processing files.
 
-TC1 (serial) 01-08-2025:
+TC1 (serial) 01-08-2025 with nCG=1:
 - files adapated
 - SV-dt: 38.6s
 - SV-dt/2: 48.6s
