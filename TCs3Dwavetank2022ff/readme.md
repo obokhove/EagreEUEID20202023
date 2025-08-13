@@ -75,7 +75,11 @@ TC4 used MPI 10 cores 28-07-2025 to 30-07-2025 nCG=1:
 - MMP 10 cores on M2 Macbook 2024: 35:01:50.5hr
 - all figures reproduced
 - All post-processing files have all been heavily adapted/corrected and made more user-friendly: pp_wavemaker_TC4VP.py , pp_probes_TC4VP.py , FFT_202002.m
-- 07-08 nCG=2 test at res_x=0.02 (twice as large), but with degree=(2*nCG,4*nz)): ::hr TBD
+- 08-08 nCG=2 MMP test at res_x=0.02 (2x) degree=(2nCG,4nz)) 15:23:17.0
+- 09-08 nCG=1 MMP at res_x=0.01 degree=(2nCG,4nz)) 13:01:22.8
+- 29-07 nCG=1 SV default degrees at res_x=0.01 17:11:47.1
+- 13-08 nCG=2 SV default degrees at res_x=0.02 12:24:01.8
+- New 3D_tank_VP.py and 3D_tank.py files
 
 TC3 used MPI 10 cores 30-07-2025 to 01-08-2025, with nCG=1:
 - made changes in, new files: settings_TC3.py, pp_energy_figs_TC3VP.py 
