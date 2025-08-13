@@ -64,7 +64,7 @@ The numerical solutions can be processed and visualised using the post-processin
 | TC5       |**`pot_sp2.py`,`PFE_sp2max.py`,** <br/> `PFE_sp2maxA.py`, `PFE_sp2A.py`, `PFE_sp2energy.py`<br/> in the folder TC5_codes <br/> :white_check_mark: Done. 20240724
 
 
-## Notes on test cases TC1, TC2, TC3, TC4 (OB all done via Docker installation on M2 Macbook)
+## Notes on test cases TC1, TC2, TC3, TC4 (OB all done via Docker installation on M2 Macbook 10 cores)
 OB reproducing, testing and plotting 28-07-2025 to 01-08-2025. Draft of manuscript for figure reference added.
 
 TC4 used MPI 10 cores 28-07-2025 to 30-07-2025 nCG=1:
@@ -75,7 +75,11 @@ TC4 used MPI 10 cores 28-07-2025 to 30-07-2025 nCG=1:
 - MMP 10 cores on M2 Macbook 2024: 35:01:50.5hr
 - all figures reproduced
 - All post-processing files have all been heavily adapted/corrected and made more user-friendly: pp_wavemaker_TC4VP.py , pp_probes_TC4VP.py , FFT_202002.m
-- 07-08 nCG=2 test at res_x=0.02 (twice as large), but with degree=(2*nCG,4*nz)): ::hr TBD
+- 08-08 nCG=2 MMP test at res_x=0.02 (2x) degree=(2*nCG,4*nz)) 15:23:17.0
+- 09-08 nCG=1 MMP at res_x=0.01 degree=(2*nCG,4*nz)) 13:01:22.8
+- 29-07 nCG=1 SV default degrees at res_x=0.01 17:11:47.1
+- 13-08 nCG=2 SV default degrees at res_x=0.02 12:24:01.8
+- New 3D_tank_VP.py and 3D_tank.py files
 
 TC3 used MPI 10 cores 30-07-2025 to 01-08-2025, with nCG=1:
 - made changes in, new files: settings_TC3.py, pp_energy_figs_TC3VP.py 
