@@ -65,7 +65,7 @@ The numerical solutions can be processed and visualised using the post-processin
 
 
 ## Notes on test cases TC1, TC2, TC3, TC4 (OB all done via Docker installation on M2 Macbook)
-OB reproducing, testing and plotting 28-07-2025 to 01-08-2025. Draft of manuscript for figure reference added.
+OB reproducing, testing and plotting 28-07-2025 to 21-08-2025. Draft of manuscript for figure reference added.
 
 TC4 used MPI 10 cores 28-07-2025 to 30-07-2025 nCG=1:
 - datapath set in settings_TC4.py (should be set right)
@@ -79,7 +79,7 @@ TC4 used MPI 10 cores 28-07-2025 to 30-07-2025 nCG=1:
 - 09-08 nCG=1 MMP at res_x=0.01 degree=(2nCG,4nz)) 13:01:22.8
 - 29-07 nCG=1 SV default degrees at res_x=0.01 17:11:47.1
 - 13-08 nCG=2 SV default degrees at res_x=0.02 12:24:01.8
-- New 3D_tank_VP.py and 3D_tank.py files
+- New 3D_tank_VP.py (3D_tank_VPaug.py with different horizonta;/vertical degree quadratures) and 3D_tank.py files
 
 TC3 used MPI 10 cores 30-07-2025 to 01-08-2025, with nCG=1:
 - made changes in, new files: settings_TC3.py, pp_energy_figs_TC3VP.py 
