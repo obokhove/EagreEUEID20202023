@@ -1,8 +1,10 @@
 # Eagre/Aegir European Industry Doctorates GitHub pages
 
+Water Waves Submitted paper 11-03-2026: https://eartharxiv.org/repository/view/10493/
+https://github.com/obokhove/TCs3Dnumericalwavetank2022ff/releases/tag/NWTPFv1.0.0
+
 JEM-2026 paper: https://link.springer.com/article/10.1007/s10665-026-10511-9
-Codes are found (here) at https://github.com/obokhove/EagreEUEID20202023 (in “cou-
-pledbeachwave”).
+Codes are found (here) at https://github.com/obokhove/EagreEUEID20202023 (in “coupledbeachwave”).
 
 Eagre GitHub codes: https://github.com/EAGRE-water-wave-impact-modelling
 and
