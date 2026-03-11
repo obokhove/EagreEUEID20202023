@@ -1,5 +1,9 @@
 # Eagre/Aegir European Industry Doctorates GitHub pages
 
+JEM-2026 paper: https://link.springer.com/article/10.1007/s10665-026-10511-9
+Codes are found (here) at https://github.com/obokhove/EagreEUEID20202023 (in “cou-
+pledbeachwave”).
+
 Eagre GitHub codes: https://github.com/EAGRE-water-wave-impact-modelling
 and
 https://github.com/EAGRE-water-wave-impact-modelling/3D-wave-tank-JCP2022
